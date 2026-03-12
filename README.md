@@ -60,48 +60,15 @@ FixStay solves this by providing a centralized, database-driven platform for rep
 ---
 
 ## 🧩 User Stories
-
-### 🏠 Host Story – Reporting & Tracking an Issue
-_As a rental host, when something breaks in my apartment, I want to quickly post the problem with photos and priority, so a service provider can take the job and I can track its progress without endless phone calls._
-
----
-
-### 🔧 Service Provider Story – Finding Work
-_As a service provider, I want to see nearby maintenance tasks that match my skills, accept a job I’m available for, update the status as I work, and upload proof when I’m done, so I can build trust and get more jobs._
-
----
-
-### ⭐ Trust & Quality Story – Ratings
-_As a host, I want to rate and review service providers after a job is completed, so I can choose reliable professionals in the future and help others avoid bad experiences._
-
----
-
-## 🧠 Key Technical Concepts
-- Multi-role system architecture
-- RESTful API design
-- Relational database modeling
-- File upload and storage
-- Notification system
-- Secure authentication and authorization
-
----
-
-## 🛠️ Possible Tech Stack
-- **Frontend:** React / Vue / Angular  
-- **Backend:** Node.js (Express) / Laravel / Spring Boot  
-- **Database:** PostgreSQL / MySQL  
-- **Auth:** JWT  
-- **Hosting:** AWS / DigitalOcean  
-
----
-
-## 📈 Project Value
-- Improves operational efficiency for rental hosts
-- Creates transparency and accountability for service providers
-- Digitizes a real-world workflow used in the hospitality industry
-- Strong portfolio project demonstrating full-stack and system design skills
-
----
-
-## 📄 License
-This project is for educational and portfolio purposes.
+### 1. Host – Adding a New Property
+As a rental host,
+I want to add a new short-term rental property with address, photos, and basic details,
+so that I can start creating maintenance requests specifically for that property and keep all my listings organized in one place.
+### 2. Service Provider – Filtering & Accepting Tasks
+As a verified service provider (handyman/cleaner),
+I want to filter available maintenance tasks by location, category, and urgency level,
+so that I can quickly accept only the jobs I’m skilled for and available to complete within my schedule.
+### 3. Admin – Verifying a New Service Provider
+As an administrator,
+I want to review and approve a new service provider’s profile (documents, skills, location),
+so that only trustworthy professionals can accept tasks and hosts can rely on the quality of the platform.
