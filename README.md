@@ -72,3 +72,7 @@ so that I can quickly accept only the jobs I’m skilled for and available to co
 As an administrator,
 I want to review and approve a new service provider’s profile (documents, skills, location),
 so that only trustworthy professionals can accept tasks and hosts can rely on the quality of the platform.
+
+### persona
+After doing 2 interviews with property owners (hosts) we have come up with the following persona :
+![persona](Images/UX-Persona-template_page-0001.jpg)
