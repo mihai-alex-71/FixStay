@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixStay – Provider Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h2 class="logo"><a href="front.html">Fix<span>Stay</span></a></h2>
+    <nav class="navigation" id="navMenu">
+        <a href="front.html">Home</a>
+        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+    </nav>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</header>
+
+<div class="dashboard-page">
+    <div class="dash-layout">
+
+        <aside class="sidebar">
+            <span class="sidebar-label">Provider Menu</span>
+            <a class="sidebar-item active" href="#"><span class="icon">📊</span> Overview</a>
+            <a class="sidebar-item" href="#"><span class="icon">🔍</span> Browse Tasks</a>
+            <a class="sidebar-item" href="#"><span class="icon">📋</span> My Jobs</a>
+            <a class="sidebar-item" href="#"><span class="icon">📤</span> Upload Proof</a>
+            <a class="sidebar-item" href="#"><span class="icon">🔔</span> Notifications <span class="badge new" style="margin-left:auto">2</span></a>
+            <a class="sidebar-item" href="#"><span class="icon">⭐</span> My Reviews</a>
+            <br>
+            <span class="sidebar-label">Account</span>
+            <a class="sidebar-item" href="#"><span class="icon">👤</span> My Profile</a>
+            <a class="sidebar-item" href="login.html"><span class="icon">🚪</span> Logout</a>
+        </aside>
+
+        <main class="dash-content">
+            <div class="dash-greeting">
+                <h2>Hello, Mihai 🔧</h2>
+                <p>You have 2 new task offers available near you.</p>
+            </div>
+
+            <div class="dash-stats">
+                <div class="dash-stat">
+                    <div class="dash-stat-icon orange">📋</div>
+                    <div><div class="dash-stat-num">2</div><div class="dash-stat-label">Active Jobs</div></div>
+                </div>
+                <div class="dash-stat">
+                    <div class="dash-stat-icon green">✅</div>
+                    <div><div class="dash-stat-num">47</div><div class="dash-stat-label">Completed</div></div>
+                </div>
+                <div class="dash-stat">
+                    <div class="dash-stat-icon blue">⭐</div>
+                    <div><div class="dash-stat-num">4.9</div><div class="dash-stat-label">Your Rating</div></div>
+                </div>
+                <div class="dash-stat">
+                    <div class="dash-stat-icon red">💰</div>
+                    <div><div class="dash-stat-num">8</div><div class="dash-stat-label">New Offers</div></div>
+                </div>
+            </div>
+
+            <!-- Available tasks -->
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>Available Tasks Near You</h3>
+                    <button class="btn-sm outline">Filter</button>
+                </div>
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-icon">💧</div>
+                        <div class="task-info">
+                            <div class="task-title">Leaking pipe – kitchen sink</div>
+                            <div class="task-meta">Bucharest · Plumbing · Posted 20 min ago</div>
+                        </div>
+                        <button class="btn-sm outline" style="flex-shrink:0">Accept</button>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-icon">⚡</div>
+                        <div class="task-info">
+                            <div class="task-title">Broken socket – bedroom</div>
+                            <div class="task-meta">Bucharest · Electrical · Posted 1h ago</div>
+                        </div>
+                        <button class="btn-sm outline" style="flex-shrink:0">Accept</button>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-icon">❄️</div>
+                        <div class="task-info">
+                            <div class="task-title">AC not cooling properly</div>
+                            <div class="task-meta">Cluj-Napoca · HVAC · Posted 3h ago</div>
+                        </div>
+                        <button class="btn-sm outline" style="flex-shrink:0">Accept</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My jobs -->
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>My Active Jobs</h3>
+                </div>
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-icon">🧹</div>
+                        <div class="task-info">
+                            <div class="task-title">Deep cleaning – Beach House</div>
+                            <div class="task-meta">Constanța · Due today</div>
+                        </div>
+                        <span class="badge progress">In Progress</span>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-icon">🪟</div>
+                        <div class="task-info">
+                            <div class="task-title">Window latch repair</div>
+                            <div class="task-meta">Bucharest · Due tomorrow</div>
+                        </div>
+                        <span class="badge new">Accepted</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navMenu.classList.toggle('open');
+    });
+</script>
+</body>
+</html>
