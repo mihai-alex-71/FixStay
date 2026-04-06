@@ -1,9 +1,12 @@
 # FixStay 🛠️🏠  
 **Short-Term Rental Maintenance Management Platform**
 
-## 🎨 Figma Wireframe
-You can view the wireframe here:
-https://www.figma.com/design/usTg5rmJ0XaSKrLIwMtVDF/Lab2?node-id=6-13&t=sNDVqbziHyVFMMS7-1
+## 🎨 Figma Wireframes
+Dashbord pages wireframe:
+https://www.figma.com/design/qlVDDKQBmHYOd3VxrXWY8C/Wp2_Dashboards?node-id=11-2&t=4hLSHZpXSmQiCwQY-1
+
+Front page and login page:
+https://www.figma.com/design/y4BvoeRUi36GiM2clJin2a/Wp2_Front-page-and-login?node-id=2-179&t=cmwkBPMupOk7YCol-1
 
 ## 📌 Overview
 FixStay is a role-based web application designed to simplify maintenance management for short-term rental properties. It connects property hosts with verified service providers, enabling fast issue reporting, task monitoring, and transparent service execution.
