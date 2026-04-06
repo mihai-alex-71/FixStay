@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixStay – Tenant Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h2 class="logo"><a href="front.html">Fix<span>Stay</span></a></h2>
+    <nav class="navigation" id="navMenu">
+        <a href="front.html">Home</a>
+        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+    </nav>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</header>
+
+<div class="dashboard-page">
+    <div class="dash-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <span class="sidebar-label">Tenant Menu</span>
+            <a class="sidebar-item active" href="#">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                Overview
+            </a>
+            <a class="sidebar-item" href="#">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
+                    <path d="M9 22V12H15V22"/>
+                </svg>
+                My Rental
+            </a>
+            <a class="sidebar-item" href="#">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.29 3.86L1.82 18C1.64537 18.3024 1.55297 18.6453 1.55199 18.9945C1.55101 19.3437 1.64149 19.6871 1.81442 19.9905C1.98735 20.2939 2.23673 20.5467 2.53771 20.7239C2.83869 20.901 3.18109 20.9962 3.53 21H20.47C20.8189 20.9962 21.1613 20.901 21.4623 20.7239C21.7633 20.5467 22.0127 20.2939 22.1856 19.9905C22.3585 19.6871 22.449 19.3437 22.448 18.9945C22.447 18.6453 22.3546 18.3024 22.18 18L13.71 3.86C13.5317 3.56611 13.2807 3.32312 12.9812 3.15448C12.6817 2.98585 12.3438 2.89725 12 2.89725C11.6562 2.89725 11.3183 2.98585 11.0188 3.15448C10.7193 3.32312 10.4683 3.56611 10.29 3.86Z"/>
+                    <path d="M12 9V13"/><path d="M12 17H12.01"/>
+                </svg>
+                Report Issue
+            </a>
+            <a class="sidebar-item" href="#">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"/>
+                </svg>
+                Messages
+            </a>
+            <br>
+            <span class="sidebar-label">Account</span>
+            <a class="sidebar-item" href="#">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                Profile
+            </a>
+            <a class="sidebar-item" href="login.html">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"/>
+                    <path d="M16 17L21 12L16 7"/><path d="M21 12H9"/>
+                </svg>
+                Logout
+            </a>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="dash-content">
+            <div class="dash-greeting">
+                <h2>Welcome, Sarah</h2>
+                <p>Everything you need for your rental at Beach House, Constanța.</p>
+            </div>
+
+            <!-- Quick Action Card -->
+            <div class="dash-panel" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem;">
+                <div style="padding: 2rem; text-align: center; color: white;">
+                    <h3 style="color: white; font-size: 1.5rem; margin-bottom: 1rem;">Need to Report an Issue?</h3>
+                    <p style="opacity: 0.9; margin-bottom: 1.5rem; font-size: 1.05rem;">Water leak? Broken appliance? Heating problem? Let your landlord know instantly.</p>
+                    <button class="btn-white" onclick="location.href='#'" style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                        Report Issue Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Rental Info -->
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>My Rental Information</h3>
+                </div>
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
+                                <path d="M9 22V12H15V22"/>
+                            </svg>
+                        </div>
+                        <div class="task-info">
+                            <div class="task-title">Beach House Apartment</div>
+                            <div class="task-meta">Constanța · Lease started: January 1, 2026</div>
+                        </div>
+                        <span class="badge new">Active Lease</span>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div class="task-info">
+                            <div class="task-title">Landlord: Alex M.</div>
+                            <div class="task-meta">Phone: +40 123 456 789 · Email: alex@example.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Issues -->
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>My Reported Issues</h3>
+                </div>
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 14.76V3.5C14 3.10218 13.842 2.72064 13.5607 2.43934C13.2794 2.15804 12.8978 2 12.5 2C12.1022 2 11.7206 2.15804 11.4393 2.43934C11.158 2.72064 11 3.10218 11 3.5V14.76C10.2166 15.1805 9.59475 15.8456 9.22219 16.6512C8.84963 17.4567 8.74845 18.3587 8.93398 19.2272C9.11952 20.0957 9.58184 20.8817 10.2513 21.4641C10.9207 22.0464 11.7561 22.3927 12.635 22.4488C13.5139 22.5049 14.3862 22.2678 15.1181 21.7717C15.85 21.2757 16.4025 20.5476 16.6925 19.6985C16.9826 18.8494 17.0952 17.9256 16.9154 17.0353C16.7356 16.145 16.2722 15.333 15.592 14.712"/>
+                            </svg>
+                        </div>
+                        <div class="task-info">
+                            <div class="task-title">AC not cooling properly</div>
+                            <div class="task-meta">Reported 2 days ago · Landlord notified · Waiting for technician</div>
+                        </div>
+                        <span class="badge pending">Pending</span>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"/>
+                                <path d="M7 22V12L17 12V22"/>
+                            </svg>
+                        </div>
+                        <div class="task-info">
+                            <div class="task-title">Kitchen sink was leaking</div>
+                            <div class="task-meta">Reported 2 weeks ago · Fixed by Mihai P.</div>
+                        </div>
+                        <span class="badge done">Resolved</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>Messages from Landlord</h3>
+                </div>
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"/>
+                            </svg>
+                        </div>
+                        <div class="task-info">
+                            <div class="task-title">AC repair scheduled for tomorrow</div>
+                            <div class="task-meta">Technician will arrive at 10 AM to fix the cooling issue</div>
+                        </div>
+                        <span class="badge new">Today</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navMenu.classList.toggle('open');
+    });
+</script>
+</body>
+</html>

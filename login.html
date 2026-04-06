@@ -51,7 +51,7 @@
                 </div>
                 <button type="submit" class="btn-form">Sign In</button>
                 <div class="auth-switch">
-                    Don't have an account? <a href="#" onclick="showTab('register')">Register here</a>
+                    Don't have an account? <a href="#" onclick="showTab('register'); return false;">Register here</a>
                 </div>
             </form>
 
@@ -75,13 +75,14 @@
                     <label for="regRole">I am a...</label>
                     <select id="regRole" required>
                         <option value="" disabled selected>Select your role</option>
+                        <option value="guest">Guest / Tenant</option>
                         <option value="host">Host / Property Owner</option>
                         <option value="provider">Service Provider</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="regPass">Password</label>
-                    <input type="password" id="regPass" placeholder="Min. 8 characters" required>
+                    <input type="password" id="regPass" placeholder="Min. 8 characters" required minlength="8">
                 </div>
                 <div class="form-group">
                     <label for="regConfirm">Confirm password</label>
@@ -89,7 +90,7 @@
                 </div>
                 <button type="submit" class="btn-form">Create Account</button>
                 <div class="auth-switch">
-                    Already have an account? <a href="#" onclick="showTab('login')">Sign in</a>
+                    Already have an account? <a href="#" onclick="showTab('login'); return false;">Sign in</a>
                 </div>
             </form>
 
@@ -120,10 +121,11 @@
     // Demo: redirect to role dashboard after login
     function handleLogin(e) {
         e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
+        const email = document.getElementById('loginEmail').value.toLowerCase();
         // Demo routing — in production this would hit your backend
         if (email.includes('admin'))         location.href = 'dashboard-admin.html';
         else if (email.includes('provider')) location.href = 'dashboard-provider.html';
+        else if (email.includes('guest'))    location.href = 'dashboard-guest.html';
         else                                 location.href = 'dashboard-host.html';
     }
 
@@ -131,10 +133,14 @@
         e.preventDefault();
         const pass    = document.getElementById('regPass').value;
         const confirm = document.getElementById('regConfirm').value;
-        if (pass !== confirm) { alert('Passwords do not match!'); return; }
+        if (pass !== confirm) { 
+            alert('Passwords do not match!'); 
+            return; 
+        }
         const role = document.getElementById('regRole').value;
-        if (role === 'host')     location.href = 'dashboard-host.html';
-        else                     location.href = 'dashboard-provider.html';
+        if (role === 'guest')        location.href = 'dashboard-guest.html';
+        else if (role === 'host')     location.href = 'dashboard-host.html';
+        else                          location.href = 'dashboard-provider.html';
     }
 
     // Open register tab if URL has ?tab=register
