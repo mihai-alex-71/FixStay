@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import com.fixStay.backend.dto.LoginResponse;
+
 @Service
 public class UserService {
 
@@ -27,7 +29,7 @@ public class UserService {
         if (userRepository.existsByEmailAddress(request.email())) {
             return "Error: email already registered!";
         }
-        if (request.role() != Role.HOST && request.role() != Role.SERVICE_PROVIDER){
+        if (request.role() != Role.HOST && request.role() != Role.SERVICE_PROVIDER && request.role() != Role.GUEST) {
             return  " cannot set roles other than host or Service provider . In order to become an admin you need to contact the website owner";
         }
 
@@ -46,21 +48,21 @@ public class UserService {
     }
 
 
-    public String logInUser(LoginRequest request){
+    public LoginResponse logInUser(LoginRequest request){
 
         Optional<User> possibleUser = userRepository.findUserByEmailAddress(request.email());
 
 
         if ( possibleUser.isEmpty() ){
-            return "The email you provided is not registered yet! please try signing up first !";
+            return new LoginResponse("The email you provided is not registered yet! please try signing up first !", null);
         }
         User user = possibleUser.get();
 
         String hashedSavedPassword = user.getPassword();
         if (passwordEncoder.matches(request.password(),hashedSavedPassword)){
-            return " success ! you are logged in ! ";
+            return new LoginResponse(" success ! you are logged in ! ", user.getRole().name());
         }else {
-            return " wrong password please try again ! ";
+            return new LoginResponse(" wrong password please try again ! ", null);
         }
     }
 }
