@@ -142,6 +142,11 @@
                 });
 
                 const data = await response.json();
+
+                localStorage.setItem("role", data.role);
+                localStorage.setItem("email", data.emailAddress);
+                localStorage.setItem("firstName", data.firstName);
+
                 if (data.role) {
 
                     if (data.role === 'HOST') {
@@ -151,13 +156,13 @@
                     } else if (data.role === 'GUEST') {
                         window.location.href = 'dashboard-guest.html';
                     } else if (data.role === 'ADMIN') {
-                        window.location.href = 'dahsboard-admin.html';
+                        window.location.href = 'dashboard-admin.html';
                     }
                 }
-                    else {
-                        alert(data.message);
-                    }
-                } catch (error) {
+                else {
+                    alert(data.message);
+                }
+            } catch (error) {
                 alert("Colud not cnnect to the server. Is spring boot running????");
                 console.error(error);
             }
