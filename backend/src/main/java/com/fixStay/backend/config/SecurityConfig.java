@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .cors(cors -> {}) // Enable the @CrossOrigin we added earlier
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // OPEN THE FRONT DOOR
+                        .requestMatchers("/api/properties/**").permitAll()
                         .anyRequest().authenticated() // Everything else stays locked
                 );
 

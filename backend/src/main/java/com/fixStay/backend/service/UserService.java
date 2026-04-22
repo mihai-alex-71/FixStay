@@ -54,15 +54,15 @@ public class UserService {
 
 
         if ( possibleUser.isEmpty() ){
-            return new LoginResponse("The email you provided is not registered yet! please try signing up first !", null);
+            return new LoginResponse("The email you provided is not registered yet! please try signing up first !", null, null, null);
         }
         User user = possibleUser.get();
 
         String hashedSavedPassword = user.getPassword();
         if (passwordEncoder.matches(request.password(),hashedSavedPassword)){
-            return new LoginResponse(" success ! you are logged in ! ", user.getRole().name());
+            return new LoginResponse(" success ! you are logged in ! ", user.getRole().name(), user.getEmailAddress(), user.getFirstName());
         }else {
-            return new LoginResponse(" wrong password please try again ! ", null);
+            return new LoginResponse(" wrong password please try again ! ", null, null, null);
         }
     }
 }
