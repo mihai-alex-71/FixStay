@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixStay – Professional Maintenance Management for Short-Term Rentals</title>
+    <meta name="description" content="FixStay connects rental property hosts with verified service providers. Streamline maintenance requests, track progress in real-time, and maintain your properties efficiently.">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h2 class="logo">Fix<span>Stay</span></h2>
+    <nav class="navigation" id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="#how">How It Works</a>
+        <a href="#roles">Roles</a>
+        <a href="#contact">Contact</a>
+        <button class="btnLogin-popup" onclick="location.href='login.html'">Login</button>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-badge">Rental Maintenance Platform</div>
+            <h1>Fix Issues.<br>Fast. Tracked.<br>Trusted.</h1>
+            <p>FixStay connects rental hosts with verified service providers. Report issues, monitor progress, and get work done — all in one place.</p>
+            <div class="hero-cta">
+                <button class="btn-white" onclick="location.href='login.html'">Get Started Free</button>
+                <button class="btn-outline-white" onclick="location.href='#how'">See How It Works</button>
+            </div>
+        </div>
+        <div class="hero-cards">
+            <div class="hero-card">
+                <div class="hero-card-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
+                        <path d="M9 22V12H15V22"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4>For Hosts</h4>
+                    <p>Report issues with photos, set priority, track in real time</p>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="hero-card-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.7 6.3C15.4 7 15.4 8.1 14.7 8.8L8.8 14.7C8.1 15.4 7 15.4 6.3 14.7C5.6 14 5.6 12.9 6.3 12.2L12.2 6.3C12.9 5.6 14 5.6 14.7 6.3Z"/>
+                        <path d="M8.5 10.5L10.5 8.5"/>
+                        <path d="M15.5 17.5L13.5 15.5"/>
+                        <path d="M6 3L3 6L6 9L9 6L6 3Z"/>
+                        <path d="M18 15L15 18L18 21L21 18L18 15Z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4>For Service Providers</h4>
+                    <p>Find nearby jobs, accept tasks, upload completion proof</p>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="hero-card-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4>For Guests</h4>
+                    <p>Book properties, report issues directly, track maintenance status</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="page-section">
+    <div class="stats-row">
+        <div class="stat-card"><div class="stat-num">1,200+</div><div class="stat-label">Tasks Completed</div></div>
+        <div class="stat-card"><div class="stat-num">340+</div><div class="stat-label">Verified Providers</div></div>
+        <div class="stat-card"><div class="stat-num">98%</div><div class="stat-label">Satisfaction Rate</div></div>
+        <div class="stat-card"><div class="stat-num">2.4h</div><div class="stat-label">Avg. Response Time</div></div>
+    </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="page-section" id="how">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">How FixStay Works</h2>
+    <p class="section-sub">From issue to resolution in four simple steps — fully tracked and transparent.</p>
+    <div class="how-grid">
+        <div class="step-card">
+            <div class="step-num">01</div>
+            <div class="step-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 3H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+            </div>
+            <h3>Host Reports Issue</h3>
+            <p>Upload photos, add description, set category and priority level for the problem.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">02</div>
+            <div class="step-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21L16.65 16.65"/>
+                </svg>
+            </div>
+            <h3>Provider Finds Task</h3>
+            <p>Verified service providers browse available jobs filtered by location, type, and urgency.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">03</div>
+            <div class="step-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6V12L16 14"/>
+                </svg>
+            </div>
+            <h3>Work Gets Done</h3>
+            <p>Provider accepts, updates status to In Progress, and uploads completion proof when done.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">04</div>
+            <div class="step-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+            </div>
+            <h3>Host Reviews</h3>
+            <p>Host confirms completion and leaves a rating — building trust across the platform.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ROLES -->
+<div class="roles-section" id="roles">
+    <div class="roles-inner">
+        <div class="section-label">User Roles</div>
+        <h2 class="section-title">Built for Everyone in the Chain</h2>
+        <p class="section-sub">Three distinct roles, each with a tailored experience designed for their workflow.</p>
+        <div class="roles-grid">
+            <div class="role-card">
+                <div class="role-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
+                        <path d="M9 22V12H15V22"/>
+                    </svg>
+                </div>
+                <h3>Host / Property Owner</h3>
+                <ul>
+                    <li>Add and manage rental properties</li>
+                    <li>Create maintenance requests with photos</li>
+                    <li>Track task status in real time</li>
+                    <li>Receive notifications on updates</li>
+                    <li>Rate and review service providers</li>
+                    <li>View full maintenance history</li>
+                </ul>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.7 6.3C15.4 7 15.4 8.1 14.7 8.8L8.8 14.7C8.1 15.4 7 15.4 6.3 14.7C5.6 14 5.6 12.9 6.3 12.2L12.2 6.3C12.9 5.6 14 5.6 14.7 6.3Z"/>
+                        <path d="M8.5 10.5L10.5 8.5"/>
+                        <path d="M15.5 17.5L13.5 15.5"/>
+                        <path d="M6 3L3 6L6 9L9 6L6 3Z"/>
+                        <path d="M18 15L15 18L18 21L21 18L18 15Z"/>
+                    </svg>
+                </div>
+                <h3>Service Provider</h3>
+                <ul>
+                    <li>Create a verified service profile</li>
+                    <li>Browse tasks by location & type</li>
+                    <li>Accept or decline tasks</li>
+                    <li>Update status: In Progress / Done</li>
+                    <li>Upload completion proof & notes</li>
+                    <li>Build reputation through ratings</li>
+                </ul>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <h3>Guest / Tenant</h3>
+                <ul>
+                    <li>Search and book properties</li>
+                    <li>Report issues with photos & details</li>
+                    <li>Track maintenance request status</li>
+                    <li>Communicate with property host</li>
+                    <li>View repair progress in real time</li>
+                    <li>Rate your stay and service quality</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+    <div class="cta-inner">
+        <div class="section-label">Get Started</div>
+        <h2 class="section-title">Ready to simplify your rental maintenance?</h2>
+        <p>Join hundreds of hosts and service providers already using FixStay to manage maintenance faster and smarter.</p>
+        <button class="btn-red" onclick="location.href='login.html'">Create Your Free Account</button>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-logo">FixStay</div>
+        <p>© 2026 FixStay. Built for the rental industry.</p>
+    </div>
+</footer>
+
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navMenu.classList.toggle('open');
+    });
+    navMenu.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            navMenu.classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>
