@@ -26,6 +26,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // OPEN THE FRONT DOOR
                         .requestMatchers("/api/properties/**").permitAll()
+                        //s1 testing only
+                        .requestMatchers("/api/admin/**").permitAll() //fix
+                        .requestMatchers("/admin/**").permitAll()
+                        //
                         .anyRequest().authenticated() // Everything else stays locked
                 );
 

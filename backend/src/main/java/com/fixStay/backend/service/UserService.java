@@ -1,4 +1,5 @@
 package com.fixStay.backend.service;
+import com.fixStay.backend.model.Status;
 
 import com.fixStay.backend.dto.LoginRequest;
 import com.fixStay.backend.dto.RegisterRequest;
@@ -42,6 +43,12 @@ public class UserService {
         user.setEmailAddress(request.email());
         user.setPassword(hashedPassword);
         user.setRole(request.role());
+        //s1
+        if (request.role() == Role.SERVICE_PROVIDER) {
+            user.setStatus(Status.PENDING);
+        } else {
+            user.setStatus(Status.APPROVED);
+        }
 
         userRepository.save(user);
         return " User successfully has been added to database ! ";
@@ -59,9 +66,26 @@ public class UserService {
         User user = possibleUser.get();
 
         String hashedSavedPassword = user.getPassword();
-        if (passwordEncoder.matches(request.password(),hashedSavedPassword)){
-            return new LoginResponse(" success ! you are logged in ! ", user.getRole().name(), user.getEmailAddress(), user.getFirstName());
-        }else {
+//        if (passwordEncoder.matches(request.password(),hashedSavedPassword)){
+//            return new LoginResponse(" success ! you are logged in ! ", user.getRole().name(), user.getEmailAddress(), user.getFirstName());
+//        }else {
+//            return new LoginResponse(" wrong password please try again ! ", null, null, null);
+//        }
+        //s1
+        if (passwordEncoder.matches(request.password(), hashedSavedPassword)) {
+
+            if (user.getRole() == Role.SERVICE_PROVIDER && user.getStatus() == Status.PENDING) {
+                return new LoginResponse("Your account is waiting for admin approval.", null, null, null);
+            }
+
+            return new LoginResponse(
+                    " success ! you are logged in ! ",
+                    user.getRole().name(),
+                    user.getEmailAddress(),
+                    user.getFirstName()
+            );
+
+        } else {
             return new LoginResponse(" wrong password please try again ! ", null, null, null);
         }
     }
