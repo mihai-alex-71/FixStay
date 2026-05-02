@@ -36,5 +36,10 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    //s1
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
 }
+

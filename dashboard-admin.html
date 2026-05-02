@@ -292,18 +292,74 @@
                         </div>
                     </div>
                 </div>
+
+                <!--s1-->
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>Pending Providers (Need Approval)</h3>
+                    </div>
+
+                    <div id="providersList" class="task-list">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+
+
             </main>
         </div>
     </div>
 
     <script>
+        console.log("LOADING PROVIDERS...");
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('open');
             navMenu.classList.toggle('open');
         });
+
+        async function loadPendingProviders() {
+        //http://localhost:8080/admin/providers/pending
+        //const res = await fetch("http://localhost:8080/api/admin/providers/pending");
+        const res = await fetch("http://localhost:8080/api/admin/providers/pending");
+        const providers = await res.json();
+
+        const container = document.getElementById("providersList");
+        container.innerHTML = "";
+
+        providers.forEach(p => {
+            container.innerHTML += `
+                <div class="task-item">
+                    <div class="task-info">
+                        <div class="task-title">
+                            ${p.firstName} ${p.lastName}
+                        </div>
+                        <div class="task-meta">
+                            ${p.emailAddress}
+                        </div>
+                    </div>
+
+                    <button class="btn-sm" onclick="approveProvider(${p.id})">
+                        Approve
+                    </button>
+                </div>
+            `;
+        });
+    }
+
+    async function approveProvider(id) {
+        await fetch(`http://localhost:8080/api/admin/providers/${id}/approve`, {
+            method: "PUT"
+        });
+
+        loadPendingProviders();
+    }
+
+    // 👇 AUTO LOAD ON PAGE OPEN
+    window.onload = loadPendingProviders;
     </script>
+    <script src="admin.js"></script>
 </body>
 
 </html>
