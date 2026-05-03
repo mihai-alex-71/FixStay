@@ -128,6 +128,14 @@
             font-weight: 700;
         }
 
+        .property-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
         .modal-actions {
             display: flex;
             justify-content: flex-end;
@@ -438,6 +446,10 @@
                         <span>100.00 EUR</span>
                     </div>
                 </label>
+                <label>
+                    Property Image
+                    <input type="file" id="propertyImage" accept="image/*">
+                </label>
                 <div class="modal-actions">
                     <button type="button" class="btn-modal secondary" id="cancelAddProperty">Cancel</button>
                     <button type="submit" class="btn-modal primary">Save Property</button>
@@ -477,6 +489,7 @@
         const propertyAddress = document.getElementById('propertyAddress');
         const propertyPrice = document.getElementById('propertyPrice');
         const propertyPriceValue = document.getElementById('propertyPriceValue');
+        const propertyImage = document.getElementById('propertyImage');
         const propertyList = document.getElementById('propertyList');
         const propertyEmpty = document.getElementById('propertyEmpty');
 
@@ -501,12 +514,14 @@
                 properties.forEach((property) => {
                     const propertyItem = document.createElement('div');
                     propertyItem.className = 'task-item';
+
+                    const imageUrl = property.imageUrl || (property.pictureFileName ?
+                        `http://localhost:8080/uploads/${property.pictureFileName}` :
+                        null);
+
                     propertyItem.innerHTML = `
                 <div class="task-icon">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="7" width="20" height="14" rx="2" />
-                        <path d="M16 7V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V7" />
-                    </svg>
+                    <img src="${imageUrl}" alt="Property Image" class="property-image">
                 </div>
                 <div class="task-info">
                     <div class="task-title">${property.name}</div>
@@ -554,6 +569,7 @@
         function closePropertyModal() {
             addPropertyModal.classList.remove('show');
             addPropertyModal.setAttribute('aria-hidden', 'true');
+            propertyImage.value = '';
         }
 
         openAddPropertyModal.addEventListener('click', () => {
@@ -573,21 +589,19 @@
             event.preventDefault();
             normalizePropertyPriceInput();
 
-
-            const payload = {
-                name: propertyName.value,
-                address: propertyAddress.value,
-                pricePerNight: parseFloat(propertyPrice.value),
-                hostEmailAddress: hostEmail
-            };
+            const formData = new FormData();
+            formData.append('name', propertyName.value);
+            formData.append('address', propertyAddress.value);
+            formData.append('pricePerNight', parseFloat(propertyPrice.value));
+            formData.append('hostEmailAddress', hostEmail);
+            if (propertyImage.files[0]) {
+                formData.append('image', propertyImage.files[0]);
+            }
 
             try {
                 const response = await fetch('http://localhost:8080/api/properties/create-property', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
+                    body: formData
                 });
 
                 const responseMessage = await response.text();
@@ -598,6 +612,7 @@
                     addPropertyForm.reset();
                     propertyPrice.value = '10.00';
                     updatePropertyPriceValue();
+                    propertyImage.value = '';
                 }
             } catch (error) {
                 alert('Could not save property. Please try again.');

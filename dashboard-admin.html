@@ -130,8 +130,8 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="dash-stat-num">847</div>
-                            <div class="dash-stat-label">Total Users</div>
+                            <div class="dash-stat-num" id="pendingCount">0</div>
+                            <div class="dash-stat-label">Pending Service Providers</div>
                         </div>
                     </div>
                     <div class="dash-stat">
@@ -171,6 +171,16 @@
                             <div class="dash-stat-num">98%</div>
                             <div class="dash-stat-label">Satisfaction</div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>Pending Providers (Need Approval)</h3>
+                    </div>
+                    <div id="pendingAlert" class="pending-alert">No pending providers</div>
+                    <div id="providersList" class="task-list">
+                        <!-- Filled dynamically -->
                     </div>
                 </div>
 
@@ -294,18 +304,6 @@
                 </div>
 
                 <!--s1-->
-                <div class="dash-panel">
-                    <div class="dash-panel-header">
-                        <h3>Pending Providers (Need Approval)</h3>
-                    </div>
-
-                    <div id="providersList" class="task-list">
-                        <!-- Filled dynamically -->
-                    </div>
-                </div>
-
-
-
             </main>
         </div>
     </div>
@@ -346,6 +344,22 @@
                 </div>
             `;
         });
+
+        // Update pending count
+        const count = providers.length;
+        const countElement = document.getElementById("pendingCount");
+        const alertElement = document.getElementById("pendingAlert");
+
+        countElement.textContent = count;
+        if (count === 0) {
+            countElement.classList.remove("red");
+            alertElement.textContent = "No pending providers";
+            alertElement.classList.remove("red");
+        } else {
+            countElement.classList.add("red");
+            alertElement.textContent = `${count} pending provider${count > 1 ? 's' : ''}`;
+            alertElement.classList.add("red");
+        }
     }
 
     async function approveProvider(id) {
