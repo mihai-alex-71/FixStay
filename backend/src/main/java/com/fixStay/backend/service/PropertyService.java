@@ -77,4 +77,7 @@ public class PropertyService {
         return propertyRepository.findAllByHost_EmailAddress(hostEmailAddress);
     }
 
+    public List<Property> showAllProperties() {
+        return propertyRepository.findAll();
+    }
 }

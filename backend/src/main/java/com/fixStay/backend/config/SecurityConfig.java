@@ -7,16 +7,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
+import java.util.Collections;
 
-@Configuration // Read this file when start up!
+@Configuration
 public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -28,20 +30,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Disable this for now so our frontend can talk to us
-                .cors(cors -> {}) // Enable the @CrossOrigin we added earlier
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOriginPatterns(Collections.singletonList("*"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(Collections.singletonList("*"));
+                    return config;
+                }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // OPEN THE FRONT DOOR
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/properties/**").permitAll()
-                        //s1 testing only
-                        .requestMatchers("/uploads/**").permitAll()
-                        .requestMatchers("/api/admin/**").permitAll() //fix
+                        .requestMatchers("/api/rentals/**").permitAll()
+                        .requestMatchers("/api/issues/**").permitAll()
+
+                        .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/admin/**").permitAll()
-                        //
-                        .anyRequest().authenticated() // Everything else stays locked
+                        .anyRequest().authenticated()
                 );
 
         return http.build();
     }
-
 }

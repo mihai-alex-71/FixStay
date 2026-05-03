@@ -30,4 +30,9 @@ public class PropertyController {
     public List<Property> showProperties(@RequestParam String email){
         return  propertyService.showProperty(email);
     }
+
+    @GetMapping("/all")
+    public List<Property> getAllProperties() {
+        return propertyService.showAllProperties();
+    }
 }

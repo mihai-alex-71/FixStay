@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -40,6 +41,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
+
+    // pentru guest -> daca are sau nu inchiriata o proprietate
+    @JsonIgnoreProperties("host")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "current_property_id")
+    private Property currentProperty; // Daca e null, guest-ul nu a inchiriat nimic
 
 }
 

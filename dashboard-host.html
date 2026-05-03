@@ -328,79 +328,16 @@
                 <div class="dash-panel">
                     <div class="dash-panel-header">
                         <h3>Active Maintenance Tasks</h3>
-                        <button class="btn-sm outline" type="button">+ New Request</button>
+                        <!-- Am adaugat un id si un mesaj de empty state -->
                     </div>
-                    <div class="task-list">
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z" />
-                                    <path d="M7 22V12L17 12V22" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Leaking pipe under kitchen sink</div>
-                                <div class="task-meta">Apt. 4B – Vila Florilor · Assigned to Mihai P.</div>
-                            </div>
-                            <span class="badge urgent">Urgent</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Broken socket in bedroom 2</div>
-                                <div class="task-meta">Studio Central · Assigned to Ion E.</div>
-                            </div>
-                            <span class="badge progress">In Progress</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                                    <path d="M9 3V21" />
-                                    <path d="M15 3V21" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Window latch broken – won't lock</div>
-                                <div class="task-meta">Apt. 4B – Vila Florilor · Pending provider</div>
-                            </div>
-                            <span class="badge pending">Pending</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M8 14S9.5 16 12 16S16 14 16 14" />
-                                    <path d="M9 9H9.01" />
-                                    <path d="M15 9H15.01" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Deep cleaning after checkout</div>
-                                <div class="task-meta">Beach House · Assigned to CleanPro SRL</div>
-                            </div>
-                            <span class="badge progress">In Progress</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M14 14.76V3.5C14 3.10218 13.842 2.72064 13.5607 2.43934C13.2794 2.15804 12.8978 2 12.5 2C12.1022 2 11.7206 2.15804 11.4393 2.43934C11.158 2.72064 11 3.10218 11 3.5V14.76C10.2166 15.1805 9.59475 15.8456 9.22219 16.6512C8.84963 17.4567 8.74845 18.3587 8.93398 19.2272C9.11952 20.0957 9.58184 20.8817 10.2513 21.4641C10.9207 22.0464 11.7561 22.3927 12.635 22.4488C13.5139 22.5049 14.3862 22.2678 15.1181 21.7717C15.85 21.2757 16.4025 20.5476 16.6925 19.6985C16.9826 18.8494 17.0952 17.9256 16.9154 17.0353C16.7356 16.145 16.2722 15.333 15.592 14.712" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">AC not cooling properly</div>
-                                <div class="task-meta">Studio Central · Pending provider</div>
-                            </div>
-                            <span class="badge pending">Pending</span>
-                        </div>
+                    <div class="task-list" id="issueList">
+                        <!-- Problemele vor fi generate aici din Javascript -->
+                    </div>
+                    <div class="property-empty" id="issueEmpty" style="display: none;">
+                        No maintenance requests at the moment. All good!
                     </div>
                 </div>
+
 
                 <!-- Properties -->
                 <div class="dash-panel">
@@ -459,7 +396,7 @@
     </div>
 
     <script>
-
+        // 1. INITIALIZARE SI VERIFICARE LOGIN
         const firstName = localStorage.getItem('firstName');
         const hostEmail = localStorage.getItem('email');
 
@@ -481,6 +418,62 @@
             navMenu.classList.toggle('open');
         });
 
+        // 2. LOGICA PENTRU PROBLEME (ISSUES)
+        const issueList = document.getElementById('issueList');
+        const issueEmpty = document.getElementById('issueEmpty');
+
+        async function renderIssues() {
+            try {
+                // Cerem problemele de la backend pentru acest host
+                const response = await fetch(`http://localhost:8080/api/issues/host-issues?email=${encodeURIComponent(hostEmail)}`);
+                const issues = await response.json();
+
+                issueList.innerHTML = ''; // Curatam lista inainte de a o umple
+
+                if (issues.length === 0) {
+                    issueEmpty.style.display = 'block';
+                    return;
+                }
+
+                issueEmpty.style.display = 'none';
+
+                issues.forEach((issue) => {
+                    const issueItem = document.createElement('div');
+                    issueItem.className = 'task-item';
+
+                    // Alegem un stil de badge in functie de status
+                    let badgeClass = "pending";
+                    if(issue.status === 'OPEN') badgeClass = "progress"; // Cauta provider
+                    if(issue.status === 'IN_PROGRESS') badgeClass = "urgent"; // Providerul lucreaza
+                    if(issue.status === 'RESOLVED') badgeClass = "success"; // Rezolvat
+
+                    // Generam cardul
+                    issueItem.innerHTML = `
+                    <div class="task-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"/>
+                            <path d="M7 22V12L17 12V22"/>
+                        </svg>
+                    </div>
+                    <div class="task-info">
+                        <div class="task-title">${issue.title}</div>
+                        <div class="task-meta">${issue.property.name} · Reported by: ${issue.guest.firstName} ${issue.guest.lastName}</div>
+                        <div style="font-size: 12px; margin-top: 5px; color: #5f6b73;">"${issue.description}"</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                        <span class="badge ${badgeClass}">${issue.status}</span>
+                        ${issue.status === 'PENDING' ? `<button onclick="publishIssue(${issue.id})" class="btn-sm outline" style="font-size: 11px; padding: 4px 8px;">Find Provider</button>` : ''}
+                    </div>
+                `;
+                    issueList.appendChild(issueItem);
+                });
+
+            } catch (error) {
+                console.error('Could not load issues:', error);
+            }
+        }
+
+        // 3. LOGICA PENTRU PROPRIETATI (PROPERTIES)
         const openAddPropertyModal = document.getElementById('openAddPropertyModal');
         const addPropertyModal = document.getElementById('addPropertyModal');
         const cancelAddProperty = document.getElementById('cancelAddProperty');
@@ -520,16 +513,16 @@
                         null);
 
                     propertyItem.innerHTML = `
-                <div class="task-icon">
-                    <img src="${imageUrl}" alt="Property Image" class="property-image">
-                </div>
-                <div class="task-info">
-                    <div class="task-title">${property.name}</div>
-                    <div class="task-meta">${property.address}</div>
-                    <div class="property-price">${parseFloat(property.pricePerNight).toFixed(2)} EUR</div>
-                </div>
-                <span class="badge new">Added</span>
-            `;
+                    <div class="task-icon">
+                        <img src="${imageUrl}" alt="Property Image" class="property-image">
+                    </div>
+                    <div class="task-info">
+                        <div class="task-title">${property.name}</div>
+                        <div class="task-meta">${property.address}</div>
+                        <div class="property-price">${parseFloat(property.pricePerNight).toFixed(2)} EUR</div>
+                    </div>
+                    <span class="badge new">Added</span>
+                `;
                     propertyList.appendChild(propertyItem);
                 });
 
@@ -563,8 +556,6 @@
             }
         });
         propertyPriceValue.addEventListener('blur', normalizePropertyPriceInput);
-        updatePropertyPriceValue();
-        renderProperties();
 
         function closePropertyModal() {
             addPropertyModal.classList.remove('show');
@@ -618,7 +609,17 @@
                 alert('Could not save property. Please try again.');
             }
         });
+
+        // 4. EXECUTIA LA INCARCAREA PAGINII
+        updatePropertyPriceValue();
+        renderProperties(); // Incarca casele
+        renderIssues();     // Incarca problemele
+
+        async function publishIssue(issueId) {
+            alert("Butonul Find Provider a fost apasat pentru problema ID: " + issueId);
+        }
     </script>
+
 </body>
 
 </html>

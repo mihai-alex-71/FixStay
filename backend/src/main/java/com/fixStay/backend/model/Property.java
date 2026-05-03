@@ -3,6 +3,7 @@ package com.fixStay.backend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table
@@ -23,6 +24,7 @@ public class Property {
 
     @ManyToOne
     @JoinColumn(name = "host_id", nullable = false)
+    @JsonIgnoreProperties("currentProperty") // Spunem JSON-ului: "Cand arati Host-ul, nu-mi mai arata ce case are el inchiriate ca guest"
     private User host;
 
     public String getImageUrl() {
