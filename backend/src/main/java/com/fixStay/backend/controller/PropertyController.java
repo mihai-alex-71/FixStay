@@ -4,6 +4,8 @@ import com.fixStay.backend.dto.PropertyRequest;
 import com.fixStay.backend.model.Property;
 import com.fixStay.backend.service.PropertyService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 
@@ -17,9 +19,11 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    @PostMapping("/create-property")
-    public String addProperty(@RequestBody PropertyRequest propertyRequest){
-        return propertyService.createProperty(propertyRequest);
+    @PostMapping(value = "/create-property", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String addProperty(
+            @ModelAttribute PropertyRequest propertyRequest,
+            @RequestParam(value = "image", required = false) MultipartFile image){
+        return propertyService.createProperty(propertyRequest, image);
     }
 
     @GetMapping("/get-properties")

@@ -18,8 +18,19 @@ public class Property {
     private String address;
     private Double pricePerNight;
 
+    @Column(nullable = true)
+    private String pictureFileName;
+
     @ManyToOne
     @JoinColumn(name = "host_id", nullable = false)
     private User host;
+
+    public String getImageUrl() {
+        if (this.pictureFileName != null) {
+            // Combine your server address with the file name
+            return "http://localhost:8080/uploads/" + this.pictureFileName;
+        }
+        return null;
+    }
 
 }

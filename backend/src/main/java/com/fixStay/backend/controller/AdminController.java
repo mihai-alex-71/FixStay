@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 //@RequestMapping("/admin") s1 change
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 
 public class AdminController {
 
