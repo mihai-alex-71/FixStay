@@ -364,7 +364,8 @@
 
     async function approveProvider(id) {
         await fetch(`http://localhost:8080/api/admin/providers/${id}/approve`, {
-            method: "PUT"
+            //method: "PUT"
+            method: "POST"
         });
 
         loadPendingProviders();
