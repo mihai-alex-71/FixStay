@@ -5,6 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FixStay – Provider Dashboard</title>
     <link rel="stylesheet" href="style/style.css">
+    <style>
+        .available-section-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .available-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            padding: 1.25rem 1.5rem 1.5rem;
+        }
+
+        .available-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 1.25rem 1rem 1rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            text-align: center;
+        }
+
+        .available-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .available-card-media {
+            width: 92px;
+            height: 92px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .available-card-body {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .available-card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .available-card-media svg {
+            width: 34px;
+            height: 34px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .available-card-title {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.25;
+        }
+
+        .available-card-description {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .available-card-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .address-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.34rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .task-empty-state {
+            padding: 1.5rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .active-jobs-list {
+            padding: 0;
+        }
+
+        .apply-task-btn {
+            margin-top: 0.35rem;
+            align-self: center;
+        }
+
+        @media (max-width: 980px) {
+            .available-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .available-grid {
+                padding: 1rem;
+            }
+
+            .available-card {
+                width: 100%;
+            }
+
+            .available-card-media {
+                width: 100%;
+                height: 180px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -122,54 +259,19 @@
                             <path d="M12 12V22"/>
                         </svg>
                     </div>
-                    <div><div class="dash-stat-num">8</div><div class="dash-stat-label">New Offers</div></div>
+                    <div><div class="dash-stat-num" id="availableTaskCount">0</div><div class="dash-stat-label">Available Tasks</div></div>
                 </div>
             </div>
 
             <!-- Available tasks -->
             <div class="dash-panel">
                 <div class="dash-panel-header">
-                    <h3>Available Tasks Near You</h3>
-                    <button class="btn-sm outline">Filter</button>
+                    <h3>Available Tasks</h3>
+                    <span class="available-section-count" id="availableTaskSubtitle">Loading tasks...</span>
                 </div>
-                <div class="task-list">
-                    <div class="task-item">
-                        <div class="task-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"/>
-                                <path d="M7 22V12L17 12V22"/>
-                            </svg>
-                        </div>
-                        <div class="task-info">
-                            <div class="task-title">Leaking pipe – kitchen sink</div>
-                            <div class="task-meta">Bucharest · Plumbing · Posted 20 min ago</div>
-                        </div>
-                        <button class="btn-sm outline" style="flex-shrink:0">Accept</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="task-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
-                            </svg>
-                        </div>
-                        <div class="task-info">
-                            <div class="task-title">Broken socket – bedroom</div>
-                            <div class="task-meta">Bucharest · Electrical · Posted 1h ago</div>
-                        </div>
-                        <button class="btn-sm outline" style="flex-shrink:0">Accept</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="task-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14 14.76V3.5C14 3.10218 13.842 2.72064 13.5607 2.43934C13.2794 2.15804 12.8978 2 12.5 2C12.1022 2 11.7206 2.15804 11.4393 2.43934C11.158 2.72064 11 3.10218 11 3.5V14.76C10.2166 15.1805 9.59475 15.8456 9.22219 16.6512C8.84963 17.4567 8.74845 18.3587 8.93398 19.2272C9.11952 20.0957 9.58184 20.8817 10.2513 21.4641C10.9207 22.0464 11.7561 22.3927 12.635 22.4488C13.5139 22.5049 14.3862 22.2678 15.1181 21.7717C15.85 21.2757 16.4025 20.5476 16.6925 19.6985C16.9826 18.8494 17.0952 17.9256 16.9154 17.0353C16.7356 16.145 16.2722 15.333 15.592 14.712"/>
-                            </svg>
-                        </div>
-                        <div class="task-info">
-                            <div class="task-title">AC not cooling properly</div>
-                            <div class="task-meta">Cluj-Napoca · HVAC · Posted 3h ago</div>
-                        </div>
-                        <button class="btn-sm outline" style="flex-shrink:0">Accept</button>
-                    </div>
+                <div class="available-grid" id="availableTaskGrid"></div>
+                <div class="task-empty-state" id="availableTaskEmpty" style="display:none;">
+                    No available tasks right now.
                 </div>
             </div>
 
@@ -178,34 +280,9 @@
                 <div class="dash-panel-header">
                     <h3>My Active Jobs</h3>
                 </div>
-                <div class="task-list">
-                    <div class="task-item">
-                        <div class="task-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M8 14S9.5 16 12 16S16 14 16 14"/>
-                                <path d="M9 9H9.01"/><path d="M15 9H15.01"/>
-                            </svg>
-                        </div>
-                        <div class="task-info">
-                            <div class="task-title">Deep cleaning – Beach House</div>
-                            <div class="task-meta">Constanța · Due today</div>
-                        </div>
-                        <span class="badge progress">In Progress</span>
-                    </div>
-                    <div class="task-item">
-                        <div class="task-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <path d="M9 3V21"/><path d="M15 3V21"/>
-                            </svg>
-                        </div>
-                        <div class="task-info">
-                            <div class="task-title">Window latch repair</div>
-                            <div class="task-meta">Bucharest · Due tomorrow</div>
-                        </div>
-                        <span class="badge new">Accepted</span>
-                    </div>
+                <div class="task-list active-jobs-list" id="activeJobsList"></div>
+                <div class="task-empty-state" id="activeJobsEmpty" style="display:none;">
+                    No active jobs yet.
                 </div>
             </div>
         </main>
@@ -219,6 +296,230 @@
         hamburger.classList.toggle('open');
         navMenu.classList.toggle('open');
     });
+
+    const availableTaskGrid = document.getElementById('availableTaskGrid');
+    const availableTaskEmpty = document.getElementById('availableTaskEmpty');
+    const availableTaskCount = document.getElementById('availableTaskCount');
+    const availableTaskSubtitle = document.getElementById('availableTaskSubtitle');
+    const activeJobsList = document.getElementById('activeJobsList');
+    const activeJobsEmpty = document.getElementById('activeJobsEmpty');
+    const fallbackLeakageImage = 'Images/leakage-with-tools-to-fix.png';
+    const safeFallbackImage = 'Images/UX-Persona-template_page-0001.jpg';
+
+    function getAddressBadgeStyle(address) {
+        const normalized = (address || '').toLowerCase();
+
+        if (normalized.includes('bucharest') || normalized.includes('bucure')) {
+            return 'background: rgba(59, 130, 246, 0.14); color: #1d4ed8;';
+        }
+        if (normalized.includes('cluj')) {
+            return 'background: rgba(139, 92, 246, 0.14); color: #7c3aed;';
+        }
+        if (normalized.includes('constan')) {
+            return 'background: rgba(6, 182, 212, 0.14); color: #0e7490;';
+        }
+        if (normalized.includes('iasi') || normalized.includes('iași')) {
+            return 'background: rgba(34, 197, 94, 0.14); color: #15803d;';
+        }
+        if (normalized.includes('ploi')) {
+            return 'background: rgba(249, 115, 22, 0.16); color: #c2410c;';
+        }
+        if (normalized.includes('bac')) {
+            return 'background: rgba(239, 68, 68, 0.14); color: #b91c1c;';
+        }
+
+        return 'background: rgba(100, 116, 139, 0.14); color: #475569;';
+    }
+
+    function getIssueImage(issue) {
+        const property = issue && issue.property ? issue.property : null;
+        const imageUrl = property && typeof property.imageUrl === 'string' ? property.imageUrl : null;
+        return imageUrl || fallbackLeakageImage;
+    }
+
+    function renderAvailableTaskCard(issue) {
+        const address = issue && issue.property ? issue.property.address : 'Unknown address';
+        const card = document.createElement('article');
+        card.className = 'available-card';
+
+        const media = document.createElement('div');
+        media.className = 'available-card-media';
+
+        const img = document.createElement('img');
+        img.alt = issue.title || 'Maintenance task image';
+        img.src = getIssueImage(issue);
+        img.onerror = () => {
+            if (img.dataset.fallbackApplied === 'true') {
+                img.style.display = 'none';
+                media.innerHTML = `
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"></path>
+                        <path d="M7 22V12L17 12V22"></path>
+                    </svg>`;
+                return;
+            }
+            img.dataset.fallbackApplied = 'true';
+            img.src = safeFallbackImage;
+        };
+
+        media.appendChild(img);
+
+        card.appendChild(media);
+
+        const body = document.createElement('div');
+        body.className = 'available-card-body';
+
+        const badgeWrap = document.createElement('div');
+        badgeWrap.className = 'available-card-badges';
+
+        const addressBadge = document.createElement('span');
+        addressBadge.className = 'address-badge';
+        addressBadge.textContent = address;
+        addressBadge.setAttribute('style', getAddressBadgeStyle(address));
+
+        badgeWrap.appendChild(addressBadge);
+
+        const title = document.createElement('h4');
+        title.className = 'available-card-title';
+        title.textContent = issue.title || 'Untitled issue';
+
+        const description = document.createElement('p');
+        description.className = 'available-card-description';
+        description.textContent = issue.description || 'No description provided.';
+
+        const applyButton = document.createElement('button');
+        applyButton.className = 'btn-sm outline apply-task-btn';
+        applyButton.type = 'button';
+        applyButton.textContent = 'Apply for Task';
+        applyButton.addEventListener('click', async () => {
+            const providerEmail = localStorage.getItem('email');
+            if (!providerEmail) {
+                alert('Please log in again before applying for a task.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/issues/service-apply/${issue.id}?email=${encodeURIComponent(providerEmail)}`, {
+                    method: 'POST'
+                });
+                const message = await response.text();
+                alert(message);
+                if (response.ok) {
+                    renderAvailableTasks();
+                    renderActiveJobs();
+                }
+            } catch (error) {
+                console.error('Could not apply for task:', error);
+                alert('Could not apply for task. Please try again.');
+            }
+        });
+
+        body.appendChild(badgeWrap);
+        body.appendChild(title);
+        body.appendChild(description);
+        body.appendChild(applyButton);
+
+        card.appendChild(body);
+        return card;
+    }
+
+    function renderActiveJobCard(issue) {
+        const card = document.createElement('div');
+        card.className = 'task-item';
+
+        const iconWrap = document.createElement('div');
+        iconWrap.className = 'task-icon';
+        iconWrap.innerHTML = `
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14S9.5 16 12 16S16 14 16 14"></path>
+                <path d="M9 9H9.01"></path>
+                <path d="M15 9H15.01"></path>
+            </svg>`;
+
+        const info = document.createElement('div');
+        info.className = 'task-info';
+
+        const title = document.createElement('div');
+        title.className = 'task-title';
+        title.textContent = issue.title || 'Active job';
+
+        const meta = document.createElement('div');
+        meta.className = 'task-meta';
+        const city = issue.property && issue.property.address ? issue.property.address : 'Unknown city';
+        meta.textContent = `${city} · Active now`;
+
+        const badge = document.createElement('span');
+        badge.className = 'address-badge';
+        badge.textContent = city;
+        badge.setAttribute('style', getAddressBadgeStyle(city));
+
+        info.appendChild(title);
+        info.appendChild(meta);
+        card.appendChild(iconWrap);
+        card.appendChild(info);
+        card.appendChild(badge);
+        return card;
+    }
+
+    async function renderAvailableTasks() {
+        try {
+            const response = await fetch('http://localhost:8080/api/issues/issue-available');
+            const issues = await response.json();
+
+            availableTaskGrid.innerHTML = '';
+            availableTaskCount.textContent = String(Array.isArray(issues) ? issues.length : 0);
+            availableTaskSubtitle.textContent = `${Array.isArray(issues) ? issues.length : 0} tasks found`;
+
+            if (!Array.isArray(issues) || issues.length === 0) {
+                availableTaskEmpty.style.display = 'block';
+                return;
+            }
+
+            availableTaskEmpty.style.display = 'none';
+            issues.forEach((issue) => {
+                availableTaskGrid.appendChild(renderAvailableTaskCard(issue));
+            });
+        } catch (error) {
+            console.error('Could not load available tasks:', error);
+            availableTaskCount.textContent = '0';
+            availableTaskSubtitle.textContent = 'Unable to load tasks';
+            availableTaskEmpty.style.display = 'block';
+        }
+    }
+
+    async function renderActiveJobs() {
+        const providerEmail = localStorage.getItem('email');
+        if (!providerEmail) {
+            activeJobsEmpty.style.display = 'block';
+            activeJobsEmpty.textContent = 'Please log in to see active jobs.';
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/issues/service-provider/jobs?email=${encodeURIComponent(providerEmail)}`);
+            const jobs = await response.json();
+
+            activeJobsList.innerHTML = '';
+
+            if (!Array.isArray(jobs) || jobs.length === 0) {
+                activeJobsEmpty.style.display = 'block';
+                return;
+            }
+
+            activeJobsEmpty.style.display = 'none';
+            jobs.forEach((job) => {
+                activeJobsList.appendChild(renderActiveJobCard(job));
+            });
+        } catch (error) {
+            console.error('Could not load active jobs:', error);
+            activeJobsEmpty.style.display = 'block';
+            activeJobsEmpty.textContent = 'Could not load active jobs.';
+        }
+    }
+
+    renderAvailableTasks();
+    renderActiveJobs();
 </script>
 </body>
 </html>

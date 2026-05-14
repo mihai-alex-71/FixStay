@@ -328,7 +328,7 @@
                 <div class="dash-panel">
                     <div class="dash-panel-header">
                         <h3>Active Maintenance Tasks</h3>
-                        <!-- Am adaugat un id si un mesaj de empty state -->
+                        <button class="btn-sm outline" id="openAddIssueModal">+ Add New Task</button>
                     </div>
                     <div class="task-list" id="issueList">
                         <!-- Problemele vor fi generate aici din Javascript -->
@@ -395,6 +395,34 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="addIssueModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addIssueTitle">
+            <h4 id="addIssueTitle">Report Maintenance Task</h4>
+            <form id="addIssueForm" class="modal-form">
+                <label>
+                    Title
+                    <input type="text" id="issueTitle" required>
+                </label>
+                <label>
+                    Property (select)
+                    <select id="issueProperty" required>
+                        <option value="" disabled selected>Select property</option>
+                    </select>
+                </label>
+                <label>
+                    Description
+                    <textarea id="issueDescription" rows="4"
+                        style="resize:vertical; padding:10px; border:1px solid #d8e1e7; border-radius:8px;"
+                        required></textarea>
+                </label>
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal secondary" id="cancelAddIssue">Cancel</button>
+                    <button type="submit" class="btn-modal primary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // 1. INITIALIZARE SI VERIFICARE LOGIN
         const firstName = localStorage.getItem('firstName');
@@ -443,9 +471,9 @@
 
                     // Alegem un stil de badge in functie de status
                     let badgeClass = "pending";
-                    if(issue.status === 'OPEN') badgeClass = "progress"; // Cauta provider
-                    if(issue.status === 'IN_PROGRESS') badgeClass = "urgent"; // Providerul lucreaza
-                    if(issue.status === 'RESOLVED') badgeClass = "success"; // Rezolvat
+                    if (issue.status === 'OPEN') badgeClass = "progress"; // Cauta provider
+                    if (issue.status === 'IN_PROGRESS') badgeClass = "urgent"; // Providerul lucreaza
+                    if (issue.status === 'RESOLVED') badgeClass = "success"; // Rezolvat
 
                     // Generam cardul
                     issueItem.innerHTML = `
@@ -492,6 +520,8 @@
                     `http://localhost:8080/api/properties/get-properties?email=${encodeURIComponent(hostEmail)}`
                 );
                 const properties = await response.json();
+                // expose properties for other UI pieces (issue form)
+                window.propertiesData = properties || [];
 
                 propertyList.innerHTML = '';
 
@@ -525,6 +555,9 @@
                 `;
                     propertyList.appendChild(propertyItem);
                 });
+
+                // populate issue property select if modal exists
+                populatePropertySelect();
 
             } catch (error) {
                 console.error('Could not load properties:', error);
@@ -610,13 +643,96 @@
             }
         });
 
+        // --- ISSUE (TASK) FORM HANDLERS ---
+        const openAddIssueModal = document.getElementById('openAddIssueModal');
+        const addIssueModal = document.getElementById('addIssueModal');
+        const cancelAddIssue = document.getElementById('cancelAddIssue');
+        const addIssueForm = document.getElementById('addIssueForm');
+        const issueTitle = document.getElementById('issueTitle');
+        const issueProperty = document.getElementById('issueProperty');
+        const issueDescription = document.getElementById('issueDescription');
+
+        function populatePropertySelect() {
+            if (!issueProperty) return;
+            const props = window.propertiesData || [];
+            issueProperty.innerHTML = '<option value="" disabled selected>Select property</option>';
+            props.forEach(p => {
+                const owner = p.hostEmail || p.ownerEmail || (p.host && p.host.email) || hostEmail;
+                const option = document.createElement('option');
+                option.value = p.id;
+                option.textContent = `${p.name} · ${p.address || ''} (${owner})`;
+                issueProperty.appendChild(option);
+            });
+        }
+
+        function closeIssueModal() {
+            addIssueModal.classList.remove('show');
+            addIssueModal.setAttribute('aria-hidden', 'true');
+            addIssueForm.reset();
+        }
+
+        openAddIssueModal.addEventListener('click', () => {
+            populatePropertySelect();
+            addIssueModal.classList.add('show');
+            addIssueModal.setAttribute('aria-hidden', 'false');
+        });
+
+        cancelAddIssue.addEventListener('click', closeIssueModal);
+
+        addIssueModal.addEventListener('click', (event) => {
+            if (event.target === addIssueModal) {
+                closeIssueModal();
+            }
+        });
+
+        addIssueForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const payload = {
+                title: issueTitle.value.trim(),
+                description: issueDescription.value.trim(),
+                propertyId: Number(issueProperty.value),
+                guestEmail: hostEmail
+            };
+
+            try {
+                const res = await fetch('http://localhost:8080/api/issues/report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const msg = await res.text();
+                alert(msg);
+                if (res.ok) {
+                    closeIssueModal();
+                    await renderIssues();
+                }
+            } catch (err) {
+                console.error('Could not create issue', err);
+                alert('Could not create task. Please try again.');
+            }
+        });
+
         // 4. EXECUTIA LA INCARCAREA PAGINII
         updatePropertyPriceValue();
         renderProperties(); // Incarca casele
         renderIssues();     // Incarca problemele
 
         async function publishIssue(issueId) {
-            alert("Butonul Find Provider a fost apasat pentru problema ID: " + issueId);
+            try {
+                const response = await fetch(
+                    `http://localhost:8080/api/issues/publish/${issueId}?email=${encodeURIComponent(hostEmail)}`,
+                    { method: 'POST' }
+                );
+                const message = await response.text();
+                alert(message);
+                if (response.ok) {
+                    await renderIssues();
+                }
+            } catch (error) {
+                console.error('Could not publish issue:', error);
+                alert('Could not publish issue. Please try again.');
+            }
         }
     </script>
 
