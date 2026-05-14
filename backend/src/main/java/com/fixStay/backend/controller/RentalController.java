@@ -6,6 +6,8 @@ import com.fixStay.backend.repository.PropertyRepository;
 import com.fixStay.backend.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.http.ResponseEntity;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api/rentals")
@@ -19,11 +21,22 @@ public class RentalController {
         this.propertyRepository = propertyRepository;
     }
 
-    // Pt a vedea datele Guest-ului (daca are chirie sau nu)
+//    // Pt a vedea datele Guest-ului (daca are chirie sau nu)
+//    @GetMapping("/guest-info")
+//    public User getGuestInfo(@RequestParam String email) {
+//        return userRepository.findUserByEmailAddress(email)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//    }
+    //s2 fix crash
     @GetMapping("/guest-info")
-    public User getGuestInfo(@RequestParam String email) {
+    public ResponseEntity<?> getGuestInfo(@RequestParam String email) {
+
         return userRepository.findUserByEmailAddress(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() ->
+                        ResponseEntity.status(404)
+                                .body("User not found")
+                );
     }
 
     // Guest-ul apasa "Rent Now"
