@@ -20,7 +20,7 @@ public class AdminSeeder {
                 admin.setFirstName("Super");
                 admin.setLastName("Admin");
                 admin.setRole(Role.ADMIN); // The crucial security role
-                admin.setStatus(Status.APPROVED); // Your friend's new column!
+                admin.setStatus(Status.APPROVED);
 
                 // 3. Hash the password "admin" so the Bouncer can read it
                 admin.setPassword(passwordEncoder.encode("admin"));

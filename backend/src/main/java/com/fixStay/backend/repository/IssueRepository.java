@@ -18,4 +18,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
 
     // Pentru ca Provider-ul sa vada joburile disponibile (status = OPEN)
     List<Issue> findByStatus(IssueStatus status);
+
+    List<Issue> findByProviderEmailAddress(String serviceProviderEmailAddress);
 }

@@ -2,12 +2,7 @@ package com.fixStay.backend.controller;
 
 import com.fixStay.backend.dto.IssueRequest;
 import com.fixStay.backend.model.Issue;
-import com.fixStay.backend.model.IssueStatus;
-import com.fixStay.backend.model.Property;
-import com.fixStay.backend.model.User;
-import com.fixStay.backend.repository.IssueRepository;
-import com.fixStay.backend.repository.PropertyRepository;
-import com.fixStay.backend.repository.UserRepository;
+import com.fixStay.backend.service.IssueService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,44 +12,47 @@ import java.util.List;
 @RequestMapping("/api/issues")
 public class IssueController {
 
-    private final IssueRepository issueRepository;
-    private final UserRepository userRepository;
-    private final PropertyRepository propertyRepository;
+    private final IssueService issueService;
 
-    public IssueController(IssueRepository issueRepository, UserRepository userRepository, PropertyRepository propertyRepository) {
-        this.issueRepository = issueRepository;
-        this.userRepository = userRepository;
-        this.propertyRepository = propertyRepository;
+
+    public IssueController(IssueService issueService) {
+        this.issueService = issueService;
     }
 
-    // GUEST: Creeaza o noua problema
     @PostMapping("/report")
-    public String reportIssue(@RequestBody IssueRequest request) {
-        User guest = userRepository.findUserByEmailAddress(request.getGuestEmail())
-                .orElseThrow(() -> new RuntimeException("Guest not found"));
-
-        Property property = propertyRepository.findById(request.getPropertyId())
-                .orElseThrow(() -> new RuntimeException("Property not found"));
-
-        Issue newIssue = new Issue();
-        newIssue.setTitle(request.getTitle());
-        newIssue.setDescription(request.getDescription());
-        newIssue.setStatus(IssueStatus.PENDING);
-        newIssue.setGuest(guest);
-        newIssue.setProperty(property);
-
-        issueRepository.save(newIssue);
-        return "Issue reported successfully!";
+    public String reportIssue(@RequestBody IssueRequest issueRequest){
+        return  issueService.reportIssue(issueRequest);
     }
 
-    // HOST: Vede toate problemele de la proprietatile lui
     @GetMapping("/host-issues")
-    public List<Issue> getHostIssues(@RequestParam String email) {
-        return issueRepository.findByProperty_Host_EmailAddress(email);
+    public List<Issue> getIssueForHost(@RequestParam String email){
+        return  issueService.getIssueForHost(email);
     }
 
     @GetMapping("/my-reports")
-    public List<Issue> getMyReports(@RequestParam String email) {
-        return issueRepository.findByGuest_EmailAddress(email);
+    public List<Issue> getGuestReports(@RequestParam String email){
+        return issueService.getGuestReports(email);
     }
+
+    @PostMapping("/publish/{id}")
+    public String publishIssue(@PathVariable Long id, @RequestParam String email){
+        return issueService.publishIssue(id, email);
+    }
+
+    @GetMapping("/issue-available")
+    public List<Issue> getAvailableTasks(){
+        return issueService.getAvailableTasks();
+    }
+
+    @PostMapping("/service-apply/{id}")
+    public String assignIssueToServiceProvider(@PathVariable Long id, @RequestParam String email){
+        return issueService.assignIssueToServiceProvider(id, email);
+    }
+
+    //provider active job
+    @GetMapping("service-provider/jobs")
+    public List<Issue> showActiveJobs(@RequestParam String email){
+        return  issueService.getIssueByServiceProvider(email);
+    }
+
 }

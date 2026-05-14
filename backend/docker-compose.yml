@@ -10,6 +10,13 @@ services:
       - "5432:5432"
     volumes:
       - fixstay_data:/var/lib/postgresql/data
+  frontend:
+    image: nginx:alpine
+    container_name: fixstay-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ../:/usr/share/nginx/html
 
 volumes:
   fixstay_data:
