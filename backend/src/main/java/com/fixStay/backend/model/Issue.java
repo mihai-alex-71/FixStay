@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "issues")
 @Getter
@@ -42,4 +44,23 @@ public class Issue {
     @ManyToOne
     @JoinColumn(name = "provider_id")
     private User provider;
+
+    //s3
+    // Proof image uploaded by provider after completion
+    @Column(name = "completion_proof")
+    private String completionProof;
+
+    // Optional completion notes
+    @Column(length = 1000)
+    private String completionNotes;
+
+    // Timestamp when task was completed
+    private LocalDateTime completedAt;
+
+    // Host rating for provider
+    private Integer providerRating;
+
+    // Host review text
+    @Column(length = 1000)
+    private String providerReview;
 }

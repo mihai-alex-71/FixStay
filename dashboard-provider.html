@@ -144,7 +144,6 @@
     </style>
 </head>
 <body>
-
 <header>
     <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
     <nav class="navigation" id="navMenu">
@@ -220,7 +219,7 @@
 
         <main class="dash-content">
             <div class="dash-greeting">
-                <h2>Hello, Mihai</h2>
+                <h2 id="providerGreeting">Hello</h2>
                 <p>You have 2 new task offers available near you.</p>
             </div>
 
@@ -232,7 +231,7 @@
                             <rect x="8" y="2" width="8" height="4" rx="1"/>
                         </svg>
                     </div>
-                    <div><div class="dash-stat-num">2</div><div class="dash-stat-label">Active Jobs</div></div>
+                    <div><div class="dash-stat-num" id="activeJobsCount">0</div><div class="dash-stat-label">Active Jobs</div></div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-icon success">
@@ -241,7 +240,7 @@
                             <path d="M22 4L12 14.01L9 11.01"/>
                         </svg>
                     </div>
-                    <div><div class="dash-stat-num">47</div><div class="dash-stat-label">Completed</div></div>
+                    <div><div class="dash-stat-num" id="completedJobsCount">0</div><div class="dash-stat-label">Completed</div></div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-icon secondary">
@@ -249,7 +248,7 @@
                             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
                         </svg>
                     </div>
-                    <div><div class="dash-stat-num">4.9</div><div class="dash-stat-label">Your Rating</div></div>
+                    <div><div class="dash-stat-num" id="providerRating">0.0</div><div class="dash-stat-label">Your Rating</div></div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-icon primary">
@@ -289,237 +288,317 @@
     </div>
 </div>
 
+
 <script>
-    const hamburger = document.getElementById('hamburger');
-    const navMenu   = document.getElementById('navMenu');
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        navMenu.classList.toggle('open');
-    });
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
 
-    const availableTaskGrid = document.getElementById('availableTaskGrid');
-    const availableTaskEmpty = document.getElementById('availableTaskEmpty');
-    const availableTaskCount = document.getElementById('availableTaskCount');
-    const availableTaskSubtitle = document.getElementById('availableTaskSubtitle');
-    const activeJobsList = document.getElementById('activeJobsList');
-    const activeJobsEmpty = document.getElementById('activeJobsEmpty');
-    const fallbackLeakageImage = 'Images/leakage-with-tools-to-fix.png';
-    const safeFallbackImage = 'Images/UX-Persona-template_page-0001.jpg';
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navMenu.classList.toggle('open');
+});
 
-    function getAddressBadgeStyle(address) {
-        const normalized = (address || '').toLowerCase();
+const availableTaskGrid = document.getElementById('availableTaskGrid');
+const availableTaskEmpty = document.getElementById('availableTaskEmpty');
+const availableTaskCount = document.getElementById('availableTaskCount');
+const availableTaskSubtitle = document.getElementById('availableTaskSubtitle');
 
-        if (normalized.includes('bucharest') || normalized.includes('bucure')) {
-            return 'background: rgba(59, 130, 246, 0.14); color: #1d4ed8;';
-        }
-        if (normalized.includes('cluj')) {
-            return 'background: rgba(139, 92, 246, 0.14); color: #7c3aed;';
-        }
-        if (normalized.includes('constan')) {
-            return 'background: rgba(6, 182, 212, 0.14); color: #0e7490;';
-        }
-        if (normalized.includes('iasi') || normalized.includes('iași')) {
-            return 'background: rgba(34, 197, 94, 0.14); color: #15803d;';
-        }
-        if (normalized.includes('ploi')) {
-            return 'background: rgba(249, 115, 22, 0.16); color: #c2410c;';
-        }
-        if (normalized.includes('bac')) {
-            return 'background: rgba(239, 68, 68, 0.14); color: #b91c1c;';
-        }
+const activeJobsList = document.getElementById('activeJobsList');
+const activeJobsEmpty = document.getElementById('activeJobsEmpty');
 
-        return 'background: rgba(100, 116, 139, 0.14); color: #475569;';
+const activeJobsCount = document.getElementById('activeJobsCount');
+const completedJobsCount = document.getElementById('completedJobsCount');
+const providerRating = document.getElementById('providerRating');
+
+const fallbackLeakageImage = 'Images/leakage-with-tools-to-fix.png';
+const safeFallbackImage = 'Images/UX-Persona-template_page-0001.jpg';
+
+//greeting
+const firstName = localStorage.getItem('firstName') || 'User';
+document.getElementById('providerGreeting').textContent = `Hello, ${firstName}`;
+
+//helpers
+function getAddressBadgeStyle(address) {
+    const normalized = (address || '').toLowerCase();
+
+    if (normalized.includes('bucharest') || normalized.includes('bucure')) {
+        return 'background: rgba(59, 130, 246, 0.14); color: #1d4ed8;';
+    }
+    if (normalized.includes('cluj')) {
+        return 'background: rgba(139, 92, 246, 0.14); color: #7c3aed;';
+    }
+    if (normalized.includes('constan')) {
+        return 'background: rgba(6, 182, 212, 0.14); color: #0e7490;';
+    }
+    if (normalized.includes('iasi') || normalized.includes('iași')) {
+        return 'background: rgba(34, 197, 94, 0.14); color: #15803d;';
+    }
+    if (normalized.includes('ploi')) {
+        return 'background: rgba(249, 115, 22, 0.16); color: #c2410c;';
+    }
+    if (normalized.includes('bac')) {
+        return 'background: rgba(239, 68, 68, 0.14); color: #b91c1c;';
+    }
+    return 'background: rgba(100, 116, 139, 0.14); color: #475569;';
+}
+
+function getIssueImage(issue) {
+    return issue?.property?.imageUrl || fallbackLeakageImage;
+}
+async function renderActiveJobs() {
+    const providerEmail = localStorage.getItem('email');
+
+    if (!providerEmail) {
+        activeJobsEmpty.style.display = 'block';
+        activeJobsEmpty.textContent = 'Please log in to see active jobs.';
+        return;
     }
 
-    function getIssueImage(issue) {
-        const property = issue && issue.property ? issue.property : null;
-        const imageUrl = property && typeof property.imageUrl === 'string' ? property.imageUrl : null;
-        return imageUrl || fallbackLeakageImage;
-    }
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/issues/service-provider/jobs?email=${encodeURIComponent(providerEmail)}`
+        );
 
-    function renderAvailableTaskCard(issue) {
-        const address = issue && issue.property ? issue.property.address : 'Unknown address';
-        const card = document.createElement('article');
-        card.className = 'available-card';
+        if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+        }
 
-        const media = document.createElement('div');
-        media.className = 'available-card-media';
+        const text = await response.text();
 
-        const img = document.createElement('img');
-        img.alt = issue.title || 'Maintenance task image';
-        img.src = getIssueImage(issue);
-        img.onerror = () => {
-            if (img.dataset.fallbackApplied === 'true') {
-                img.style.display = 'none';
-                media.innerHTML = `
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"></path>
-                        <path d="M7 22V12L17 12V22"></path>
-                    </svg>`;
-                return;
-            }
-            img.dataset.fallbackApplied = 'true';
-            img.src = safeFallbackImage;
-        };
-
-        media.appendChild(img);
-
-        card.appendChild(media);
-
-        const body = document.createElement('div');
-        body.className = 'available-card-body';
-
-        const badgeWrap = document.createElement('div');
-        badgeWrap.className = 'available-card-badges';
-
-        const addressBadge = document.createElement('span');
-        addressBadge.className = 'address-badge';
-        addressBadge.textContent = address;
-        addressBadge.setAttribute('style', getAddressBadgeStyle(address));
-
-        badgeWrap.appendChild(addressBadge);
-
-        const title = document.createElement('h4');
-        title.className = 'available-card-title';
-        title.textContent = issue.title || 'Untitled issue';
-
-        const description = document.createElement('p');
-        description.className = 'available-card-description';
-        description.textContent = issue.description || 'No description provided.';
-
-        const applyButton = document.createElement('button');
-        applyButton.className = 'btn-sm outline apply-task-btn';
-        applyButton.type = 'button';
-        applyButton.textContent = 'Apply for Task';
-        applyButton.addEventListener('click', async () => {
-            const providerEmail = localStorage.getItem('email');
-            if (!providerEmail) {
-                alert('Please log in again before applying for a task.');
-                return;
-            }
-
-            try {
-                const response = await fetch(`http://localhost:8080/api/issues/service-apply/${issue.id}?email=${encodeURIComponent(providerEmail)}`, {
-                    method: 'POST'
-                });
-                const message = await response.text();
-                alert(message);
-                if (response.ok) {
-                    renderAvailableTasks();
-                    renderActiveJobs();
-                }
-            } catch (error) {
-                console.error('Could not apply for task:', error);
-                alert('Could not apply for task. Please try again.');
-            }
-        });
-
-        body.appendChild(badgeWrap);
-        body.appendChild(title);
-        body.appendChild(description);
-        body.appendChild(applyButton);
-
-        card.appendChild(body);
-        return card;
-    }
-
-    function renderActiveJobCard(issue) {
-        const card = document.createElement('div');
-        card.className = 'task-item';
-
-        const iconWrap = document.createElement('div');
-        iconWrap.className = 'task-icon';
-        iconWrap.innerHTML = `
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 14S9.5 16 12 16S16 14 16 14"></path>
-                <path d="M9 9H9.01"></path>
-                <path d="M15 9H15.01"></path>
-            </svg>`;
-
-        const info = document.createElement('div');
-        info.className = 'task-info';
-
-        const title = document.createElement('div');
-        title.className = 'task-title';
-        title.textContent = issue.title || 'Active job';
-
-        const meta = document.createElement('div');
-        meta.className = 'task-meta';
-        const city = issue.property && issue.property.address ? issue.property.address : 'Unknown city';
-        meta.textContent = `${city} · Active now`;
-
-        const badge = document.createElement('span');
-        badge.className = 'address-badge';
-        badge.textContent = city;
-        badge.setAttribute('style', getAddressBadgeStyle(city));
-
-        info.appendChild(title);
-        info.appendChild(meta);
-        card.appendChild(iconWrap);
-        card.appendChild(info);
-        card.appendChild(badge);
-        return card;
-    }
-
-    async function renderAvailableTasks() {
+        let jobs = [];
         try {
-            const response = await fetch('http://localhost:8080/api/issues/issue-available');
-            const issues = await response.json();
-
-            availableTaskGrid.innerHTML = '';
-            availableTaskCount.textContent = String(Array.isArray(issues) ? issues.length : 0);
-            availableTaskSubtitle.textContent = `${Array.isArray(issues) ? issues.length : 0} tasks found`;
-
-            if (!Array.isArray(issues) || issues.length === 0) {
-                availableTaskEmpty.style.display = 'block';
-                return;
-            }
-
-            availableTaskEmpty.style.display = 'none';
-            issues.forEach((issue) => {
-                availableTaskGrid.appendChild(renderAvailableTaskCard(issue));
-            });
-        } catch (error) {
-            console.error('Could not load available tasks:', error);
-            availableTaskCount.textContent = '0';
-            availableTaskSubtitle.textContent = 'Unable to load tasks';
-            availableTaskEmpty.style.display = 'block';
+            jobs = JSON.parse(text);
+        } catch (e) {
+            console.error("Invalid JSON from backend:", text);
+            throw new Error("Backend returned invalid JSON");
         }
-    }
 
-    async function renderActiveJobs() {
-        const providerEmail = localStorage.getItem('email');
-        if (!providerEmail) {
+        if (!Array.isArray(jobs)) {
+            throw new Error("Jobs is not an array");
+        }
+
+        activeJobsList.innerHTML = '';
+
+        // NORMALIZE STATUS
+        const activeJobs = jobs.filter(job =>
+            (job.status || "").trim().toUpperCase() === "IN_PROGRESS"
+        );
+
+        const completedJobs = jobs.filter(job =>
+            (job.status || "").trim().toUpperCase() === "COMPLETED"
+        );
+
+        // update stats safely
+        if (activeJobsCount) activeJobsCount.textContent = activeJobs.length;
+        if (completedJobsCount) completedJobsCount.textContent = completedJobs.length;
+
+        // empty state
+        if (activeJobs.length === 0) {
             activeJobsEmpty.style.display = 'block';
-            activeJobsEmpty.textContent = 'Please log in to see active jobs.';
+            activeJobsEmpty.textContent = 'No active jobs yet.';
             return;
         }
 
-        try {
-            const response = await fetch(`http://localhost:8080/api/issues/service-provider/jobs?email=${encodeURIComponent(providerEmail)}`);
-            const jobs = await response.json();
+        activeJobsEmpty.style.display = 'none';
 
-            activeJobsList.innerHTML = '';
+        // render cards (THIS is where buttons come from)
+        activeJobs.forEach(job => {
+            activeJobsList.appendChild(renderActiveJobCard(job));
+        });
 
-            if (!Array.isArray(jobs) || jobs.length === 0) {
-                activeJobsEmpty.style.display = 'block';
-                return;
-            }
-
-            activeJobsEmpty.style.display = 'none';
-            jobs.forEach((job) => {
-                activeJobsList.appendChild(renderActiveJobCard(job));
-            });
-        } catch (error) {
-            console.error('Could not load active jobs:', error);
-            activeJobsEmpty.style.display = 'block';
-            activeJobsEmpty.textContent = 'Could not load active jobs.';
-        }
+    } catch (error) {
+        console.error('Could not load active jobs:', error);
+        activeJobsEmpty.style.display = 'block';
+        activeJobsEmpty.textContent = 'Could not load active jobs.';
     }
+}
 
-    renderAvailableTasks();
-    renderActiveJobs();
+async function renderAvailableTasks() {
+    try {
+        availableTaskSubtitle.textContent = "Loading tasks...";
+
+        const response = await fetch('http://localhost:8080/api/issues/issue-available');
+
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const issues = await response.json();
+
+        availableTaskGrid.innerHTML = '';
+
+        availableTaskCount.textContent = issues.length;
+        availableTaskSubtitle.textContent = `${issues.length} tasks found`;
+
+        if (!issues.length) {
+            availableTaskEmpty.style.display = 'block';
+            return;
+        }
+
+        availableTaskEmpty.style.display = 'none';
+
+        issues.forEach(issue => {
+            const card = document.createElement('article');
+            card.className = 'available-card';
+
+            const media = document.createElement('div');
+            media.className = 'available-card-media';
+
+            const img = document.createElement('img');
+            img.src = getIssueImage(issue);
+            img.onerror = () => img.src = safeFallbackImage;
+
+            media.appendChild(img);
+
+            const body = document.createElement('div');
+            body.className = 'available-card-body';
+
+            const title = document.createElement('h4');
+            title.textContent = issue.title || 'Untitled';
+
+            const desc = document.createElement('p');
+            desc.textContent = issue.description || '';
+
+            const btn = document.createElement('button');
+            btn.className = 'btn-sm outline';
+            btn.textContent = 'Apply';
+
+            btn.onclick = async () => {
+                const email = localStorage.getItem('email');
+                if (!email) return alert("Login required");
+
+                const res = await fetch(
+                    `http://localhost:8080/api/issues/service-apply/${issue.id}?email=${encodeURIComponent(email)}`,
+                    { method: "POST" }
+                );
+
+                alert(await res.text());
+
+                if (res.ok) {
+                    renderAvailableTasks();
+                    renderActiveJobs();
+                }
+            };
+
+            body.appendChild(title);
+            body.appendChild(desc);
+            body.appendChild(btn);
+
+            card.appendChild(media);
+            card.appendChild(body);
+
+            availableTaskGrid.appendChild(card);
+        });
+
+    } catch (err) {
+        console.error(err);
+        availableTaskSubtitle.textContent = "Failed to load tasks";
+        availableTaskEmpty.style.display = 'block';
+    }
+}
+
+function renderActiveJobCard(issue) {
+    const card = document.createElement('div');
+    card.className = 'task-item';
+
+    const iconWrap = document.createElement('div');
+    iconWrap.className = 'task-icon';
+    iconWrap.innerHTML = `
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 14S9.5 16 12 16S16 14 16 14"></path>
+            <path d="M9 9H9.01"></path>
+            <path d="M15 9H15.01"></path>
+        </svg>`;
+
+    const info = document.createElement('div');
+    info.className = 'task-info';
+
+    const title = document.createElement('div');
+    title.className = 'task-title';
+    title.textContent = issue.title || 'Active job';
+
+    const meta = document.createElement('div');
+    meta.className = 'task-meta';
+    meta.textContent = (issue.property?.address || 'Unknown location') + ' · In progress';
+
+    const actions = document.createElement('div');
+    actions.style.display = 'flex';
+    actions.style.gap = '8px';
+    actions.style.marginLeft = 'auto';
+
+    // VIEW BUTTON
+    const viewBtn = document.createElement('button');
+    viewBtn.className = 'btn-sm outline';
+    viewBtn.textContent = 'View';
+    viewBtn.onclick = () => {
+        alert(issue.description || 'No details available');
+    };
+
+    // COMPLETE BUTTON
+    const completeBtn = document.createElement('button');
+    completeBtn.className = 'btn-sm';
+    completeBtn.textContent = 'Complete';
+
+    completeBtn.onclick = () => {
+        const email = localStorage.getItem('email');
+        if (!email) return alert('Login required');
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+
+        fileInput.onchange = async () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const notes = prompt("Add notes (optional)") || "";
+
+            const formData = new FormData();
+            formData.append("proofImage", file);
+            formData.append("notes", notes);
+
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/issues/complete/${issue.id}?email=${encodeURIComponent(email)}`,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+                alert(await res.text());
+
+                if (res.ok) {
+                    renderActiveJobs();
+                    renderAvailableTasks();
+                }
+
+            } catch (e) {
+                console.error(e);
+                alert("Failed to complete job");
+            }
+        };
+
+        fileInput.click();
+    };
+
+    actions.appendChild(viewBtn);
+    actions.appendChild(completeBtn);
+
+    info.appendChild(title);
+    info.appendChild(meta);
+
+    card.appendChild(iconWrap);
+    card.appendChild(info);
+    card.appendChild(actions);
+
+    return card;
+}
+
+
+//INIT
+renderAvailableTasks();
+renderActiveJobs();
+
 </script>
 </body>
 </html>
