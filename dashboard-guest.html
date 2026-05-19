@@ -10,346 +10,200 @@
 
 <body>
 
-    <header>
-        <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
-        <nav class="navigation" id="navMenu">
-            <a href="index.html">Home</a>
-            <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
-        </nav>
-        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-    </header>
+<header>
+    <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
+    <nav class="navigation" id="navMenu">
+        <a href="index.html">Home</a>
+        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+    </nav>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</header>
 
-    <div class="dashboard-page">
-        <div class="dash-layout">
+<div class="dashboard-page">
+    <div class="dash-layout">
 
-            <!-- SIDEBAR -->
-            <aside class="sidebar">
-                <span class="sidebar-label">Tenant Menu</span>
-                <a class="sidebar-item active" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
-                    </svg>
-                    Overview
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" />
-                        <path d="M9 22V12H15V22" />
-                    </svg>
-                    My Rental
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10.29 3.86L1.82 18C1.64537 18.3024 1.55297 18.6453 1.55199 18.9945C1.55101 19.3437 1.64149 19.6871 1.81442 19.9905C1.98735 20.2939 2.23673 20.5467 2.53771 20.7239C2.83869 20.901 3.18109 20.9962 3.53 21H20.47C20.8189 20.9962 21.1613 20.901 21.4623 20.7239C21.7633 20.5467 22.0127 20.2939 22.1856 19.9905C22.3585 19.6871 22.449 19.3437 22.448 18.9945C22.447 18.6453 22.3546 18.3024 22.18 18L13.71 3.86C13.5317 3.56611 13.2807 3.32312 12.9812 3.15448C12.6817 2.98585 12.3438 2.89725 12 2.89725C11.6562 2.89725 11.3183 2.98585 11.0188 3.15448C10.7193 3.32312 10.4683 3.56611 10.29 3.86Z" />
-                        <path d="M12 9V13" />
-                        <path d="M12 17H12.01" />
-                    </svg>
-                    Report Issue
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" />
-                    </svg>
-                    Messages
-                </a>
-                <br>
-                <span class="sidebar-label">Account</span>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                    Profile
-                </a>
-                <a class="sidebar-item" href="login.html">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" />
-                        <path d="M16 17L21 12L16 7" />
-                        <path d="M21 12H9" />
-                    </svg>
-                    Logout
-                </a>
-            </aside>
+        <aside class="sidebar">
+            <span class="sidebar-label">Tenant Menu</span>
+            <a class="sidebar-item active" href="#">Overview</a>
+            <a class="sidebar-item" href="#">My Rental</a>
+            <a class="sidebar-item" href="#">Report Issue</a>
+            <a class="sidebar-item" href="#">Messages</a>
+            <br>
+            <span class="sidebar-label">Account</span>
+            <a class="sidebar-item" href="#">Profile</a>
+            <a class="sidebar-item" href="login.html">Logout</a>
+        </aside>
 
-            <!-- MAIN -->
-            <main class="dash-content">
+        <main class="dash-content">
 
-                <!-- SECTIUNEA 1: CATALOG (Se vede doar daca NU are chirie) -->
-                <div id="catalogSection" style="display: none;">
-                    <div class="dash-greeting">
-                        <h2>Explore Properties</h2>
-                        <p>Find your perfect stay from our available rentals.</p>
-                    </div>
+            <div id="catalogSection" style="display: none;">
+                <div class="dash-greeting">
+                    <h2>Explore Properties</h2>
+                    <p>Find your perfect stay from our available rentals.</p>
+                </div>
+                <div id="propertiesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;"></div>
+            </div>
 
-                    <!-- Aici vom genera cardurile cu case din Javascript -->
-                    <div id="propertiesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-                        <!-- Cardurile vor fi inserate aici automat -->
-                    </div>
+            <div id="activeRentalSection" style="display: none;">
+                <div class="dash-greeting">
+                    <h2>Welcome back!</h2>
+                    <p>Manage your current rental seamlessly.</p>
                 </div>
 
-
-                <!-- SECTIUNEA 2: DASHBOARD CHIRIAS (Se vede doar daca ARE chirie) -->
-                <div id="activeRentalSection" style="display: none;">
-                    <div class="dash-greeting">
-                        <h2>Welcome back!</h2>
-                        <p>Manage your current rental seamlessly.</p>
+                <div class="dash-panel" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem; color: white; padding: 2rem; text-align: center;">
+                    <h3>Need to Report an Issue?</h3>
+                    <div id="initialReportView">
+                        <p style="opacity: 0.9; margin-bottom: 1.5rem;">Water leak? Broken appliance? Let your landlord know instantly.</p>
+                        <button class="btn-white" onclick="showReportForm()" style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Report Issue Now</button>
                     </div>
-
-                    <!-- Aici pui codul vechi cu "Quick Action Card" (Report Issue) pe care l-am facut mai devreme -->
-                    <div class="dash-panel" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem;">
-                        <div style="padding: 2rem; text-align: center; color: white;">
-                            <h3 style="color: white; font-size: 1.5rem; margin-bottom: 1rem;">Need to Report an Issue?</h3>
-
-                            <div id="initialReportView">
-                                <p style="opacity: 0.9; margin-bottom: 1.5rem; font-size: 1.05rem;">Water leak? Broken appliance? Let your landlord know instantly.</p>
-                                <button class="btn-white" onclick="showReportForm()" style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                                    Report Issue Now
-                                </button>
-                            </div>
-
-                            <form id="issueForm" style="display: none; text-align: left; max-width: 500px; margin: 0 auto;">
-                                <input type="text" id="issueTitle" placeholder="Issue Title (e.g., Leaking pipe)" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none;">
-                                <textarea id="issueDescription" placeholder="Describe the exact problem..." required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none; min-height: 100px;"></textarea>
-                                <div style="display: flex; gap: 10px; justify-content: center;">
-                                    <button type="submit" style="background: white; color: #7c3aed; padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send Report</button>
-                                    <button type="button" onclick="hideReportForm()" style="background: transparent; color: white; border: 1px solid white; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">Cancel</button>
-                                </div>
-                            </form>
-                            <div id="myIssuesSection" style="margin-top: 2.5rem; text-align: left; width: 100%;">
-                                <h4 style="color: white; margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px; font-size: 1.1rem;">
-                                    My Support Requests
-                                </h4>
-                                <div id="issuesTrackerList" style="min-height: 50px;">
-                                    <!-- Aici vor apărea problemele raportate -->
-                                </div>
-                            </div>
+                    <form id="issueForm" style="display: none; text-align: left; max-width: 500px; margin: 0 auto;">
+                        <input type="text" id="issueTitle" placeholder="Issue Title" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none;">
+                        <textarea id="issueDescription" placeholder="Describe the problem..." required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none; min-height: 100px;"></textarea>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button type="submit" style="background: white; color: #7c3aed; padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send Report</button>
+                            <button type="button" onclick="hideReportForm()" style="background: transparent; color: white; border: 1px solid white; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">Cancel</button>
                         </div>
+                    </form>
+                    <div id="myIssuesSection" style="margin-top: 2.5rem; text-align: left;">
+                        <h4 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;">My Support Requests</h4>
+                        <div id="issuesTrackerList"></div>
                     </div>
                 </div>
 
-            </main>
-        </div>
+                <div class="dash-panel" style="margin-bottom: 2rem; padding: 20px;">
+                    <h3>Chat with your Host</h3>
+                    <div id="chat-messages" style="height: 300px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; padding: 15px; display: flex; flex-direction: column; gap: 10px;"></div>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="chatInput" placeholder="Type your message here..." style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <button onclick="sendChatMessage()" style="padding: 12px 24px; background-color: #7c3aed; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
     </div>
+</div>
 
-    <script>
-        // --- 1. MENIUL HAMBURGER ---
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            navMenu.classList.toggle('open');
-        });
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navMenu.classList.toggle('open'); });
 
-        // --- 2. VARIABILE GLOBALE ---
-        // Citim emailul EXACT cum a fost salvat de login.html
-        const guestEmail = localStorage.getItem("email");
-        let currentPropertyId = null;
+    const guestEmail = localStorage.getItem("loggedInEmail") || localStorage.getItem("email");
+    let currentPropertyId = null;
+    let currentHostEmail = null;
 
-        // Verificam daca user-ul e logat, altfel il dam afara
-        if (!guestEmail) {
-            window.location.href = "login.html";
-        }
+    if (!guestEmail) { window.location.href = "login.html"; }
 
-        // Cand se incarca pagina, rulam asta DOAR daca avem email
-        document.addEventListener("DOMContentLoaded", () => {
-            if (guestEmail) {
-                checkGuestStatus();
+    document.addEventListener("DOMContentLoaded", () => { if (guestEmail) { checkGuestStatus(); } });
+
+    async function checkGuestStatus() {
+        try {
+            // Întrebăm direct noul endpoint simplu din Java
+            const response = await fetch(`http://localhost:8080/api/rentals/active-host?guestEmail=${guestEmail}`);
+
+            if (response.ok) {
+                const rentalData = await response.json();
+                currentPropertyId = rentalData.propertyId;
+                currentHostEmail = rentalData.hostEmail;
+
+                document.getElementById('activeRentalSection').style.display = 'block';
+                document.getElementById('catalogSection').style.display = 'none';
+
+                loadChat();
+                setInterval(loadChat, 3000); // Live chat la 3 secunde
+                loadMyIssues();
+            } else {
+                document.getElementById('activeRentalSection').style.display = 'none';
+                document.getElementById('catalogSection').style.display = 'block';
+                loadProperties();
             }
-        });
+        } catch (error) {
+            console.error("Error checking guest status", error);
+        }
+    }
 
-        // --- 3. LOGICA PENTRU CATALOG SI INCHIRIERE ---
-        // Cand se incarca pagina, verificam daca omul are chirie
+    async function loadProperties() {
+        try {
+            const response = await fetch('http://localhost:8080/api/properties/all');
+            const properties = await response.json();
+            const grid = document.getElementById('propertiesGrid');
+            grid.innerHTML = '';
+            properties.forEach(prop => {
+                const card = document.createElement('div');
+                card.className = 'dash-panel'; card.style.padding = '15px';
+                card.innerHTML = `
+                        <h3>${prop.name}</h3>
+                        <p>📍 ${prop.address}</p>
+                        <p style="font-weight:bold; color:#7c3aed;">$${prop.pricePerNight} / night</p>
+                        <button onclick="rentProperty(${prop.id})" style="width:100%; background:#7c3aed; color:white; padding:10px; border:none; border-radius:6px; cursor:pointer;">Rent Now</button>
+                    `;
+                grid.appendChild(card);
+            });
+        } catch (error) { console.error(error); }
+    }
 
-        async function checkGuestStatus() {
+    async function rentProperty(propertyId) {
+        const today = new Date().toISOString().split('T')[0];
+        const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        if(confirm("Rent this property?")) {
             try {
-                const response = await fetch(`http://localhost:8080/api/rentals/guest-info?email=${guestEmail}`);
-                const guest = await response.json();
-
-                if (guest.currentProperty !== null) {
-                    // ARE CHIRIE
-                    currentPropertyId = guest.currentProperty.id;
-                    document.getElementById('activeRentalSection').style.display = 'block';
-                    document.getElementById('catalogSection').style.display = 'none';
-
-                    // ADAUGA ASTA: Incarca problemele raportate
-                    loadMyIssues();
-                } else {
-                    // NU ARE CHIRIE
-                    document.getElementById('activeRentalSection').style.display = 'none';
-                    document.getElementById('catalogSection').style.display = 'block';
-                    loadProperties();
-                }
-            } catch (error) {
-                console.error("Error fetching guest info", error);
-            }
-        }
-
-        async function loadProperties() {
-            try {
-                const response = await fetch('http://localhost:8080/api/properties/all');
-                const properties = await response.json();
-                const grid = document.getElementById('propertiesGrid');
-                grid.innerHTML = '';
-
-                properties.forEach(prop => {
-                    const card = document.createElement('div');
-                    card.className = 'dash-panel';
-                    card.style.padding = '15px';
-
-                    card.innerHTML = `
-                    <img src="${prop.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image'}"
-                         alt="${prop.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
-                    <h3 style="margin-bottom: 5px;">${prop.name}</h3>
-                    <p style="color: #666; margin-bottom: 5px;">📍 ${prop.address}</p>
-                    <p style="font-weight: bold; color: #7c3aed; margin-bottom: 15px;">$${prop.pricePerNight} / night</p>
-                    <button onclick="rentProperty(${prop.id})"
-                            style="width: 100%; background: #7c3aed; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">
-                        Rent Now
-                    </button>
-                `;
-                    grid.appendChild(card);
-                });
-            } catch (error) {
-                console.error("Error fetching properties", error);
-            }
-        }
-
-        async function rentProperty(propertyId) {
-            if(confirm("Are you sure you want to rent this property?")) {
-                try {
-                    const response = await fetch(`http://localhost:8080/api/rentals/rent?email=${guestEmail}&propertyId=${propertyId}`, {
-                        method: 'POST'
-                    });
-
-                    if (response.ok) {
-                        alert("Congratulations! You have rented the property.");
-                        window.location.reload();
-                    } else {
-                        alert("Failed to rent property.");
-                    }
-                } catch (error) {
-                    console.error("Error renting property", error);
-                }
-            }
-        }
-
-        // --- 4. LOGICA PENTRU RAPORTAREA PROBLEMELOR (REPORT ISSUE) ---
-        function showReportForm() {
-            document.getElementById('initialReportView').style.display = 'none';
-            document.getElementById('issueForm').style.display = 'block';
-        }
-
-        function hideReportForm() {
-            document.getElementById('initialReportView').style.display = 'block';
-            document.getElementById('issueForm').style.display = 'none';
-            document.getElementById('issueForm').reset();
-        }
-
-        document.getElementById('issueForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const title = document.getElementById('issueTitle').value;
-            const description = document.getElementById('issueDescription').value;
-
-            // Construim pachetul, folosind ID-ul salvat automat mai sus
-            const requestData = {
-                title: title,
-                description: description,
-                guestEmail: guestEmail,
-                propertyId: currentPropertyId
-            };
-
-            try {
-                const response = await fetch('http://localhost:8080/api/issues/report', {
+                const response = await fetch(`http://localhost:8080/api/rentals/rent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestData)
+                    body: JSON.stringify({ guestEmail: guestEmail, propertyId: propertyId, startDate: today, endDate: nextWeek })
                 });
+                if (response.ok) { alert("Success!"); window.location.reload(); }
+                else { const msg = await response.text(); alert(msg); }
+            } catch (error) { console.error(error); }
+        }
+    }
 
-                if (response.ok) {
-                    alert("Awesome! Your issue has been reported to the landlord.");
-                    loadMyIssues();
-                    hideReportForm();
-                } else {
-                    alert("Oops! Something went wrong.");
-                }
-            } catch (error) {
-                console.error("Error communicating with backend:", error);
-                alert("Connection error.");
-            }
+    function showReportForm() { document.getElementById('initialReportView').style.display = 'none'; document.getElementById('issueForm').style.display = 'block'; }
+    function hideReportForm() { document.getElementById('initialReportView').style.display = 'block'; document.getElementById('issueForm').style.display = 'none'; }
+
+    document.getElementById('issueForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const requestData = { title: document.getElementById('issueTitle').value, description: document.getElementById('issueDescription').value, guestEmail: guestEmail, propertyId: currentPropertyId };
+        const response = await fetch('http://localhost:8080/api/issues/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestData) });
+        if (response.ok) { alert("Reported!"); loadMyIssues(); hideReportForm(); }
+    });
+
+    async function loadMyIssues() {
+        const response = await fetch(`http://localhost:8080/api/issues/my-reports?email=${guestEmail}`);
+        const issues = await response.json();
+        const list = document.getElementById('issuesTrackerList'); list.innerHTML = '';
+        if(issues.length === 0) { list.innerHTML = '<p>No requests.</p>'; return; }
+        issues.forEach(issue => {
+            list.innerHTML += `<div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:6px; margin-bottom:5px;"><strong>${issue.title}</strong> - ${issue.status}</div>`;
         });
+    }
 
-        // --- 5. LOGICA PENTRU TRACKING STATUS ---
-        function getStatusDetails(status) {
-            switch (status) {
-                case 'PENDING':
-                    return { text: "Waiting for landlord", color: "#f39c12" }; // Galben
-                case 'OPEN':
-                    return { text: "Searching for provider", color: "#3498db" }; // Albastru
-                case 'IN_PROGRESS':
-                    return { text: "Provider on the way", color: "#9b59b6" }; // Mov
-                case 'RESOLVED':
-                    return { text: "All done!", color: "#2ecc71" }; // Verde
-                default:
-                    return { text: status, color: "#95a5a6" };
-            }
-        }
+    async function loadChat() {
+        if (!guestEmail || !currentHostEmail) return;
+        try {
+            const response = await fetch(`http://localhost:8080/api/messages/conversation?user1=${guestEmail}&user2=${currentHostEmail}`);
+            const messages = await response.json();
+            const chatBox = document.getElementById('chat-messages'); chatBox.innerHTML = "";
+            messages.forEach(msg => {
+                const isMe = msg.sender.emailAddress === guestEmail;
+                const alignment = isMe ? "flex-end" : "flex-start";
+                const bgColor = isMe ? "#7c3aed" : "#e2e8f0";
+                chatBox.innerHTML += `
+                        <div style="align-self: ${alignment}; background:${bgColor}; color:${isMe?'white':'#333'}; padding:10px; border-radius:10px; max-width:70%;">
+                            ${msg.content}
+                        </div>`;
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (e) {}
+    }
 
-        async function loadMyIssues() {
-            console.log("Fetching issues for:", guestEmail); // Debug line
-            try {
-                const response = await fetch(`http://localhost:8080/api/issues/my-reports?email=${guestEmail}`);
-                const issues = await response.json();
-
-                const listContainer = document.getElementById('issuesTrackerList');
-                listContainer.innerHTML = '';
-
-                if (issues.length === 0) {
-                    listContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">No requests yet.</p>';
-                    return;
-                }
-
-                issues.forEach(issue => {
-                    const details = getStatusDetails(issue.status);
-                    const card = document.createElement('div');
-                    card.style.cssText = `
-                        background: rgba(255,255,255,0.08);
-                        padding: 15px;
-                        border-radius: 10px;
-                        margin-bottom: 12px;
-                        border-left: 5px solid ${details.color};
-                        transition: transform 0.2s;
-                    `;
-
-                    card.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
-                                <strong style="color: white; font-size: 1rem; display: block; margin-bottom: 4px;">${issue.title}</strong>
-                                <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin: 0;">${issue.description}</p>
-                            </div>
-                            <span style="color: ${details.color}; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 4px; white-space: nowrap; margin-left: 10px;">
-                                ${details.text}
-                            </span>
-                        </div>
-                    `;
-                    listContainer.appendChild(card);
-                });
-            } catch (error) {
-                console.error("Error loading issues:", error);
-            }
-        }
-
-        // Modificăm listener-ul de submit ca să dea refresh la listă automat după raportare
-        const originalSubmit = document.getElementById('issueForm').onsubmit;
-    </script>
+    async function sendChatMessage() {
+        const input = document.getElementById('chatInput'); if (!input.value.trim() || !currentHostEmail) return;
+        await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: guestEmail, receiverEmail: currentHostEmail, content: input.value }) });
+        input.value = ""; loadChat();
+    }
+    document.getElementById('chatInput').addEventListener('keypress', (e) => { if(e.key==='Enter') sendChatMessage(); });
+</script>
 </body>
-
 </html>

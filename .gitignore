@@ -4,12 +4,8 @@
 *.iws
 *.ipr
 out/
-
 target/
-
 *.log
-
 **/.DS_Store
-
 uploads/*
 !uploads/.gitkeep

@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/properties/**").permitAll()
                         .requestMatchers("/api/rentals/**").permitAll()
                         .requestMatchers("/api/issues/**").permitAll()
+                        .requestMatchers("/api/messages/**").permitAll()
 
                         .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/admin/**").permitAll()

@@ -144,8 +144,7 @@
                 const data = await response.json();
 
                 localStorage.setItem("role", data.role);
-                localStorage.setItem("email", data.emailAddress);
-                localStorage.setItem("firstName", data.firstName);
+                localStorage.setItem("loggedInEmail", document.getElementById('loginEmail').value);
 
                 if (data.role) {
 

@@ -2,6 +2,7 @@ package com.fixStay.backend.service;
 
 import com.fixStay.backend.dto.PropertyRequest;
 import com.fixStay.backend.model.Property;
+import com.fixStay.backend.model.PropertyStatus;
 import com.fixStay.backend.model.User;
 import com.fixStay.backend.repository.PropertyRepository;
 import com.fixStay.backend.repository.UserRepository;
@@ -48,6 +49,10 @@ public class PropertyService {
         prop.setPricePerNight(request.pricePerNight());
         prop.setHost(host);
 
+        prop.setApprovalStatus(PropertyStatus.PENDING);
+        prop.setListed(true);
+        // ----------------------------------
+
         try {
             if(image != null && !image.isEmpty()){
                 String UPLOAD_DIR = "uploads/";
@@ -77,7 +82,17 @@ public class PropertyService {
         return propertyRepository.findAllByHost_EmailAddress(hostEmailAddress);
     }
 
+    // --- METODA MODIFICATĂ: Guestul vede doar proprietățile Aprobate și Listate ---
     public List<Property> showAllProperties() {
-        return propertyRepository.findAll();
+        List<Property> allProps = propertyRepository.findAll();
+        List<Property> visibleProps = new ArrayList<>();
+
+        for (Property p : allProps) {
+            if (p.getApprovalStatus() != null && p.getApprovalStatus() == PropertyStatus.APPROVED && p.isListed()) {
+                visibleProps.add(p);
+            }
+        }
+
+        return visibleProps;
     }
 }

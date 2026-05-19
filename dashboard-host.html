@@ -7,735 +7,165 @@
     <title>FixStay – Host Dashboard</title>
     <link rel="stylesheet" href="style/style.css">
     <style>
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.45);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 16px;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
-        .modal-card {
-            width: 100%;
-            max-width: 460px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-        }
-
-        .modal-card h4 {
-            margin: 0 0 14px;
-        }
-
-        .modal-form {
-            display: grid;
-            gap: 12px;
-        }
-
-        .modal-form label {
-            display: grid;
-            gap: 6px;
-            font-size: 14px;
-            color: #2f3a42;
-        }
-
-        .modal-form input {
-            width: 100%;
-            border: 1px solid #d8e1e7;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 14px;
-        }
-
-        .modal-form select {
-            width: 100%;
-            border: 1px solid #d8e1e7;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 14px;
-            background: #fff;
-        }
-
-        .range-row {
-            display: grid;
-            gap: 8px;
-        }
-
-        .range-row input[type="range"] {
-            width: 100%;
-            accent-color: #7b2cbf;
-        }
-
-        .range-entry-row {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: #5f6b73;
-        }
-
-        .range-entry-row input {
-            width: 110px;
-            text-align: center;
-            border: 1px solid #cdb4db;
-            border-radius: 8px;
-            padding: 8px 10px;
-            font-weight: 700;
-            color: #7b2cbf;
-            background: #f7f0fb;
-        }
-
-        .range-entry-row input:focus {
-            outline: none;
-            border-color: #7b2cbf;
-            box-shadow: 0 0 0 3px rgba(123, 44, 191, 0.15);
-        }
-
-        .range-value {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #5f6b73;
-        }
-
-        .range-value strong {
-            color: #7b2cbf;
-        }
-
-        .property-empty {
-            padding: 14px 16px;
-            border: 1px dashed #d6c6e6;
-            border-radius: 12px;
-            background: #faf7fd;
-            color: #7b2cbf;
-            font-weight: 600;
-        }
-
-        .property-price {
-            margin-top: 4px;
-            font-size: 13px;
-            color: #7b2cbf;
-            font-weight: 700;
-        }
-
-        .property-image {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 6px;
-        }
-
-        .btn-modal {
-            border: none;
-            border-radius: 8px;
-            padding: 10px 14px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-modal.secondary {
-            background: #eef3f6;
-            color: #2f3a42;
-        }
-
-        .btn-modal.primary {
-            background: #7b2cbf;
-            color: #fff;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 16px; }
+        .modal-overlay.show { display: flex; }
+        .modal-card { width: 100%; max-width: 460px; background: #fff; border-radius: 12px; padding: 20px; }
+        .modal-form { display: grid; gap: 12px; }
+        .modal-form input, .modal-form select { width: 100%; border: 1px solid #d8e1e7; border-radius: 8px; padding: 10px; }
+        .property-image { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+        .btn-modal { border: none; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-weight: 600; }
+        .btn-modal.primary { background: #7b2cbf; color: #fff; }
+        .btn-modal.secondary { background: #eef3f6; color: #2f3a42; }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
-        <nav class="navigation" id="navMenu">
-            <a href="index.html">Home</a>
-            <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
-        </nav>
-        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-    </header>
+<header>
+    <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
+    <nav class="navigation" id="navMenu">
+        <a href="index.html">Home</a>
+        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+    </nav>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</header>
 
-    <div class="dashboard-page">
-        <div class="dash-layout">
+<div class="dashboard-page">
+    <div class="dash-layout">
 
-            <!-- SIDEBAR -->
-            <aside class="sidebar">
-                <span class="sidebar-label">Host Menu</span>
-                <a class="sidebar-item active" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
-                    </svg>
-                    Overview
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" />
-                        <path d="M9 22V12H15V22" />
-                    </svg>
-                    My Properties
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M14.7 6.3C15.4 7 15.4 8.1 14.7 8.8L8.8 14.7C8.1 15.4 7 15.4 6.3 14.7C5.6 14 5.6 12.9 6.3 12.2L12.2 6.3C12.9 5.6 14 5.6 14.7 6.3Z" />
-                        <path d="M8.5 10.5L10.5 8.5" />
-                        <path d="M15.5 17.5L13.5 15.5" />
-                        <path d="M6 3L3 6L6 9L9 6L6 3Z" />
-                        <path d="M18 15L15 18L18 21L21 18L18 15Z" />
-                    </svg>
-                    Maintenance Tasks
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 8V12" />
-                        <path d="M12 16H12.01" />
-                    </svg>
-                    New Request
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" />
-                        <path
-                            d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" />
-                    </svg>
-                    Notifications
-                    <span class="badge new" style="margin-left:auto">3</span>
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                    </svg>
-                    Reviews
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 6V12L16 14" />
-                    </svg>
-                    History
-                </a>
-                <br>
-                <span class="sidebar-label">Account</span>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                    Profile
-                </a>
-                <a class="sidebar-item" href="login.html">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" />
-                        <path d="M16 17L21 12L16 7" />
-                        <path d="M21 12H9" />
-                    </svg>
-                    Logout
-                </a>
-            </aside>
+        <aside class="sidebar">
+            <span class="sidebar-label">Host Menu</span>
+            <a class="sidebar-item active" href="#">Overview</a>
+            <a class="sidebar-item" href="#">My Properties</a>
+            <a class="sidebar-item" href="#">Maintenance Tasks</a>
+            <a class="sidebar-item" href="login.html">Logout</a>
+        </aside>
 
-            <!-- MAIN -->
-            <main class="dash-content">
-                <div class="dash-greeting">
-                    <h2 id="hostGreeting"></h2>
-                    <p>Here's what's happening with your properties today.</p>
+        <main class="dash-content">
+            <div class="dash-greeting"><h2 id="hostGreeting"></h2></div>
+
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>Active Maintenance Tasks</h3>
+                    <button class="btn-sm outline" id="openAddIssueModal">+ Add New Task</button>
                 </div>
+                <div class="task-list" id="issueList"></div>
+                <div class="property-empty" id="issueEmpty" style="display: none;">No requests.</div>
+            </div>
 
-                <!-- Stats -->
-                <div class="dash-stats">
-                    <div class="dash-stat">
-                        <div class="dash-stat-icon danger">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" />
-                                <path d="M9 22V12H15V22" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="dash-stat-num" id="propertyCount">0</div>
-                            <div class="dash-stat-label">Properties</div>
-                        </div>
-                    </div>
-                    <div class="dash-stat">
-                        <div class="dash-stat-icon warning">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10.29 3.86L1.82 18C1.64537 18.3024 1.55297 18.6453 1.55199 18.9945C1.55101 19.3437 1.64149 19.6871 1.81442 19.9905C1.98735 20.2939 2.23673 20.5467 2.53771 20.7239C2.83869 20.901 3.18109 20.9962 3.53 21H20.47C20.8189 20.9962 21.1613 20.901 21.4623 20.7239C21.7633 20.5467 22.0127 20.2939 22.1856 19.9905C22.3585 19.6871 22.449 19.3437 22.448 18.9945C22.447 18.6453 22.3546 18.3024 22.18 18L13.71 3.86C13.5317 3.56611 13.2807 3.32312 12.9812 3.15448C12.6817 2.98585 12.3438 2.89725 12 2.89725C11.6562 2.89725 11.3183 2.98585 11.0188 3.15448C10.7193 3.32312 10.4683 3.56611 10.29 3.86Z" />
-                                <path d="M12 9V13" />
-                                <path d="M12 17H12.01" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="dash-stat-num">5</div>
-                            <div class="dash-stat-label">Open Tasks</div>
-                        </div>
-                    </div>
-                    <div class="dash-stat">
-                        <div class="dash-stat-icon success">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" />
-                                <path d="M22 4L12 14.01L9 11.01" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="dash-stat-num">12</div>
-                            <div class="dash-stat-label">Completed</div>
-                        </div>
-                    </div>
-                    <div class="dash-stat">
-                        <div class="dash-stat-icon secondary">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="dash-stat-num">4.8</div>
-                            <div class="dash-stat-label">Avg. Rating Given</div>
-                        </div>
-                    </div>
+            <div class="dash-panel">
+                <div class="dash-panel-header">
+                    <h3>My Properties</h3>
+                    <button class="btn-sm outline" id="openAddPropertyModal">+ Add Property</button>
                 </div>
+                <div class="task-list" id="propertyList"></div>
+                <div class="property-empty" id="propertyEmpty">No properties added.</div>
+            </div>
+        </main>
+    </div>
+</div>
 
-                <!-- Active Tasks -->
-                <div class="dash-panel">
-                    <div class="dash-panel-header">
-                        <h3>Active Maintenance Tasks</h3>
-                        <button class="btn-sm outline" id="openAddIssueModal">+ Add New Task</button>
-                    </div>
-                    <div class="task-list" id="issueList">
-                        <!-- Problemele vor fi generate aici din Javascript -->
-                    </div>
-                    <div class="property-empty" id="issueEmpty" style="display: none;">
-                        No maintenance requests at the moment. All good!
-                    </div>
-                </div>
-
-
-                <!-- Properties -->
-                <div class="dash-panel">
-                    <div class="dash-panel-header">
-                        <h3>My Properties</h3>
-                        <button class="btn-sm outline" id="openAddPropertyModal">+ Add Property</button>
-                    </div>
-                    <div class="task-list" id="propertyList"></div>
-                    <div class="property-empty" id="propertyEmpty">No properties was added yet.</div>
-                </div>
-
-            </main>
+<div class="modal-overlay" id="chatModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; max-width: 500px;">
+        <div style="background: linear-gradient(135deg, #7b2cbf 0%, #5a189a 100%); padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4 id="chatModalTitle" style="margin: 0; color: white;">Chat</h4>
+                <span id="chatPropertySubtitle" style="font-size: 12px; opacity: 0.8;">Conversație</span>
+            </div>
+            <button onclick="closeChatModal()" style="background: none; border: none; color: white; cursor: pointer; font-size: 24px;">&times;</button>
+        </div>
+        <div id="host-chat-messages" style="height: 350px; overflow-y: auto; background-color: #f8f9fa; padding: 20px; display: flex; flex-direction: column; gap: 10px;"></div>
+        <div style="padding: 15px 20px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px;">
+            <input type="text" id="hostChatInput" placeholder="Type a message..." style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+            <button onclick="sendHostChatMessage()" class="btn-modal primary">Send</button>
         </div>
     </div>
+</div>
 
-    <div class="modal-overlay" id="addPropertyModal" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addPropertyTitle">
-            <h4 id="addPropertyTitle">Add New Property</h4>
-            <form id="addPropertyForm" class="modal-form">
-                <label>
-                    Property Name
-                    <input type="text" id="propertyName" required>
-                </label>
-                <label>
-                    Address
-                    <select id="propertyAddress" required>
-                        <option value="" disabled selected>Select address</option>
-                        <option value="Cluj-Napoca">Cluj-Napoca</option>
-                        <option value="Constanța">Constanța</option>
-                        <option value="București">București</option>
-                        <option value="Iași">Iași</option>
-                        <option value="Ploiești">Ploiești</option>
-                        <option value="Bacau">Bacau</option>
-                    </select>
-                </label>
-                <label class="range-row">
-                    <span>Price Per Night</span>
-                    <input type="range" id="propertyPrice" min="10" max="100" step="0.01" value="10" required>
-                    <div class="range-entry-row">
-                        <span>10.00 EUR</span>
-                        <input type="text" id="propertyPriceValue" value="10.00" inputmode="decimal"
-                            aria-label="Price per night value">
-                        <span>100.00 EUR</span>
-                    </div>
-                </label>
-                <label>
-                    Property Image
-                    <input type="file" id="propertyImage" accept="image/*">
-                </label>
-                <div class="modal-actions">
-                    <button type="button" class="btn-modal secondary" id="cancelAddProperty">Cancel</button>
-                    <button type="submit" class="btn-modal primary">Save Property</button>
-                </div>
-            </form>
-        </div>
+<div class="modal-overlay" id="addPropertyModal" aria-hidden="true">
+    <div class="modal-card">
+        <h4>Add Property</h4>
+        <form id="addPropertyForm" class="modal-form">
+            <input type="text" id="propertyName" placeholder="Name" required>
+            <select id="propertyAddress" required><option value="Cluj-Napoca">Cluj-Napoca</option></select>
+            <input type="number" id="propertyPrice" value="10" required>
+            <input type="file" id="propertyImage">
+            <button type="submit" class="btn-modal primary">Save</button>
+            <button type="button" class="btn-modal secondary" id="cancelAddProperty">Cancel</button>
+        </form>
     </div>
+</div>
 
-    <div class="modal-overlay" id="addIssueModal" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addIssueTitle">
-            <h4 id="addIssueTitle">Report Maintenance Task</h4>
-            <form id="addIssueForm" class="modal-form">
-                <label>
-                    Title
-                    <input type="text" id="issueTitle" required>
-                </label>
-                <label>
-                    Property (select)
-                    <select id="issueProperty" required>
-                        <option value="" disabled selected>Select property</option>
-                    </select>
-                </label>
-                <label>
-                    Description
-                    <textarea id="issueDescription" rows="4"
-                        style="resize:vertical; padding:10px; border:1px solid #d8e1e7; border-radius:8px;"
-                        required></textarea>
-                </label>
-                <div class="modal-actions">
-                    <button type="button" class="btn-modal secondary" id="cancelAddIssue">Cancel</button>
-                    <button type="submit" class="btn-modal primary">Create Task</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<script>
+    const firstName = localStorage.getItem('firstName');
+    const hostEmail = localStorage.getItem('loggedInEmail') || localStorage.getItem('email');
+    if (!hostEmail) { location.href = 'login.html'; }
+    document.getElementById('hostGreeting').textContent = `Welcome, ${firstName}!`;
 
-    <script>
-        // 1. INITIALIZARE SI VERIFICARE LOGIN
-        const firstName = localStorage.getItem('firstName');
-        const hostEmail = localStorage.getItem('email');
-
-        if (!hostEmail) {
-            location.href = 'login.html'; // kick out if not logged in
-        }
-
-        const greetingEl = document.getElementById('hostGreeting');
-        const hour = new Date().getHours();
-        const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-        if (greetingEl) {
-            greetingEl.textContent = `${greeting}, ${firstName}!`;
-        }
-
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            navMenu.classList.toggle('open');
-        });
-
-        // 2. LOGICA PENTRU PROBLEME (ISSUES)
-        const issueList = document.getElementById('issueList');
-        const issueEmpty = document.getElementById('issueEmpty');
-
-        async function renderIssues() {
-            try {
-                // Cerem problemele de la backend pentru acest host
-                const response = await fetch(`http://localhost:8080/api/issues/host-issues?email=${encodeURIComponent(hostEmail)}`);
-                const issues = await response.json();
-
-                issueList.innerHTML = ''; // Curatam lista inainte de a o umple
-
-                if (issues.length === 0) {
-                    issueEmpty.style.display = 'block';
-                    return;
-                }
-
-                issueEmpty.style.display = 'none';
-
-                issues.forEach((issue) => {
-                    const issueItem = document.createElement('div');
-                    issueItem.className = 'task-item';
-
-                    // Alegem un stil de badge in functie de status
-                    let badgeClass = "pending";
-                    if (issue.status === 'OPEN') badgeClass = "progress"; // Cauta provider
-                    if (issue.status === 'IN_PROGRESS') badgeClass = "urgent"; // Providerul lucreaza
-                    if (issue.status === 'RESOLVED') badgeClass = "success"; // Rezolvat
-
-                    // Generam cardul
-                    issueItem.innerHTML = `
-                    <div class="task-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"/>
-                            <path d="M7 22V12L17 12V22"/>
-                        </svg>
-                    </div>
-                    <div class="task-info">
-                        <div class="task-title">${issue.title}</div>
-                        <div class="task-meta">${issue.property.name} · Reported by: ${issue.guest.firstName} ${issue.guest.lastName}</div>
-                        <div style="font-size: 12px; margin-top: 5px; color: #5f6b73;">"${issue.description}"</div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
-                        <span class="badge ${badgeClass}">${issue.status}</span>
-                        ${issue.status === 'PENDING' ? `<button onclick="publishIssue(${issue.id})" class="btn-sm outline" style="font-size: 11px; padding: 4px 8px;">Find Provider</button>` : ''}
-                    </div>
+    async function renderProperties() {
+        const response = await fetch(`http://localhost:8080/api/properties/get-properties?email=${encodeURIComponent(hostEmail)}`);
+        const properties = await response.json();
+        const list = document.getElementById('propertyList'); list.innerHTML = '';
+        if(properties.length===0) return;
+        document.getElementById('propertyEmpty').style.display = 'none';
+        properties.forEach(p => {
+            const item = document.createElement('div'); item.className = 'task-item';
+            item.innerHTML = `
+                    <div class="task-info"><strong>${p.name}</strong> · ${p.address}</div>
+                    <button onclick="openChatWithGuest(${p.id}, '${p.name}')" class="btn-sm outline" style="color:#7b2cbf; border-color:#7b2cbf;">Message Guest</button>
                 `;
-                    issueList.appendChild(issueItem);
-                });
-
-            } catch (error) {
-                console.error('Could not load issues:', error);
-            }
-        }
-
-        // 3. LOGICA PENTRU PROPRIETATI (PROPERTIES)
-        const openAddPropertyModal = document.getElementById('openAddPropertyModal');
-        const addPropertyModal = document.getElementById('addPropertyModal');
-        const cancelAddProperty = document.getElementById('cancelAddProperty');
-        const addPropertyForm = document.getElementById('addPropertyForm');
-        const propertyName = document.getElementById('propertyName');
-        const propertyAddress = document.getElementById('propertyAddress');
-        const propertyPrice = document.getElementById('propertyPrice');
-        const propertyPriceValue = document.getElementById('propertyPriceValue');
-        const propertyImage = document.getElementById('propertyImage');
-        const propertyList = document.getElementById('propertyList');
-        const propertyEmpty = document.getElementById('propertyEmpty');
-
-        async function renderProperties() {
-            try {
-                const response = await fetch(
-                    `http://localhost:8080/api/properties/get-properties?email=${encodeURIComponent(hostEmail)}`
-                );
-                const properties = await response.json();
-                // expose properties for other UI pieces (issue form)
-                window.propertiesData = properties || [];
-
-                propertyList.innerHTML = '';
-
-                if (properties.length === 0) {
-                    propertyEmpty.style.display = 'block';
-                    document.getElementById('propertyCount').textContent = '0';
-                    return;
-                }
-
-                propertyEmpty.style.display = 'none';
-                document.getElementById('propertyCount').textContent = properties.length;
-
-                properties.forEach((property) => {
-                    const propertyItem = document.createElement('div');
-                    propertyItem.className = 'task-item';
-
-                    const imageUrl = property.imageUrl || (property.pictureFileName ?
-                        `http://localhost:8080/uploads/${property.pictureFileName}` :
-                        null);
-
-                    propertyItem.innerHTML = `
-                    <div class="task-icon">
-                        <img src="${imageUrl}" alt="Property Image" class="property-image">
-                    </div>
-                    <div class="task-info">
-                        <div class="task-title">${property.name}</div>
-                        <div class="task-meta">${property.address}</div>
-                        <div class="property-price">${parseFloat(property.pricePerNight).toFixed(2)} EUR</div>
-                    </div>
-                    <span class="badge new">Added</span>
-                `;
-                    propertyList.appendChild(propertyItem);
-                });
-
-                // populate issue property select if modal exists
-                populatePropertySelect();
-
-            } catch (error) {
-                console.error('Could not load properties:', error);
-            }
-        }
-
-        function updatePropertyPriceValue() {
-            propertyPriceValue.value = parseFloat(propertyPrice.value).toFixed(2);
-        }
-
-        function normalizePropertyPriceInput() {
-            const rawValue = propertyPriceValue.value.trim().replace(',', '.');
-            const parsedValue = parseFloat(rawValue);
-
-            if (!Number.isNaN(parsedValue)) {
-                const normalizedValue = Math.min(100, Math.max(10, parsedValue));
-                propertyPrice.value = normalizedValue.toFixed(2);
-                propertyPriceValue.value = normalizedValue.toFixed(2);
-            } else {
-                updatePropertyPriceValue();
-            }
-        }
-
-        propertyPrice.addEventListener('input', updatePropertyPriceValue);
-        propertyPriceValue.addEventListener('input', () => {
-            const parsedValue = parseFloat(propertyPriceValue.value.replace(',', '.'));
-            if (!Number.isNaN(parsedValue) && parsedValue >= 10 && parsedValue <= 100) {
-                propertyPrice.value = parsedValue.toFixed(2);
-            }
+            list.appendChild(item);
         });
-        propertyPriceValue.addEventListener('blur', normalizePropertyPriceInput);
+    }
 
-        function closePropertyModal() {
-            addPropertyModal.classList.remove('show');
-            addPropertyModal.setAttribute('aria-hidden', 'true');
-            propertyImage.value = '';
-        }
+    // --- AUTOMATIZARE COMPLETĂ CHAT (FĂRĂ PROMPT) ---
+    const chatModal = document.getElementById('chatModal');
+    let currentChatGuestEmail = null; let chatRefreshInterval = null;
 
-        openAddPropertyModal.addEventListener('click', () => {
-            addPropertyModal.classList.add('show');
-            addPropertyModal.setAttribute('aria-hidden', 'false');
+    function closeChatModal() { chatModal.classList.remove('show'); if(chatRefreshInterval) clearInterval(chatRefreshInterval); currentChatGuestEmail = null; }
+
+    async function openChatWithGuest(propertyId, propertyName) {
+        try {
+            // Întrebăm direct noul endpoint din Java cine e chiriașul activ. Gata cu prompt()!
+            const response = await fetch(`http://localhost:8080/api/rentals/active-guest?propertyId=${propertyId}`);
+            if (!response.ok) { alert("This property does not have an active guest right now."); return; }
+
+            currentChatGuestEmail = await response.text(); // Primim direct email-ul chiriașului
+
+            document.getElementById('chatModalTitle').textContent = `Chat with Guest`;
+            document.getElementById('chatPropertySubtitle').textContent = propertyName;
+            chatModal.classList.add('show');
+
+            loadHostChat();
+            if (chatRefreshInterval) clearInterval(chatRefreshInterval);
+            chatRefreshInterval = setInterval(loadHostChat, 3000);
+        } catch (e) { alert("Error opening chat."); }
+    }
+
+    async function loadHostChat() {
+        if (!hostEmail || !currentChatGuestEmail) return;
+        const response = await fetch(`http://localhost:8080/api/messages/conversation?user1=${hostEmail}&user2=${currentChatGuestEmail}`);
+        const messages = await response.json();
+        const chatBox = document.getElementById('host-chat-messages'); chatBox.innerHTML = "";
+        messages.forEach(msg => {
+            const isMe = msg.sender.emailAddress === hostEmail;
+            chatBox.innerHTML += `<div style="align-self: ${isMe?'flex-end':'flex-start'}; background:${isMe?'#7b2cbf':'#e2e8f0'}; color:${isMe?'white':'#333'}; padding:10px; border-radius:10px;">${msg.content}</div>`;
         });
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-        cancelAddProperty.addEventListener('click', closePropertyModal);
+    async function sendHostChatMessage() {
+        const input = document.getElementById('hostChatInput'); if(!input.value.trim() || !currentChatGuestEmail) return;
+        await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: hostEmail, receiverEmail: currentChatGuestEmail, content: input.value }) });
+        input.value = ""; loadHostChat();
+    }
 
-        addPropertyModal.addEventListener('click', (event) => {
-            if (event.target === addPropertyModal) {
-                closePropertyModal();
-            }
-        });
+    document.getElementById('hostChatInput').addEventListener('keypress', (e) => { if(e.key==='Enter') sendHostChatMessage(); });
 
-        addPropertyForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            normalizePropertyPriceInput();
+    document.getElementById('openAddPropertyModal').addEventListener('click', () => document.getElementById('addPropertyModal').classList.add('show'));
+    document.getElementById('cancelAddProperty').addEventListener('click', () => document.getElementById('addPropertyModal').classList.remove('show'));
 
-            const formData = new FormData();
-            formData.append('name', propertyName.value);
-            formData.append('address', propertyAddress.value);
-            formData.append('pricePerNight', parseFloat(propertyPrice.value));
-            formData.append('hostEmailAddress', hostEmail);
-            if (propertyImage.files[0]) {
-                formData.append('image', propertyImage.files[0]);
-            }
-
-            try {
-                const response = await fetch('http://localhost:8080/api/properties/create-property', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const responseMessage = await response.text();
-                alert(responseMessage);
-                if (response.ok) {
-                    await renderProperties();
-                    closePropertyModal();
-                    addPropertyForm.reset();
-                    propertyPrice.value = '10.00';
-                    updatePropertyPriceValue();
-                    propertyImage.value = '';
-                }
-            } catch (error) {
-                alert('Could not save property. Please try again.');
-            }
-        });
-
-        // --- ISSUE (TASK) FORM HANDLERS ---
-        const openAddIssueModal = document.getElementById('openAddIssueModal');
-        const addIssueModal = document.getElementById('addIssueModal');
-        const cancelAddIssue = document.getElementById('cancelAddIssue');
-        const addIssueForm = document.getElementById('addIssueForm');
-        const issueTitle = document.getElementById('issueTitle');
-        const issueProperty = document.getElementById('issueProperty');
-        const issueDescription = document.getElementById('issueDescription');
-
-        function populatePropertySelect() {
-            if (!issueProperty) return;
-            const props = window.propertiesData || [];
-            issueProperty.innerHTML = '<option value="" disabled selected>Select property</option>';
-            props.forEach(p => {
-                const owner = p.hostEmail || p.ownerEmail || (p.host && p.host.email) || hostEmail;
-                const option = document.createElement('option');
-                option.value = p.id;
-                option.textContent = `${p.name} · ${p.address || ''} (${owner})`;
-                issueProperty.appendChild(option);
-            });
-        }
-
-        function closeIssueModal() {
-            addIssueModal.classList.remove('show');
-            addIssueModal.setAttribute('aria-hidden', 'true');
-            addIssueForm.reset();
-        }
-
-        openAddIssueModal.addEventListener('click', () => {
-            populatePropertySelect();
-            addIssueModal.classList.add('show');
-            addIssueModal.setAttribute('aria-hidden', 'false');
-        });
-
-        cancelAddIssue.addEventListener('click', closeIssueModal);
-
-        addIssueModal.addEventListener('click', (event) => {
-            if (event.target === addIssueModal) {
-                closeIssueModal();
-            }
-        });
-
-        addIssueForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const payload = {
-                title: issueTitle.value.trim(),
-                description: issueDescription.value.trim(),
-                propertyId: Number(issueProperty.value),
-                guestEmail: hostEmail
-            };
-
-            try {
-                const res = await fetch('http://localhost:8080/api/issues/report', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const msg = await res.text();
-                alert(msg);
-                if (res.ok) {
-                    closeIssueModal();
-                    await renderIssues();
-                }
-            } catch (err) {
-                console.error('Could not create issue', err);
-                alert('Could not create task. Please try again.');
-            }
-        });
-
-        // 4. EXECUTIA LA INCARCAREA PAGINII
-        updatePropertyPriceValue();
-        renderProperties(); // Incarca casele
-        renderIssues();     // Incarca problemele
-
-        async function publishIssue(issueId) {
-            try {
-                const response = await fetch(
-                    `http://localhost:8080/api/issues/publish/${issueId}?email=${encodeURIComponent(hostEmail)}`,
-                    { method: 'POST' }
-                );
-                const message = await response.text();
-                alert(message);
-                if (response.ok) {
-                    await renderIssues();
-                }
-            } catch (error) {
-                console.error('Could not publish issue:', error);
-                alert('Could not publish issue. Please try again.');
-            }
-        }
-    </script>
-
+    renderProperties();
+</script>
 </body>
-
 </html>
