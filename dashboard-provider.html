@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -121,6 +122,90 @@
             align-self: center;
         }
 
+        .filter-shell {
+            position: relative;
+            display: inline-block;
+            z-index: 1000;
+        }
+
+        .filter-popup {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 12px);
+            background: #fff;
+            border: 1px solid #dbe4ee;
+            border-radius: 12px;
+            padding: 16px;
+            width: 220px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            z-index: 1001;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .filter-popup h4 {
+            margin: 0 0 14px 0;
+            font-size: 0.95rem;
+            color: #1f2937;
+        }
+
+        .filter-cities {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .filter-cities label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #475467;
+            font-size: 0.95rem;
+        }
+
+        .filter-cities input[type="checkbox"] {
+            accent-color: #7c3aed;
+            width: 16px;
+            height: 16px;
+        }
+
+        .filter-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 1px solid #2563eb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: #2563eb;
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.16);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .filter-toggle:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+        }
+
+        .available-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .available-section-header h3 {
+            margin: 0;
+        }
+
         @media (max-width: 980px) {
             .available-grid {
                 grid-template-columns: 1fr;
@@ -143,293 +228,396 @@
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
-    <nav class="navigation" id="navMenu">
-        <a href="index.html">Home</a>
-        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
-    </nav>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-</header>
+    <header>
+        <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
+        <nav class="navigation" id="navMenu">
+            <a href="index.html">Home</a>
+            <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
 
-<div class="dashboard-page">
-    <div class="dash-layout">
+    <div class="dashboard-page">
+        <div class="dash-layout">
 
-        <aside class="sidebar">
-            <span class="sidebar-label">Provider Menu</span>
-            <a class="sidebar-item active" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-                </svg>
-                Overview
-            </a>
-            <a class="sidebar-item" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="11" cy="11" r="8"/><path d="M21 21L16.65 16.65"/>
-                </svg>
-                Browse Tasks
-            </a>
-            <a class="sidebar-item" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8"/>
-                    <rect x="8" y="2" width="8" height="4" rx="1"/>
-                </svg>
-                My Jobs
-            </a>
-            <a class="sidebar-item" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"/>
-                    <path d="M17 8L12 3L7 8"/><path d="M12 3V15"/>
-                </svg>
-                Upload Proof
-            </a>
-            <a class="sidebar-item" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"/>
-                    <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"/>
-                </svg>
-                Notifications
-                <span class="badge new" style="margin-left:auto">2</span>
-            </a>
-            <a class="sidebar-item" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                </svg>
-                My Reviews
-            </a>
-            <br>
-            <span class="sidebar-label">Account</span>
-            <a class="sidebar-item" href="#">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-                My Profile
-            </a>
-            <a class="sidebar-item" href="login.html">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"/>
-                    <path d="M16 17L21 12L16 7"/><path d="M21 12H9"/>
-                </svg>
-                Logout
-            </a>
-        </aside>
+            <aside class="sidebar">
+                <span class="sidebar-label">Provider Menu</span>
+                <a class="sidebar-item active" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    Overview
+                </a>
+                <a class="sidebar-item" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="M21 21L16.65 16.65" />
+                    </svg>
+                    Browse Tasks
+                </a>
+                <a class="sidebar-item" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8" />
+                        <rect x="8" y="2" width="8" height="4" rx="1" />
+                    </svg>
+                    My Jobs
+                </a>
+                <a class="sidebar-item" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" />
+                        <path d="M17 8L12 3L7 8" />
+                        <path d="M12 3V15" />
+                    </svg>
+                    Upload Proof
+                </a>
+                <a class="sidebar-item" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" />
+                        <path
+                            d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" />
+                    </svg>
+                    Notifications
+                    <span class="badge new" style="margin-left:auto">2</span>
+                </a>
+                <a class="sidebar-item" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                    </svg>
+                    My Reviews
+                </a>
+                <br>
+                <span class="sidebar-label">Account</span>
+                <a class="sidebar-item" href="#">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    My Profile
+                </a>
+                <a class="sidebar-item" href="login.html">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" />
+                        <path d="M16 17L21 12L16 7" />
+                        <path d="M21 12H9" />
+                    </svg>
+                    Logout
+                </a>
+            </aside>
 
-        <main class="dash-content">
-            <div class="dash-greeting">
-                <h2>Hello, Mihai</h2>
-                <p>You have 2 new task offers available near you.</p>
-            </div>
-
-            <div class="dash-stats">
-                <div class="dash-stat">
-                    <div class="dash-stat-icon warning">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8"/>
-                            <rect x="8" y="2" width="8" height="4" rx="1"/>
-                        </svg>
-                    </div>
-                    <div><div class="dash-stat-num">2</div><div class="dash-stat-label">Active Jobs</div></div>
+            <main class="dash-content">
+                <div class="dash-greeting">
+                    <h2>Hello, Mihai</h2>
+                    <p>You have 2 new task offers available near you.</p>
                 </div>
-                <div class="dash-stat">
-                    <div class="dash-stat-icon success">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999"/>
-                            <path d="M22 4L12 14.01L9 11.01"/>
-                        </svg>
-                    </div>
-                    <div><div class="dash-stat-num">47</div><div class="dash-stat-label">Completed</div></div>
-                </div>
-                <div class="dash-stat">
-                    <div class="dash-stat-icon secondary">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                        </svg>
-                    </div>
-                    <div><div class="dash-stat-num">4.9</div><div class="dash-stat-label">Your Rating</div></div>
-                </div>
-                <div class="dash-stat">
-                    <div class="dash-stat-icon primary">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 16V8C20.9996 7.64927 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64927 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z"/>
-                            <path d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z"/>
-                            <path d="M12 12V22"/>
-                        </svg>
-                    </div>
-                    <div><div class="dash-stat-num" id="availableTaskCount">0</div><div class="dash-stat-label">Available Tasks</div></div>
-                </div>
-            </div>
 
-            <!-- Available tasks -->
-            <div class="dash-panel">
-                <div class="dash-panel-header">
+                <div class="dash-stats">
+                    <div class="dash-stat">
+                        <div class="dash-stat-icon warning">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8" />
+                                <rect x="8" y="2" width="8" height="4" rx="1" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="dash-stat-num" id="activeJobCount">0</div>
+                            <div class="dash-stat-label">Active Jobs</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat">
+                        <div class="dash-stat-icon success">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" />
+                                <path d="M22 4L12 14.01L9 11.01" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="dash-stat-num" id="completedJobCount">0</div>
+                            <div class="dash-stat-label">Completed</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat">
+                        <div class="dash-stat-icon secondary">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="dash-stat-num" id="providerRating">0.0</div>
+                            <div class="dash-stat-label">Your Rating</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat">
+                        <div class="dash-stat-icon primary">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M21 16V8C20.9996 7.64927 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64927 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" />
+                                <path
+                                    d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z" />
+                                <path d="M12 12V22" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="dash-stat-num" id="availableTaskCount">0</div>
+                            <div class="dash-stat-label">Available Tasks</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available tasks -->
+                <div class="available-section-header">
                     <h3>Available Tasks</h3>
-                    <span class="available-section-count" id="availableTaskSubtitle">Loading tasks...</span>
+                    <div class="filter-shell">
+                        <button onclick="toggleFilterPopup()" class="btn-modal filter-toggle" style="padding: 10px 16px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                            Filter Cities
+                        </button>
+                        <div id="filterPopup" class="filter-popup">
+                            <h4>Select Cities</h4>
+                            <div class="filter-cities" id="cityCheckboxes">
+                                <label><input type="checkbox" value="Cluj-Napoca"> Cluj-Napoca</label>
+                                <label><input type="checkbox" value="București"> București</label>
+                                <label><input type="checkbox" value="Iași"> Iași</label>
+                                <label><input type="checkbox" value="Timișoara"> Timișoara</label>
+                                <label><input type="checkbox" value="Constanța"> Constanța</label>
+                                <label><input type="checkbox" value="Brașov"> Brașov</label>
+                            </div>
+                            <button onclick="applyFilter()" class="btn-modal primary" style="width: 100%;">Apply Filter</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="available-grid" id="availableTaskGrid"></div>
-                <div class="task-empty-state" id="availableTaskEmpty" style="display:none;">
-                    No available tasks right now.
+                <div class="dash-panel">
+                    <div class="available-grid" id="availableTaskGrid"></div>
+                    <div class="task-empty-state" id="availableTaskEmpty" style="display:none;">
+                        No available tasks right now.
+                    </div>
                 </div>
-            </div>
 
-            <!-- My jobs -->
-            <div class="dash-panel">
-                <div class="dash-panel-header">
-                    <h3>My Active Jobs</h3>
+                <!-- My jobs -->
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>My Active Jobs</h3>
+                    </div>
+                    <div class="task-list active-jobs-list" id="activeJobsList"></div>
+                    <div class="task-empty-state" id="activeJobsEmpty" style="display:none;">
+                        No active jobs yet.
+                    </div>
                 </div>
-                <div class="task-list active-jobs-list" id="activeJobsList"></div>
-                <div class="task-empty-state" id="activeJobsEmpty" style="display:none;">
-                    No active jobs yet.
-                </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
-</div>
 
-<script>
-    const hamburger = document.getElementById('hamburger');
-    const navMenu   = document.getElementById('navMenu');
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        navMenu.classList.toggle('open');
-    });
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            navMenu.classList.toggle('open');
+        });
 
-    const availableTaskGrid = document.getElementById('availableTaskGrid');
-    const availableTaskEmpty = document.getElementById('availableTaskEmpty');
-    const availableTaskCount = document.getElementById('availableTaskCount');
-    const availableTaskSubtitle = document.getElementById('availableTaskSubtitle');
-    const activeJobsList = document.getElementById('activeJobsList');
-    const activeJobsEmpty = document.getElementById('activeJobsEmpty');
-    const fallbackLeakageImage = 'Images/leakage-with-tools-to-fix.png';
-    const safeFallbackImage = 'Images/UX-Persona-template_page-0001.jpg';
+        const availableTaskGrid = document.getElementById('availableTaskGrid');
+        const availableTaskEmpty = document.getElementById('availableTaskEmpty');
+        const availableTaskCount = document.getElementById('availableTaskCount');
+        const activeJobsList = document.getElementById('activeJobsList');
+        const activeJobsEmpty = document.getElementById('activeJobsEmpty');
+        const activeJobCount = document.getElementById('activeJobCount');
+        const completedJobCount = document.getElementById('completedJobCount');
+        const providerRating = document.getElementById('providerRating');
+        const fallbackLeakageImage = 'Images/leakage-with-tools-to-fix.png';
+        const safeFallbackImage = 'Images/UX-Persona-template_page-0001.jpg';
+        let allAvailableIssues = [];
+        let selectedCities = [];
 
-    function getAddressBadgeStyle(address) {
-        const normalized = (address || '').toLowerCase();
-
-        if (normalized.includes('bucharest') || normalized.includes('bucure')) {
-            return 'background: rgba(59, 130, 246, 0.14); color: #1d4ed8;';
-        }
-        if (normalized.includes('cluj')) {
-            return 'background: rgba(139, 92, 246, 0.14); color: #7c3aed;';
-        }
-        if (normalized.includes('constan')) {
-            return 'background: rgba(6, 182, 212, 0.14); color: #0e7490;';
-        }
-        if (normalized.includes('iasi') || normalized.includes('iași')) {
-            return 'background: rgba(34, 197, 94, 0.14); color: #15803d;';
-        }
-        if (normalized.includes('ploi')) {
-            return 'background: rgba(249, 115, 22, 0.16); color: #c2410c;';
-        }
-        if (normalized.includes('bac')) {
-            return 'background: rgba(239, 68, 68, 0.14); color: #b91c1c;';
+        function getStoredSessionValue(key) {
+            return sessionStorage.getItem(key) || localStorage.getItem(key);
         }
 
-        return 'background: rgba(100, 116, 139, 0.14); color: #475569;';
-    }
+        function getLoggedInProviderEmail() {
+            return getStoredSessionValue('loggedInEmail') || getStoredSessionValue('emailAddress') || getStoredSessionValue('email');
+        }
 
-    function getIssueImage(issue) {
-        const property = issue && issue.property ? issue.property : null;
-        const imageUrl = property && typeof property.imageUrl === 'string' ? property.imageUrl : null;
-        return imageUrl || fallbackLeakageImage;
-    }
+        function getLoggedInFirstName() {
+            return getStoredSessionValue('firstName') || 'Provider';
+        }
 
-    function renderAvailableTaskCard(issue) {
-        const address = issue && issue.property ? issue.property.address : 'Unknown address';
-        const card = document.createElement('article');
-        card.className = 'available-card';
+        function getIssueStatus(issue) {
+            return String(issue && issue.status ? issue.status : '').toUpperCase();
+        }
 
-        const media = document.createElement('div');
-        media.className = 'available-card-media';
+        function getAddressBadgeStyle(address) {
+            const normalized = (address || '').toLowerCase();
 
-        const img = document.createElement('img');
-        img.alt = issue.title || 'Maintenance task image';
-        img.src = getIssueImage(issue);
-        img.onerror = () => {
-            if (img.dataset.fallbackApplied === 'true') {
-                img.style.display = 'none';
-                media.innerHTML = `
+            if (normalized.includes('bucharest') || normalized.includes('bucure')) {
+                return 'background: rgba(59, 130, 246, 0.14); color: #1d4ed8;';
+            }
+            if (normalized.includes('cluj')) {
+                return 'background: rgba(139, 92, 246, 0.14); color: #7c3aed;';
+            }
+            if (normalized.includes('constan')) {
+                return 'background: rgba(6, 182, 212, 0.14); color: #0e7490;';
+            }
+            if (normalized.includes('iasi') || normalized.includes('iași')) {
+                return 'background: rgba(34, 197, 94, 0.14); color: #15803d;';
+            }
+            if (normalized.includes('ploi')) {
+                return 'background: rgba(249, 115, 22, 0.16); color: #c2410c;';
+            }
+            if (normalized.includes('bac')) {
+                return 'background: rgba(239, 68, 68, 0.14); color: #b91c1c;';
+            }
+
+            return 'background: rgba(100, 116, 139, 0.14); color: #475569;';
+        }
+
+        function getIssueImage(issue) {
+            const property = issue && issue.property ? issue.property : null;
+            const imageUrl = property && typeof property.imageUrl === 'string' ? property.imageUrl : null;
+            return imageUrl || fallbackLeakageImage;
+        }
+
+        function getIssueAddress(issue) {
+            return issue && issue.property && issue.property.address ? issue.property.address : 'Unknown address';
+        }
+
+        function toggleFilterPopup() {
+            const popup = document.getElementById('filterPopup');
+            popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function applyFilter() {
+            const checkboxes = document.querySelectorAll('#cityCheckboxes input[type="checkbox"]:checked');
+            selectedCities = Array.from(checkboxes).map(cb => cb.value);
+            document.getElementById('filterPopup').style.display = 'none';
+            renderAvailableTasks();
+        }
+
+        function filterIssuesByCity(issues) {
+            if (!selectedCities.length) {
+                return issues;
+            }
+
+            return issues.filter(issue => {
+                const address = getIssueAddress(issue).toLowerCase();
+                return selectedCities.some(city => address.includes(city.toLowerCase()));
+            });
+        }
+
+        function renderAvailableTaskCard(issue) {
+            const address = issue && issue.property ? issue.property.address : 'Unknown address';
+            const card = document.createElement('article');
+            card.className = 'available-card';
+
+            const media = document.createElement('div');
+            media.className = 'available-card-media';
+
+            const img = document.createElement('img');
+            img.alt = issue.title || 'Maintenance task image';
+            img.src = getIssueImage(issue);
+            img.onerror = () => {
+                if (img.dataset.fallbackApplied === 'true') {
+                    img.style.display = 'none';
+                    media.innerHTML = `
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2.69L13.5 5.74L16.91 6.24L14.45 8.63L15.03 12L12 10.39L8.97 12L9.55 8.63L7.09 6.24L10.5 5.74L12 2.69Z"></path>
                         <path d="M7 22V12L17 12V22"></path>
                     </svg>`;
-                return;
-            }
-            img.dataset.fallbackApplied = 'true';
-            img.src = safeFallbackImage;
-        };
-
-        media.appendChild(img);
-
-        card.appendChild(media);
-
-        const body = document.createElement('div');
-        body.className = 'available-card-body';
-
-        const badgeWrap = document.createElement('div');
-        badgeWrap.className = 'available-card-badges';
-
-        const addressBadge = document.createElement('span');
-        addressBadge.className = 'address-badge';
-        addressBadge.textContent = address;
-        addressBadge.setAttribute('style', getAddressBadgeStyle(address));
-
-        badgeWrap.appendChild(addressBadge);
-
-        const title = document.createElement('h4');
-        title.className = 'available-card-title';
-        title.textContent = issue.title || 'Untitled issue';
-
-        const description = document.createElement('p');
-        description.className = 'available-card-description';
-        description.textContent = issue.description || 'No description provided.';
-
-        const applyButton = document.createElement('button');
-        applyButton.className = 'btn-sm outline apply-task-btn';
-        applyButton.type = 'button';
-        applyButton.textContent = 'Apply for Task';
-        applyButton.addEventListener('click', async () => {
-            const providerEmail = localStorage.getItem('email');
-            if (!providerEmail) {
-                alert('Please log in again before applying for a task.');
-                return;
-            }
-
-            try {
-                const response = await fetch(`http://localhost:8080/api/issues/service-apply/${issue.id}?email=${encodeURIComponent(providerEmail)}`, {
-                    method: 'POST'
-                });
-                const message = await response.text();
-                alert(message);
-                if (response.ok) {
-                    renderAvailableTasks();
-                    renderActiveJobs();
+                    return;
                 }
-            } catch (error) {
-                console.error('Could not apply for task:', error);
-                alert('Could not apply for task. Please try again.');
-            }
-        });
+                img.dataset.fallbackApplied = 'true';
+                img.src = safeFallbackImage;
+            };
 
-        body.appendChild(badgeWrap);
-        body.appendChild(title);
-        body.appendChild(description);
-        body.appendChild(applyButton);
+            media.appendChild(img);
 
-        card.appendChild(body);
-        return card;
-    }
+            card.appendChild(media);
 
-    function renderActiveJobCard(issue) {
-        const card = document.createElement('div');
-        card.className = 'task-item';
+            const body = document.createElement('div');
+            body.className = 'available-card-body';
 
-        const iconWrap = document.createElement('div');
-        iconWrap.className = 'task-icon';
-        iconWrap.innerHTML = `
+            const badgeWrap = document.createElement('div');
+            badgeWrap.className = 'available-card-badges';
+
+            const addressBadge = document.createElement('span');
+            addressBadge.className = 'address-badge';
+            addressBadge.textContent = address;
+            addressBadge.setAttribute('style', getAddressBadgeStyle(address));
+
+            badgeWrap.appendChild(addressBadge);
+
+            const title = document.createElement('h4');
+            title.className = 'available-card-title';
+            title.textContent = issue.title || 'Untitled issue';
+
+            const description = document.createElement('p');
+            description.className = 'available-card-description';
+            description.textContent = issue.description || 'No description provided.';
+
+            const applyButton = document.createElement('button');
+            applyButton.className = 'btn-sm outline apply-task-btn';
+            applyButton.type = 'button';
+            applyButton.textContent = 'Apply for Task';
+            applyButton.addEventListener('click', async () => {
+                const providerEmail = getLoggedInProviderEmail();
+                if (!providerEmail) {
+                    alert('Your session has expired. Please log in again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`http://localhost:8080/api/issues/service-apply/${issue.id}?email=${encodeURIComponent(providerEmail)}`, {
+                        method: 'POST'
+                    });
+                    const message = await response.text();
+                    alert(message);
+                    if (response.ok) {
+                        renderAvailableTasks();
+                        loadProviderJobs()
+                            .then((jobs) => renderActiveJobs(jobs))
+                            .catch((error) => {
+                                console.error('Could not refresh provider jobs after applying:', error);
+                                renderActiveJobs([]);
+                            });
+                    }
+                } catch (error) {
+                    console.error('Could not apply for task:', error);
+                    alert('Could not apply for task. Please try again.');
+                }
+            });
+
+            body.appendChild(badgeWrap);
+            body.appendChild(title);
+            body.appendChild(description);
+            body.appendChild(applyButton);
+
+            card.appendChild(body);
+            return card;
+        }
+
+        function renderActiveJobCard(issue) {
+            const card = document.createElement('div');
+            card.className = 'task-item';
+
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'task-icon';
+            iconWrap.innerHTML = `
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M8 14S9.5 16 12 16S16 14 16 14"></path>
@@ -437,89 +625,139 @@
                 <path d="M15 9H15.01"></path>
             </svg>`;
 
-        const info = document.createElement('div');
-        info.className = 'task-info';
+            const info = document.createElement('div');
+            info.className = 'task-info';
 
-        const title = document.createElement('div');
-        title.className = 'task-title';
-        title.textContent = issue.title || 'Active job';
+            const title = document.createElement('div');
+            title.className = 'task-title';
+            title.textContent = issue.title || 'Active job';
 
-        const meta = document.createElement('div');
-        meta.className = 'task-meta';
-        const city = issue.property && issue.property.address ? issue.property.address : 'Unknown city';
-        meta.textContent = `${city} · Active now`;
+            const meta = document.createElement('div');
+            meta.className = 'task-meta';
+            const city = issue.property && issue.property.address ? issue.property.address : 'Unknown city';
+            meta.textContent = `${city} · Active now`;
 
-        const badge = document.createElement('span');
-        badge.className = 'address-badge';
-        badge.textContent = city;
-        badge.setAttribute('style', getAddressBadgeStyle(city));
+            const badge = document.createElement('span');
+            badge.className = 'address-badge';
+            badge.textContent = city;
+            badge.setAttribute('style', getAddressBadgeStyle(city));
 
-        info.appendChild(title);
-        info.appendChild(meta);
-        card.appendChild(iconWrap);
-        card.appendChild(info);
-        card.appendChild(badge);
-        return card;
-    }
+            info.appendChild(title);
+            info.appendChild(meta);
+            card.appendChild(iconWrap);
+            card.appendChild(info);
+            card.appendChild(badge);
+            return card;
+        }
 
-    async function renderAvailableTasks() {
-        try {
-            const response = await fetch('http://localhost:8080/api/issues/issue-available');
-            const issues = await response.json();
+        function updateProviderStats(jobs) {
+            const providerJobs = Array.isArray(jobs) ? jobs : [];
+            const completedJobs = providerJobs.filter((issue) => getIssueStatus(issue) === 'RESOLVED');
+            const activeJobs = providerJobs.filter((issue) => getIssueStatus(issue) !== 'RESOLVED');
+            const trackedJobs = activeJobs.length + completedJobs.length;
+            const ratingValue = trackedJobs > 0 ? ((completedJobs.length / trackedJobs) * 5).toFixed(1) : '0.0';
 
-            availableTaskGrid.innerHTML = '';
-            availableTaskCount.textContent = String(Array.isArray(issues) ? issues.length : 0);
-            availableTaskSubtitle.textContent = `${Array.isArray(issues) ? issues.length : 0} tasks found`;
+            activeJobCount.textContent = String(activeJobs.length);
+            completedJobCount.textContent = String(completedJobs.length);
+            providerRating.textContent = ratingValue;
 
-            if (!Array.isArray(issues) || issues.length === 0) {
+            return { activeJobs, completedJobs };
+        }
+
+        async function renderAvailableTasks() {
+            try {
+                const filteredIssues = filterIssuesByCity(allAvailableIssues);
+
+                availableTaskGrid.innerHTML = '';
+                availableTaskCount.textContent = String(Array.isArray(filteredIssues) ? filteredIssues.length : 0);
+
+                if (!Array.isArray(filteredIssues) || filteredIssues.length === 0) {
+                    availableTaskEmpty.style.display = 'block';
+                    return;
+                }
+
+                availableTaskEmpty.style.display = 'none';
+                filteredIssues.forEach((issue) => {
+                    availableTaskGrid.appendChild(renderAvailableTaskCard(issue));
+                });
+            } catch (error) {
+                console.error('Could not load available tasks:', error);
+                availableTaskCount.textContent = '0';
                 availableTaskEmpty.style.display = 'block';
-                return;
+            }
+        }
+
+        async function loadProviderJobs() {
+            const providerEmail = getLoggedInProviderEmail();
+            if (!providerEmail) {
+                return [];
             }
 
-            availableTaskEmpty.style.display = 'none';
-            issues.forEach((issue) => {
-                availableTaskGrid.appendChild(renderAvailableTaskCard(issue));
-            });
-        } catch (error) {
-            console.error('Could not load available tasks:', error);
-            availableTaskCount.textContent = '0';
-            availableTaskSubtitle.textContent = 'Unable to load tasks';
-            availableTaskEmpty.style.display = 'block';
-        }
-    }
-
-    async function renderActiveJobs() {
-        const providerEmail = localStorage.getItem('email');
-        if (!providerEmail) {
-            activeJobsEmpty.style.display = 'block';
-            activeJobsEmpty.textContent = 'Please log in to see active jobs.';
-            return;
-        }
-
-        try {
             const response = await fetch(`http://localhost:8080/api/issues/service-provider/jobs?email=${encodeURIComponent(providerEmail)}`);
             const jobs = await response.json();
+            return Array.isArray(jobs) ? jobs : [];
+        }
 
-            activeJobsList.innerHTML = '';
+        async function loadAvailableIssues() {
+            const response = await fetch('http://localhost:8080/api/issues/issue-available');
+            const issues = await response.json();
+            allAvailableIssues = Array.isArray(issues) ? issues : [];
+            await renderAvailableTasks();
+        }
 
-            if (!Array.isArray(jobs) || jobs.length === 0) {
+        async function renderActiveJobs(providerJobs) {
+            const providerEmail = getLoggedInProviderEmail();
+            if (!providerEmail) {
                 activeJobsEmpty.style.display = 'block';
+                activeJobsEmpty.textContent = 'Please log in to see active jobs.';
+                activeJobCount.textContent = '0';
+                completedJobCount.textContent = '0';
+                providerRating.textContent = '0.0';
                 return;
             }
 
-            activeJobsEmpty.style.display = 'none';
-            jobs.forEach((job) => {
-                activeJobsList.appendChild(renderActiveJobCard(job));
-            });
-        } catch (error) {
-            console.error('Could not load active jobs:', error);
-            activeJobsEmpty.style.display = 'block';
-            activeJobsEmpty.textContent = 'Could not load active jobs.';
-        }
-    }
+            try {
+                const jobs = Array.isArray(providerJobs) ? providerJobs : [];
+                const { activeJobs, completedJobs } = updateProviderStats(jobs);
 
-    renderAvailableTasks();
-    renderActiveJobs();
-</script>
+                activeJobsList.innerHTML = '';
+
+                if (jobs.length === 0) {
+                    activeJobsEmpty.style.display = 'block';
+                    return;
+                }
+
+                if (activeJobs.length === 0) {
+                    activeJobsEmpty.style.display = 'block';
+                    activeJobsEmpty.textContent = completedJobs.length > 0
+                        ? 'No active jobs right now. Your completed jobs are reflected in the stats above.'
+                        : 'No active jobs yet.';
+                    return;
+                }
+
+                activeJobsEmpty.style.display = 'none';
+                activeJobs.forEach((job) => {
+                    activeJobsList.appendChild(renderActiveJobCard(job));
+                });
+            } catch (error) {
+                console.error('Could not load active jobs:', error);
+                activeJobsEmpty.style.display = 'block';
+                activeJobsEmpty.textContent = 'Could not load active jobs.';
+            }
+        }
+
+        document.querySelector('.dash-greeting h2').textContent = `Hello, ${getLoggedInFirstName()}`;
+
+        Promise.all([
+            loadAvailableIssues(),
+            loadProviderJobs()
+                .then((jobs) => renderActiveJobs(jobs))
+                .catch((error) => {
+                    console.error('Could not load provider jobs:', error);
+                    renderActiveJobs([]);
+                })
+        ]);
+    </script>
 </body>
+
 </html>

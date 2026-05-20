@@ -143,8 +143,19 @@
 
                 const data = await response.json();
 
-                localStorage.setItem("role", data.role);
-                localStorage.setItem("loggedInEmail", document.getElementById('loginEmail').value);
+                const emailAddress = data.emailAddress || document.getElementById('loginEmail').value.trim();
+
+                sessionStorage.setItem("role", data.role || "");
+                sessionStorage.setItem("loggedInEmail", emailAddress);
+                sessionStorage.setItem("emailAddress", emailAddress);
+
+                localStorage.setItem("role", data.role || "");
+                localStorage.setItem("loggedInEmail", emailAddress);
+                localStorage.setItem("emailAddress", emailAddress);
+                if (data.firstName) {
+                    sessionStorage.setItem("firstName", data.firstName);
+                    localStorage.setItem("firstName", data.firstName);
+                }
 
                 if (data.role) {
 

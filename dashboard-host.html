@@ -7,165 +7,858 @@
     <title>FixStay – Host Dashboard</title>
     <link rel="stylesheet" href="style/style.css">
     <style>
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 16px; }
-        .modal-overlay.show { display: flex; }
-        .modal-card { width: 100%; max-width: 460px; background: #fff; border-radius: 12px; padding: 20px; }
-        .modal-form { display: grid; gap: 12px; }
-        .modal-form input, .modal-form select { width: 100%; border: 1px solid #d8e1e7; border-radius: 8px; padding: 10px; }
-        .property-image { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
-        .btn-modal { border: none; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-weight: 600; }
-        .btn-modal.primary { background: #7b2cbf; color: #fff; }
-        .btn-modal.secondary { background: #eef3f6; color: #2f3a42; }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 16px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 460px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .modal-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .modal-form input,
+        .modal-form select {
+            width: 100%;
+            border: 1px solid #d8e1e7;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .property-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .btn-modal {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-modal.primary {
+            background: #7b2cbf;
+            color: #fff;
+        }
+
+        .btn-modal.secondary {
+            background: #eef3f6;
+            color: #2f3a42;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .price-range {
+            flex: 1;
+            accent-color: #7b2cbf;
+        }
+
+        .price-value {
+            min-width: 64px;
+            text-align: right;
+            font-weight: 700;
+            color: #5a189a;
+        }
+
+        .property-notice {
+            margin: 12px 0 0;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .property-notice.success {
+            background: rgba(22, 163, 74, 0.12);
+            color: #166534;
+            border: 1px solid rgba(22, 163, 74, 0.2);
+        }
+
+        .property-notice.error {
+            background: rgba(220, 38, 38, 0.1);
+            color: #991b1b;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .host-announcement {
+            margin: 0 0 16px;
+        }
+
+        .report-issue-btn {
+            color: #d97706;
+            border-color: #d97706;
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .report-issue-btn:hover {
+            background: rgba(249, 115, 22, 0.12);
+            color: #c2410c;
+            border-color: #ea580c;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.16);
+        }
+
+        .property-status-badge {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+
+        .property-status-badge.pending {
+            background: rgba(245, 158, 11, 0.14);
+            color: #b45309;
+        }
+
+        .property-status-badge.approved {
+            background: rgba(22, 163, 74, 0.14);
+            color: #166534;
+        }
+
+        .property-status-badge.rejected {
+            background: rgba(220, 38, 38, 0.14);
+            color: #991b1b;
+        }
+
+        .issue-row-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .issue-row-badge.in-progress {
+            background: rgba(249, 115, 22, 0.16);
+            color: #c2410c;
+            border: 1px solid rgba(249, 115, 22, 0.24);
+        }
+
+        /* Status badges for host issues */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.01em;
+        }
+
+        .status-badge.open {
+            background: rgba(16, 185, 129, 0.12);
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.18);
+        }
+
+        .status-badge.pending {
+            background: rgba(239, 68, 68, 0.08);
+            color: #991b1b;
+            border: 1px solid rgba(239, 68, 68, 0.12);
+        }
+
+        .status-badge.in_progress {
+            background: rgba(249, 115, 22, 0.10);
+            color: #c2410c;
+            border: 1px solid rgba(249, 115, 22, 0.14);
+        }
+
+        .status-badge.resolved {
+            background: rgba(99, 102, 241, 0.08);
+            color: #3730a3;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+        }
+
+        .property-section {
+            margin-bottom: 1rem;
+        }
+
+        .property-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .property-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 0 0 1.5rem;
+        }
+
+        .property-summary-card {
+            background: #fff;
+            border: 1px solid #dbe4ee;
+            border-radius: 14px;
+            padding: 16px 18px;
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+        }
+
+        .property-summary-label {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .property-summary-value {
+            font-size: 1.8rem;
+            line-height: 1.1;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        .property-summary-value.pending {
+            color: #b45309;
+        }
+
+        .property-summary-value.active {
+            color: #166534;
+        }
+
+        .property-card-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .property-card {
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #dbe4ee;
+            background: #fff;
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+        }
+
+        .property-card-image {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            background: #eef3f6;
+        }
+
+        .property-card-body {
+            padding: 14px 16px 16px;
+        }
+
+        .property-card-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .property-card-meta {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .property-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .property-card-price {
+            font-weight: 800;
+            color: #5b21b6;
+        }
+
+        .property-card.empty-state {
+            padding: 16px;
+            color: #64748b;
+            border-style: dashed;
+            background: #fff;
+        }
     </style>
 </head>
 
 <body>
 
-<header>
-    <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
-    <nav class="navigation" id="navMenu">
-        <a href="index.html">Home</a>
-        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
-    </nav>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-</header>
+    <header>
+        <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
+        <nav class="navigation" id="navMenu">
+            <a href="index.html">Home</a>
+            <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
 
-<div class="dashboard-page">
-    <div class="dash-layout">
+    <div class="dashboard-page">
+        <div class="dash-layout">
 
-        <aside class="sidebar">
-            <span class="sidebar-label">Host Menu</span>
-            <a class="sidebar-item active" href="#">Overview</a>
-            <a class="sidebar-item" href="#">My Properties</a>
-            <a class="sidebar-item" href="#">Maintenance Tasks</a>
-            <a class="sidebar-item" href="login.html">Logout</a>
-        </aside>
+            <aside class="sidebar">
+                <span class="sidebar-label">Host Menu</span>
+                <a class="sidebar-item active" href="#">Overview</a>
+                <a class="sidebar-item" href="#">My Properties</a>
+                <a class="sidebar-item" href="#">Maintenance Tasks</a>
+                <a class="sidebar-item" href="login.html">Logout</a>
+            </aside>
 
-        <main class="dash-content">
-            <div class="dash-greeting"><h2 id="hostGreeting"></h2></div>
-
-            <div class="dash-panel">
-                <div class="dash-panel-header">
-                    <h3>Active Maintenance Tasks</h3>
-                    <button class="btn-sm outline" id="openAddIssueModal">+ Add New Task</button>
+            <main class="dash-content">
+                <div class="dash-greeting">
+                    <h2 id="hostGreeting"></h2>
                 </div>
-                <div class="task-list" id="issueList"></div>
-                <div class="property-empty" id="issueEmpty" style="display: none;">No requests.</div>
-            </div>
 
-            <div class="dash-panel">
-                <div class="dash-panel-header">
-                    <h3>My Properties</h3>
-                    <button class="btn-sm outline" id="openAddPropertyModal">+ Add Property</button>
+                <div id="propertySubmitNotice" class="property-notice host-announcement" style="display: none;"></div>
+
+                <div class="property-summary-grid">
+                    <div class="property-summary-card">
+                        <div class="property-summary-label">All Properties</div>
+                        <div class="property-summary-value" id="allPropertyCount">0</div>
+                    </div>
+                    <div class="property-summary-card">
+                        <div class="property-summary-label">Active Properties</div>
+                        <div class="property-summary-value active" id="activePropertyCountTop">0</div>
+                    </div>
+                    <div class="property-summary-card">
+                        <div class="property-summary-label">Pending Properties</div>
+                        <div class="property-summary-value pending" id="pendingPropertyCountTop">0</div>
+                    </div>
                 </div>
-                <div class="task-list" id="propertyList"></div>
-                <div class="property-empty" id="propertyEmpty">No properties added.</div>
-            </div>
-        </main>
-    </div>
-</div>
 
-<div class="modal-overlay" id="chatModal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; max-width: 500px;">
-        <div style="background: linear-gradient(135deg, #7b2cbf 0%, #5a189a 100%); padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h4 id="chatModalTitle" style="margin: 0; color: white;">Chat</h4>
-                <span id="chatPropertySubtitle" style="font-size: 12px; opacity: 0.8;">Conversație</span>
-            </div>
-            <button onclick="closeChatModal()" style="background: none; border: none; color: white; cursor: pointer; font-size: 24px;">&times;</button>
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>Active Maintenance Tasks</h3>
+                    </div>
+                    <div class="task-list" id="issueList" style="display: flex; flex-direction: column; gap: 10px;">
+                    </div>
+                    <div class="property-card empty-state" id="issueEmpty" style="display: none;">No requests.</div>
+                </div>
+
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>My Properties</h3>
+                        <button class="btn-sm outline" id="openAddPropertyModal">+ Add Property</button>
+                    </div>
+                    <div class="property-section">
+                        <div class="property-card-grid" id="activePropertyList"></div>
+                        <div class="property-card empty-state" id="activePropertyEmpty">No active properties.</div>
+                    </div>
+                </div>
+
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>Pending Properties</h3>
+                    </div>
+                    <div class="property-section">
+                        <div class="property-card-grid" id="pendingPropertyList"></div>
+                        <div class="property-card empty-state" id="pendingPropertyEmpty">No pending properties.</div>
+                    </div>
+                </div>
+
+                <div class="dash-panel">
+                    <div class="dash-panel-header">
+                        <h3>Rejected Properties</h3>
+                    </div>
+                    <div class="property-section">
+                        <div class="property-card-grid" id="rejectedPropertyList"></div>
+                        <div class="property-card empty-state" id="rejectedPropertyEmpty">No rejected properties.</div>
+                    </div>
+                </div>
+            </main>
         </div>
-        <div id="host-chat-messages" style="height: 350px; overflow-y: auto; background-color: #f8f9fa; padding: 20px; display: flex; flex-direction: column; gap: 10px;"></div>
-        <div style="padding: 15px 20px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px;">
-            <input type="text" id="hostChatInput" placeholder="Type a message..." style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
-            <button onclick="sendHostChatMessage()" class="btn-modal primary">Send</button>
+    </div>
+
+    <div class="modal-overlay" id="chatModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true"
+            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; max-width: 500px;">
+            <div
+                style="background: linear-gradient(135deg, #7b2cbf 0%, #5a189a 100%); padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4 id="chatModalTitle" style="margin: 0; color: white;">Chat</h4>
+                    <span id="chatPropertySubtitle" style="font-size: 12px; opacity: 0.8;">Conversație</span>
+                </div>
+                <button onclick="closeChatModal()"
+                    style="background: none; border: none; color: white; cursor: pointer; font-size: 24px;">&times;</button>
+            </div>
+            <div id="host-chat-messages"
+                style="height: 350px; overflow-y: auto; background-color: #f8f9fa; padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+            </div>
+            <div
+                style="padding: 15px 20px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px;">
+                <input type="text" id="hostChatInput" placeholder="Type a message..."
+                    style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                <button onclick="sendHostChatMessage()" class="btn-modal primary">Send</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal-overlay" id="addPropertyModal" aria-hidden="true">
-    <div class="modal-card">
-        <h4>Add Property</h4>
-        <form id="addPropertyForm" class="modal-form">
-            <input type="text" id="propertyName" placeholder="Name" required>
-            <select id="propertyAddress" required><option value="Cluj-Napoca">Cluj-Napoca</option></select>
-            <input type="number" id="propertyPrice" value="10" required>
-            <input type="file" id="propertyImage">
-            <button type="submit" class="btn-modal primary">Save</button>
-            <button type="button" class="btn-modal secondary" id="cancelAddProperty">Cancel</button>
-        </form>
+    <div class="modal-overlay" id="addPropertyModal" aria-hidden="true">
+        <div class="modal-card">
+            <h4>Add Property</h4>
+            <form id="addPropertyForm" class="modal-form">
+                <input type="text" id="propertyName" placeholder="Name" required>
+                <select id="propertyAddress" required>
+                    <option value="Cluj-Napoca">Cluj-Napoca</option>
+                    <option value="București">București</option>
+                    <option value="Iași">Iași</option>
+                    <option value="Timișoara">Timișoara</option>
+                    <option value="Constanța">Constanța</option>
+                    <option value="Brașov">Brașov</option>
+                </select>
+                <div>
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px; font-size: 0.875rem; color:#475467;">
+                        <span>Price per night</span>
+                        <span id="propertyPriceValue" style="font-weight:700; color:#5a189a;">10</span>
+                    </div>
+                    <div class="price-row">
+                        <input type="range" id="propertyPrice" class="price-range" min="10" max="500" step="5"
+                            value="10" required>
+                        <div class="price-value">EURO</div>
+                    </div>
+                </div>
+                <input type="file" id="propertyImage">
+                <div id="addPropertyStatus" class="property-notice" style="display: none;"></div>
+                <button type="submit" class="btn-modal primary">Save</button>
+                <button type="button" class="btn-modal secondary" id="cancelAddProperty">Cancel</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<script>
-    const firstName = localStorage.getItem('firstName');
-    const hostEmail = localStorage.getItem('loggedInEmail') || localStorage.getItem('email');
-    if (!hostEmail) { location.href = 'login.html'; }
-    document.getElementById('hostGreeting').textContent = `Welcome, ${firstName}!`;
+    <div class="modal-overlay" id="reportIssueModal" aria-hidden="true">
+        <div class="modal-card">
+            <h4>Report Maintenance Issue</h4>
+            <form id="reportIssueForm" class="modal-form">
+                <input type="hidden" id="reportPropertyId">
+                <input type="text" id="reportIssueTitle" placeholder="Issue Title" required>
+                <textarea id="reportIssueDescription" placeholder="Description of the problem..." required rows="4"
+                    style="width:100%; border:1px solid #d8e1e7; border-radius:8px; padding:10px; font-family: inherit;"></textarea>
+                <button type="submit" class="btn-modal primary">Submit Report</button>
+                <button type="button" class="btn-modal secondary"
+                    onclick="document.getElementById('reportIssueModal').classList.remove('show')">Cancel</button>
+            </form>
+        </div>
+    </div>
 
-    async function renderProperties() {
-        const response = await fetch(`http://localhost:8080/api/properties/get-properties?email=${encodeURIComponent(hostEmail)}`);
-        const properties = await response.json();
-        const list = document.getElementById('propertyList'); list.innerHTML = '';
-        if(properties.length===0) return;
-        document.getElementById('propertyEmpty').style.display = 'none';
-        properties.forEach(p => {
-            const item = document.createElement('div'); item.className = 'task-item';
-            item.innerHTML = `
-                    <div class="task-info"><strong>${p.name}</strong> · ${p.address}</div>
-                    <button onclick="openChatWithGuest(${p.id}, '${p.name}')" class="btn-sm outline" style="color:#7b2cbf; border-color:#7b2cbf;">Message Guest</button>
+    <script>
+        function getStoredSessionValue(key) {
+            return sessionStorage.getItem(key) || localStorage.getItem(key);
+        }
+
+        const firstName = getStoredSessionValue('firstName') || 'Host';
+        const hostEmail = getStoredSessionValue('loggedInEmail') || getStoredSessionValue('emailAddress') || getStoredSessionValue('email');
+        if (!hostEmail) { location.href = 'login.html'; }
+        document.getElementById('hostGreeting').textContent = `Welcome, ${firstName}!`;
+
+        function getPropertyImage(property) {
+            return property.imageUrl || 'Images/Gemini_Generated_Image_8umfit8umfit8umf.png';
+        }
+
+        function getCityBadge(address) {
+            if (!address) return '';
+            const city = address.trim().toLowerCase();
+            let color, bgColor, borderColor;
+
+            if (city.includes('bucurești') || city.includes('bucharest') || city.includes('bucuresti')) {
+                color = '#1e3a8a'; bgColor = '#dbeafe'; borderColor = '#bfdbfe';
+            } else if (city.includes('cluj')) {
+                color = '#14532d'; bgColor = '#dcfce7'; borderColor = '#bbf7d0';
+            } else if (city.includes('timișoara') || city.includes('timisoara')) {
+                color = '#7c2d12'; bgColor = '#ffedd5'; borderColor = '#fed7aa';
+            } else if (city.includes('iași') || city.includes('iasi')) {
+                color = '#4c1d95'; bgColor = '#ede9fe'; borderColor = '#ddd6fe';
+            } else if (city.includes('brașov') || city.includes('brasov')) {
+                color = '#831843'; bgColor = '#fce7f3'; borderColor = '#fbcfe8';
+            } else if (city.includes('constanța') || city.includes('constanta')) {
+                color = '#0c4a6e'; bgColor = '#e0f2fe'; borderColor = '#bae6fd';
+            } else {
+                color = '#374151'; bgColor = '#f3f4f6'; borderColor = '#e5e7eb';
+            }
+
+            return `<span style="display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: ${color}; background-color: ${bgColor}; border: 1px solid ${borderColor};">${address}</span>`;
+        }
+
+        function createPropertyItem(property) {
+            const card = document.createElement('div');
+            card.className = 'property-card';
+
+            const statusValue = (property.status || property.approvalStatus || '').toUpperCase();
+            const statusClass = statusValue.toLowerCase();
+            const statusLabel = statusValue === 'PENDING'
+                ? 'Under review'
+                : statusValue === 'APPROVED'
+                    ? 'Active'
+                    : statusValue === 'REJECTED'
+                        ? 'Rejected'
+                        : (statusValue || 'Unknown');
+
+            let actionButton = '';
+            if (statusValue === 'REJECTED') {
+                actionButton = `<button onclick="deleteProperty(${property.id})" class="btn-sm outline" style="color:#dc2626; border-color:#dc2626;">Delete</button>`;
+            } else if (statusValue === 'APPROVED') {
+                actionButton = `
+                    <button class="btn-sm outline chat-btn" style="display:none; color:#7b2cbf; border-color:#7b2cbf;" onclick="openChatWithGuest(${property.id}, '${property.name.replace(/'/g, "\\'")}')">Message Guest</button>
+                    <button class="btn-sm outline report-issue-btn" onclick="openReportIssueModal(${property.id})">Report Issue</button>
                 `;
-            list.appendChild(item);
+            }
+
+            card.innerHTML = `
+                <img class="property-card-image" src="${getPropertyImage(property)}" alt="${property.name}">
+                <div class="property-card-body">
+                    <div class="property-card-title" style="color: #374151;"><span style="color: #6b7280; font-weight: normal; font-size: 0.9rem;">Name:</span> ${property.name}</div>
+                    <div class="property-card-meta" style="margin-bottom:6px; display: flex; align-items: center; gap: 6px;"><span style="color: #6b7280; font-size: 0.9rem;">Address:</span> ${getCityBadge(property.address)}</div>
+                    <div class="property-card-footer">
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <span class="property-status-badge ${statusClass}">${statusLabel}</span>
+                            <span class="property-card-price">${property.pricePerNight ?? 0} EURO / night</span>
+                        </div>
+                        <div style="display:flex; gap:6px;">
+                            ${actionButton}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (statusValue === 'APPROVED') {
+                const chatBtn = card.querySelector('.chat-btn');
+                if (chatBtn) {
+                    fetch(`http://localhost:8080/api/rentals/active-guest?propertyId=${property.id}`)
+                        .then(res => {
+                            if (res.ok) chatBtn.style.display = 'inline-block';
+                        })
+                        .catch(() => { });
+                }
+            }
+
+            return card;
+        }
+
+        function getIssueProviderEmail(issue) {
+            return issue && issue.provider && issue.provider.emailAddress ? issue.provider.emailAddress : '';
+        }
+
+        function getIssueStatusBadge(issue) {
+            if (issue.status === 'IN_PROGRESS') {
+                return '<span class="issue-row-badge in-progress">In progress</span>';
+            }
+
+            return '';
+        }
+
+        async function deleteProperty(id) {
+            if (confirm('Are you sure you want to delete this rejected property?')) {
+                const hostEmail = getStoredSessionValue('loggedInEmail') || getStoredSessionValue('emailAddress') || getStoredSessionValue('email');
+                if (!hostEmail) {
+                    alert('Session expired. Please log in again.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`http://localhost:8080/api/properties/delete-property/${id}?email=${encodeURIComponent(hostEmail)}`, {
+                        method: 'DELETE'
+                    });
+
+                    const message = await response.text();
+
+                    console.log(message);
+                    if (response.ok) {
+                        alert(message);
+                        renderProperties();
+                    } else {
+                        alert(message);
+                    }
+                } catch (e) {
+                    alert('Error deleting property.');
+                }
+            }
+        }
+
+        async function renderProperties() {
+            const response = await fetch(`http://localhost:8080/api/properties/get-properties?email=${encodeURIComponent(hostEmail)}`);
+            const properties = await response.json();
+
+            const pendingList = document.getElementById('pendingPropertyList');
+            const activeList = document.getElementById('activePropertyList');
+            const rejectedList = document.getElementById('rejectedPropertyList');
+
+            const pendingEmpty = document.getElementById('pendingPropertyEmpty');
+            const activeEmpty = document.getElementById('activePropertyEmpty');
+            const rejectedEmpty = document.getElementById('rejectedPropertyEmpty');
+
+            const allCount = document.getElementById('allPropertyCount');
+            const activeCountTop = document.getElementById('activePropertyCountTop');
+            const pendingCountTop = document.getElementById('pendingPropertyCountTop');
+
+            pendingList.innerHTML = '';
+            activeList.innerHTML = '';
+            rejectedList.innerHTML = '';
+
+            const pendingProperties = properties.filter(property => (property.status || property.approvalStatus) === 'PENDING');
+            const activeProperties = properties.filter(property => (property.status || property.approvalStatus) === 'APPROVED');
+            const rejectedProperties = properties.filter(property => (property.status || property.approvalStatus) === 'REJECTED');
+
+            allCount.textContent = properties.length;
+            activeCountTop.textContent = activeProperties.length;
+            pendingCountTop.textContent = pendingProperties.length;
+
+            pendingEmpty.style.display = pendingProperties.length === 0 ? 'block' : 'none';
+            activeEmpty.style.display = activeProperties.length === 0 ? 'block' : 'none';
+            rejectedEmpty.style.display = rejectedProperties.length === 0 ? 'block' : 'none';
+
+            activeProperties.forEach(property => activeList.appendChild(createPropertyItem(property)));
+            pendingProperties.forEach(property => pendingList.appendChild(createPropertyItem(property)));
+            rejectedProperties.forEach(property => rejectedList.appendChild(createPropertyItem(property)));
+        }
+
+        // --- AUTOMATIZARE COMPLETĂ CHAT (FĂRĂ PROMPT) ---
+        const chatModal = document.getElementById('chatModal');
+        let currentChatGuestEmail = null; let chatRefreshInterval = null;
+
+        function closeChatModal() { chatModal.classList.remove('show'); if (chatRefreshInterval) clearInterval(chatRefreshInterval); currentChatGuestEmail = null; }
+
+        async function openChatWithGuest(propertyId, propertyName) {
+            try {
+                // Întrebăm direct noul endpoint din Java cine e chiriașul activ. Gata cu prompt()!
+                const response = await fetch(`http://localhost:8080/api/rentals/active-guest?propertyId=${propertyId}`);
+                if (!response.ok) { alert("This property does not have an active guest right now."); return; }
+
+                currentChatGuestEmail = await response.text(); // Primim direct email-ul chiriașului
+
+                document.getElementById('chatModalTitle').textContent = `Chat with Guest`;
+                document.getElementById('chatPropertySubtitle').textContent = propertyName;
+                chatModal.classList.add('show');
+
+                loadHostChat();
+                if (chatRefreshInterval) clearInterval(chatRefreshInterval);
+                chatRefreshInterval = setInterval(loadHostChat, 3000);
+            } catch (e) { alert("Error opening chat."); }
+        }
+
+        async function loadHostChat() {
+            if (!hostEmail || !currentChatGuestEmail) return;
+            const response = await fetch(`http://localhost:8080/api/messages/conversation?user1=${hostEmail}&user2=${currentChatGuestEmail}`);
+            const messages = await response.json();
+            const chatBox = document.getElementById('host-chat-messages'); chatBox.innerHTML = "";
+            messages.forEach(msg => {
+                const isMe = msg.sender.emailAddress === hostEmail;
+                chatBox.innerHTML += `<div style="align-self: ${isMe ? 'flex-end' : 'flex-start'}; background:${isMe ? '#7b2cbf' : '#e2e8f0'}; color:${isMe ? 'white' : '#333'}; padding:10px; border-radius:10px;">${msg.content}</div>`;
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendHostChatMessage() {
+            const input = document.getElementById('hostChatInput'); if (!input.value.trim() || !currentChatGuestEmail) return;
+            await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: hostEmail, receiverEmail: currentChatGuestEmail, content: input.value }) });
+            input.value = ""; loadHostChat();
+        }
+
+        document.getElementById('hostChatInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') sendHostChatMessage(); });
+
+        document.getElementById('openAddPropertyModal').addEventListener('click', () => document.getElementById('addPropertyModal').classList.add('show'));
+        document.getElementById('cancelAddProperty').addEventListener('click', () => document.getElementById('addPropertyModal').classList.remove('show'));
+
+        const addPropertyForm = document.getElementById('addPropertyForm');
+        const addPropertyStatus = document.getElementById('addPropertyStatus');
+        const propertySubmitNotice = document.getElementById('propertySubmitNotice');
+        const propertyPriceInput = document.getElementById('propertyPrice');
+        const propertyPriceValue = document.getElementById('propertyPriceValue');
+
+        function showPropertyNotice(element, message, type) {
+            element.textContent = message;
+            element.className = `property-notice ${type}`;
+            element.style.display = 'block';
+        }
+
+        propertyPriceInput.addEventListener('input', () => {
+            propertyPriceValue.textContent = propertyPriceInput.value;
         });
-    }
 
-    // --- AUTOMATIZARE COMPLETĂ CHAT (FĂRĂ PROMPT) ---
-    const chatModal = document.getElementById('chatModal');
-    let currentChatGuestEmail = null; let chatRefreshInterval = null;
+        addPropertyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    function closeChatModal() { chatModal.classList.remove('show'); if(chatRefreshInterval) clearInterval(chatRefreshInterval); currentChatGuestEmail = null; }
+            const formData = new FormData();
+            formData.append('name', document.getElementById('propertyName').value.trim());
+            formData.append('address', document.getElementById('propertyAddress').value);
+            formData.append('pricePerNight', propertyPriceInput.value);
+            formData.append('hostEmailAddress', hostEmail);
 
-    async function openChatWithGuest(propertyId, propertyName) {
-        try {
-            // Întrebăm direct noul endpoint din Java cine e chiriașul activ. Gata cu prompt()!
-            const response = await fetch(`http://localhost:8080/api/rentals/active-guest?propertyId=${propertyId}`);
-            if (!response.ok) { alert("This property does not have an active guest right now."); return; }
+            const imageInput = document.getElementById('propertyImage');
+            if (imageInput.files && imageInput.files[0]) {
+                formData.append('image', imageInput.files[0]);
+            }
 
-            currentChatGuestEmail = await response.text(); // Primim direct email-ul chiriașului
+            addPropertyStatus.style.display = 'none';
 
-            document.getElementById('chatModalTitle').textContent = `Chat with Guest`;
-            document.getElementById('chatPropertySubtitle').textContent = propertyName;
-            chatModal.classList.add('show');
+            try {
+                const response = await fetch('http://localhost:8080/api/properties/create-property', {
+                    method: 'POST',
+                    body: formData
+                });
 
-            loadHostChat();
-            if (chatRefreshInterval) clearInterval(chatRefreshInterval);
-            chatRefreshInterval = setInterval(loadHostChat, 3000);
-        } catch (e) { alert("Error opening chat."); }
-    }
+                const resultText = await response.text();
 
-    async function loadHostChat() {
-        if (!hostEmail || !currentChatGuestEmail) return;
-        const response = await fetch(`http://localhost:8080/api/messages/conversation?user1=${hostEmail}&user2=${currentChatGuestEmail}`);
-        const messages = await response.json();
-        const chatBox = document.getElementById('host-chat-messages'); chatBox.innerHTML = "";
-        messages.forEach(msg => {
-            const isMe = msg.sender.emailAddress === hostEmail;
-            chatBox.innerHTML += `<div style="align-self: ${isMe?'flex-end':'flex-start'}; background:${isMe?'#7b2cbf':'#e2e8f0'}; color:${isMe?'white':'#333'}; padding:10px; border-radius:10px;">${msg.content}</div>`;
+                if (!response.ok) {
+                    showPropertyNotice(addPropertyStatus, resultText || 'Could not submit your property.', 'error');
+                    return;
+                }
+
+                showPropertyNotice(propertySubmitNotice, 'Your property is under review. We will announce you by the result.', 'success');
+                addPropertyForm.reset();
+                document.getElementById('propertyAddress').value = 'Cluj-Napoca';
+                propertyPriceValue.textContent = propertyPriceInput.value;
+                document.getElementById('addPropertyModal').classList.remove('show');
+                renderProperties();
+            } catch (error) {
+                showPropertyNotice(addPropertyStatus, 'Could not submit your property. Please try again.', 'error');
+            }
         });
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
 
-    async function sendHostChatMessage() {
-        const input = document.getElementById('hostChatInput'); if(!input.value.trim() || !currentChatGuestEmail) return;
-        await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: hostEmail, receiverEmail: currentChatGuestEmail, content: input.value }) });
-        input.value = ""; loadHostChat();
-    }
+        function openReportIssueModal(propertyId) {
+            document.getElementById('reportPropertyId').value = propertyId;
+            document.getElementById('reportIssueTitle').value = '';
+            document.getElementById('reportIssueDescription').value = '';
+            document.getElementById('reportIssueModal').classList.add('show');
+        }
 
-    document.getElementById('hostChatInput').addEventListener('keypress', (e) => { if(e.key==='Enter') sendHostChatMessage(); });
+        document.getElementById('reportIssueForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const propId = document.getElementById('reportPropertyId').value;
+            const title = document.getElementById('reportIssueTitle').value;
+            const desc = document.getElementById('reportIssueDescription').value;
 
-    document.getElementById('openAddPropertyModal').addEventListener('click', () => document.getElementById('addPropertyModal').classList.add('show'));
-    document.getElementById('cancelAddProperty').addEventListener('click', () => document.getElementById('addPropertyModal').classList.remove('show'));
+            try {
+                const response = await fetch('http://localhost:8080/api/issues/report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: title, description: desc, propertyId: propId, guestEmail: hostEmail })
+                });
+                if (response.ok) {
+                    alert("Issue reported successfully!");
+                    document.getElementById('reportIssueModal').classList.remove('show');
+                    loadHostIssues();
+                } else { alert("Failed to report issue."); }
+            } catch (e) { alert("Error reporting issue."); }
+        });
 
-    renderProperties();
-</script>
+        async function loadHostIssues() {
+            try {
+                const res = await fetch(`http://localhost:8080/api/issues/host-issues?email=${encodeURIComponent(hostEmail)}`);
+                const issues = await res.json();
+                const list = document.getElementById('issueList');
+                const empty = document.getElementById('issueEmpty');
+                list.innerHTML = '';
+
+                if (issues.length === 0) {
+                    empty.style.display = 'block';
+                } else {
+                    empty.style.display = 'none';
+                    // Sort issues so that PENDING items appear first, then OPEN, IN_PROGRESS, RESOLVED
+                    const rank = (s) => {
+                        if (!s) return 99;
+                        switch (s.toString().toUpperCase()) {
+                            case 'PENDING': return 0;
+                            case 'OPEN': return 1;
+                            case 'IN_PROGRESS': return 2;
+                            case 'RESOLVED': return 3;
+                            default: return 99;
+                        }
+                    };
+
+                    issues.sort((a, b) => rank(a.status) - rank(b.status));
+
+                    issues.forEach(issue => {
+                        const div = document.createElement('div');
+                        div.style.padding = "14px"; div.style.border = "1px solid #dbe4ee"; div.style.borderRadius = "10px"; div.style.background = "#fff"; div.style.display = "flex"; div.style.justifyContent = "space-between"; div.style.alignItems = "center";
+
+                        let publishBtn = "";
+                        // If it's not open or in progress, host can publish it to service providers
+                        if (issue.status !== 'OPEN' && issue.status !== 'IN_PROGRESS' && issue.status !== 'RESOLVED') {
+                            publishBtn = `<button class="btn-sm outline" style="color:#166534; border-color:#166534;" onclick="publishIssue(${issue.id})">Publish</button>`;
+                        }
+
+                        const providerEmail = getIssueProviderEmail(issue);
+                        const guestEmailReported = (issue.guest && issue.guest.emailAddress) ? issue.guest.emailAddress : '';
+
+                        // Map status to badge class and friendly label
+                        const rawStatus = (issue.status || '').toString();
+                        const statusKey = rawStatus.toUpperCase();
+                        let badgeClass = 'open';
+                        let label = rawStatus;
+                        if (statusKey === 'PENDING') { badgeClass = 'pending'; label = 'Pending'; }
+                        else if (statusKey === 'OPEN') { badgeClass = 'open'; label = 'Open'; }
+                        else if (statusKey === 'IN_PROGRESS') { badgeClass = 'in_progress'; label = 'In Progress'; }
+                        else if (statusKey === 'RESOLVED') { badgeClass = 'resolved'; label = 'Resolved'; }
+
+                        const statusBadge = `<span class="status-badge ${badgeClass}">${label}</span>`;
+
+                        const reportedByLine = guestEmailReported ? `Reported by: <span style="font-weight:600; color:#6b7280;">${guestEmailReported}</span>` : '';
+                        const providerLine = providerEmail ? `Service provider: <span style="font-weight:600; color:#5b21b6;">${providerEmail}</span>` : '';
+
+                        div.innerHTML = `
+                            <div>
+                                <div style="font-weight: 700; color: #111827;">${issue.title}</div>
+                                <div style="font-size:0.9rem; color:#475467; margin-top:6px;">${reportedByLine}</div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px; justify-content:flex-end; flex-wrap:wrap;">
+                                <div style="font-size: 0.85rem; color: #64748b;">${providerLine}</div>
+                                ${statusBadge}
+                                <div>${publishBtn}</div>
+                            </div>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
+            } catch (e) { console.error("Could not load issues", e); }
+        }
+
+        async function publishIssue(id) {
+            try {
+                const res = await fetch(`http://localhost:8080/api/issues/publish/${id}?email=${encodeURIComponent(hostEmail)}`, { method: 'POST' });
+                if (res.ok) {
+                    alert(await res.text());
+                    loadHostIssues();
+                } else {
+                    alert("Failed to publish issue. Ensure backend permissions are correct.");
+                }
+            } catch (e) { alert("Error publishing issue"); }
+        }
+
+        renderProperties();
+        loadHostIssues();
+    </script>
 </body>
+
 </html>
