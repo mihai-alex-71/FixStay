@@ -6,147 +6,371 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FixStay – Tenant Dashboard</title>
     <link rel="stylesheet" href="style/style.css">
+    <style>
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 16px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-modal {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .btn-modal.primary {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        .btn-modal.primary:hover {
+            background: #6d28d9;
+        }
+
+        .btn-modal.secondary {
+            background: #eef3f6;
+            color: #2f3a42;
+        }
+
+        .btn-modal.secondary:hover {
+            background: #e2e8f0;
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-    <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
-    <nav class="navigation" id="navMenu">
-        <a href="index.html">Home</a>
-        <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
-    </nav>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-</header>
+    <header>
+        <h2 class="logo"><a href="index.html">Fix<span>Stay</span></a></h2>
+        <nav class="navigation" id="navMenu">
+            <a href="index.html">Home</a>
+            <button class="btnLogin-popup" onclick="location.href='login.html'">Logout</button>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
 
-<div class="dashboard-page">
-    <div class="dash-layout">
+    <div class="dashboard-page">
+        <div class="dash-layout">
 
-        <aside class="sidebar">
-            <span class="sidebar-label">Tenant Menu</span>
-            <a class="sidebar-item active" href="#">Overview</a>
-            <a class="sidebar-item" href="#">My Rental</a>
-            <a class="sidebar-item" href="#">Report Issue</a>
-            <a class="sidebar-item" href="#">Messages</a>
-            <br>
-            <span class="sidebar-label">Account</span>
-            <a class="sidebar-item" href="#">Profile</a>
-            <a class="sidebar-item" href="login.html">Logout</a>
-        </aside>
+            <aside class="sidebar">
+                <span class="sidebar-label">Tenant Menu</span>
+                <a class="sidebar-item active" href="#">Overview</a>
+                <a class="sidebar-item" href="#">My Rental</a>
+                <a class="sidebar-item" href="#">Report Issue</a>
+                <a class="sidebar-item" href="#">Messages</a>
+                <br>
+                <span class="sidebar-label">Account</span>
+                <a class="sidebar-item" href="#">Profile</a>
+                <a class="sidebar-item" href="login.html">Logout</a>
+            </aside>
 
-        <main class="dash-content">
+            <main class="dash-content">
 
-            <div id="catalogSection" style="display: none;">
-                <div class="dash-greeting">
-                    <h2>Explore Properties</h2>
-                    <p>Find your perfect stay from our available rentals.</p>
-                </div>
-                <div id="propertiesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;"></div>
-            </div>
-
-            <div id="activeRentalSection" style="display: none;">
-                <div class="dash-greeting">
-                    <h2>Welcome back!</h2>
-                    <p>Manage your current rental seamlessly.</p>
-                </div>
-
-                <div class="dash-panel" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem; color: white; padding: 2rem; text-align: center;">
-                    <h3>Need to Report an Issue?</h3>
-                    <div id="initialReportView">
-                        <p style="opacity: 0.9; margin-bottom: 1.5rem;">Water leak? Broken appliance? Let your landlord know instantly.</p>
-                        <button class="btn-white" onclick="showReportForm()" style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Report Issue Now</button>
-                    </div>
-                    <form id="issueForm" style="display: none; text-align: left; max-width: 500px; margin: 0 auto;">
-                        <input type="text" id="issueTitle" placeholder="Issue Title" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none;">
-                        <textarea id="issueDescription" placeholder="Describe the problem..." required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none; min-height: 100px;"></textarea>
-                        <div style="display: flex; gap: 10px; justify-content: center;">
-                            <button type="submit" style="background: white; color: #7c3aed; padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send Report</button>
-                            <button type="button" onclick="hideReportForm()" style="background: transparent; color: white; border: 1px solid white; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">Cancel</button>
+                <div id="catalogSection" style="display: none;">
+                    <div class="dash-greeting"
+                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h2>Explore Properties</h2>
+                            <p>Find your perfect stay from our available rentals.</p>
                         </div>
-                    </form>
-                    <div id="myIssuesSection" style="margin-top: 2.5rem; text-align: left;">
-                        <h4 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;">My Support Requests</h4>
-                        <div id="issuesTrackerList"></div>
+                        <div style="position: relative; display: inline-block;">
+                            <button onclick="toggleFilterPopup()" class="btn-modal secondary"
+                                style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid #dbe4ee; font-size: 0.95rem;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                                </svg>
+                                Filter Cities
+                            </button>
+                            <div id="filterPopup"
+                                style="display: none; position: absolute; right: 0; top: 115%; background: #fff; border: 1px solid #dbe4ee; border-radius: 12px; padding: 16px; width: 220px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); z-index: 100;">
+                                <h4 style="margin: 0 0 14px 0; font-size: 0.95rem; color: #1f2937;">Select Cities</h4>
+                                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;"
+                                    id="cityCheckboxes">
+                                    <label
+                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
+                                            type="checkbox" value="Cluj-Napoca"
+                                            style="accent-color: #7c3aed; width: 16px; height: 16px;">
+                                        Cluj-Napoca</label>
+                                    <label
+                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
+                                            type="checkbox" value="București"
+                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> București</label>
+                                    <label
+                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
+                                            type="checkbox" value="Iași"
+                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Iași</label>
+                                    <label
+                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
+                                            type="checkbox" value="Timișoara"
+                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Timișoara</label>
+                                    <label
+                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
+                                            type="checkbox" value="Constanța"
+                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Constanța</label>
+                                    <label
+                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
+                                            type="checkbox" value="Brașov"
+                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Brașov</label>
+                                </div>
+                                <button onclick="applyFilter()" class="btn-modal primary" style="width: 100%;">Apply
+                                    Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="propertiesGrid"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
                     </div>
                 </div>
 
-                <div class="dash-panel" style="margin-bottom: 2rem; padding: 20px;">
-                    <h3>Chat with your Host</h3>
-                    <div id="chat-messages" style="height: 300px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; padding: 15px; display: flex; flex-direction: column; gap: 10px;"></div>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="chatInput" placeholder="Type your message here..." style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
-                        <button onclick="sendChatMessage()" style="padding: 12px 24px; background-color: #7c3aed; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send</button>
+                <div id="activeRentalSection" style="display: none;">
+                    <div class="dash-greeting">
+                        <h2>Welcome back!</h2>
+                        <p>Manage your current rental seamlessly.</p>
+                    </div>
+
+                    <div class="dash-panel"
+                        style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem; color: white; padding: 2rem; text-align: center;">
+                        <h3>Need to Report an Issue?</h3>
+                        <div id="initialReportView">
+                            <p style="opacity: 0.9; margin-bottom: 1.5rem;">Water leak? Broken appliance? Let your
+                                landlord know instantly.</p>
+                            <button class="btn-white" onclick="showReportForm()"
+                                style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Report
+                                Issue Now</button>
+                        </div>
+                        <form id="issueForm" style="display: none; text-align: left; max-width: 500px; margin: 0 auto;">
+                            <input type="text" id="issueTitle" placeholder="Issue Title" required
+                                style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none;">
+                            <textarea id="issueDescription" placeholder="Describe the problem..." required
+                                style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none; min-height: 100px;"></textarea>
+                            <div style="display: flex; gap: 10px; justify-content: center;">
+                                <button type="submit"
+                                    style="background: white; color: #7c3aed; padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send
+                                    Report</button>
+                                <button type="button" onclick="hideReportForm()"
+                                    style="background: transparent; color: white; border: 1px solid white; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">Cancel</button>
+                            </div>
+                        </form>
+                        <div id="myIssuesSection" style="margin-top: 2.5rem; text-align: left;">
+                            <h4 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;">My Support
+                                Requests</h4>
+                            <div id="issuesTrackerList"></div>
+                        </div>
+                    </div>
+
+                    <div class="dash-panel" style="margin-bottom: 2rem; padding: 20px;">
+                        <h3>Chat with your Host</h3>
+                        <div id="chat-messages"
+                            style="height: 300px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="chatInput" placeholder="Type your message here..."
+                                style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                            <button onclick="sendChatMessage()"
+                                style="padding: 12px 24px; background-color: #7c3aed; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </main>
+            </main>
+        </div>
     </div>
-</div>
 
-<script>
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
-    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navMenu.classList.toggle('open'); });
+    <div class="modal-overlay" id="rentConfirmModal" aria-hidden="true">
+        <div class="modal-card" style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🏠</div>
+            <h3 style="margin-top: 0; font-size: 1.25rem;">Confirm Rental</h3>
+            <p style="color: #64748b; margin-bottom: 24px; line-height: 1.5; font-size: 0.95rem;">Are you sure you want
+                to rent this property?<br>Your request will be sent instantly.</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="confirmRentBtn" class="btn-modal primary" style="flex: 1;">Yes, Rent it!</button>
+                <button onclick="closeRentModal()" class="btn-modal secondary" style="flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-    const guestEmail = localStorage.getItem("loggedInEmail") || localStorage.getItem("email");
-    let currentPropertyId = null;
-    let currentHostEmail = null;
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navMenu.classList.toggle('open'); });
 
-    if (!guestEmail) { window.location.href = "login.html"; }
-
-    document.addEventListener("DOMContentLoaded", () => { if (guestEmail) { checkGuestStatus(); } });
-
-    async function checkGuestStatus() {
-        try {
-            // Întrebăm direct noul endpoint simplu din Java
-            const response = await fetch(`http://localhost:8080/api/rentals/active-host?guestEmail=${guestEmail}`);
-
-            if (response.ok) {
-                const rentalData = await response.json();
-                currentPropertyId = rentalData.propertyId;
-                currentHostEmail = rentalData.hostEmail;
-
-                document.getElementById('activeRentalSection').style.display = 'block';
-                document.getElementById('catalogSection').style.display = 'none';
-
-                loadChat();
-                setInterval(loadChat, 3000); // Live chat la 3 secunde
-                loadMyIssues();
-            } else {
-                document.getElementById('activeRentalSection').style.display = 'none';
-                document.getElementById('catalogSection').style.display = 'block';
-                loadProperties();
-            }
-        } catch (error) {
-            console.error("Error checking guest status", error);
+        function getStoredSessionValue(key) {
+            return sessionStorage.getItem(key) || localStorage.getItem(key);
         }
-    }
 
-    async function loadProperties() {
-        try {
-            const response = await fetch('http://localhost:8080/api/properties/all');
-            const properties = await response.json();
+        const guestEmail = getStoredSessionValue("loggedInEmail") || getStoredSessionValue("emailAddress") || getStoredSessionValue("email");
+        let currentPropertyId = null;
+        let currentHostEmail = null;
+
+        if (!guestEmail) { window.location.href = "login.html"; }
+
+        document.addEventListener("DOMContentLoaded", () => { if (guestEmail) { checkGuestStatus(); } });
+
+        async function checkGuestStatus() {
+            try {
+                // Întrebăm direct noul endpoint simplu din Java
+                const response = await fetch(`http://localhost:8080/api/rentals/active-host?guestEmail=${guestEmail}`);
+
+                if (response.ok) {
+                    const rentalData = await response.json();
+                    currentPropertyId = rentalData.propertyId;
+                    currentHostEmail = rentalData.hostEmail;
+
+                    document.getElementById('activeRentalSection').style.display = 'block';
+                    document.getElementById('catalogSection').style.display = 'none';
+
+                    loadChat();
+                    setInterval(loadChat, 3000); // Live chat la 3 secunde
+                    loadMyIssues();
+                } else {
+                    document.getElementById('activeRentalSection').style.display = 'none';
+                    document.getElementById('catalogSection').style.display = 'block';
+                    loadProperties();
+                }
+            } catch (error) {
+                console.error("Error checking guest status", error);
+            }
+        }
+
+        function getCityBadge(address) {
+            if (!address) return '';
+            const city = address.trim().toLowerCase();
+            let color, bgColor, borderColor;
+
+            if (city.includes('bucurești') || city.includes('bucharest') || city.includes('bucuresti')) {
+                color = '#1e3a8a'; bgColor = '#dbeafe'; borderColor = '#bfdbfe';
+            } else if (city.includes('cluj')) {
+                color = '#14532d'; bgColor = '#dcfce7'; borderColor = '#bbf7d0';
+            } else if (city.includes('timișoara') || city.includes('timisoara')) {
+                color = '#7c2d12'; bgColor = '#ffedd5'; borderColor = '#fed7aa';
+            } else if (city.includes('iași') || city.includes('iasi')) {
+                color = '#4c1d95'; bgColor = '#ede9fe'; borderColor = '#ddd6fe';
+            } else if (city.includes('brașov') || city.includes('brasov')) {
+                color = '#831843'; bgColor = '#fce7f3'; borderColor = '#fbcfe8';
+            } else if (city.includes('constanța') || city.includes('constanta')) {
+                color = '#0c4a6e'; bgColor = '#e0f2fe'; borderColor = '#bae6fd';
+            } else {
+                color = '#374151'; bgColor = '#f3f4f6'; borderColor = '#e5e7eb';
+            }
+
+            return `<span style="display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: ${color}; background-color: ${bgColor}; border: 1px solid ${borderColor};">${address}</span>`;
+        }
+
+        function getPropertyImage(property) {
+            if (property.imageUrl) {
+                return property.imageUrl;
+            }
+            if (property.pictureFileName) {
+                return `http://localhost:8080/uploads/${property.pictureFileName}`;
+            }
+            return 'Images/Gemini_Generated_Image_8umfit8umfit8umf.png';
+        }
+
+        function renderPropertiesGrid(properties) {
             const grid = document.getElementById('propertiesGrid');
             grid.innerHTML = '';
             properties.forEach(prop => {
                 const card = document.createElement('div');
                 card.className = 'dash-panel'; card.style.padding = '15px';
                 card.innerHTML = `
-                        <h3>${prop.name}</h3>
-                        <p>📍 ${prop.address}</p>
-                        <p style="font-weight:bold; color:#7c3aed;">$${prop.pricePerNight} / night</p>
-                        <button onclick="rentProperty(${prop.id})" style="width:100%; background:#7c3aed; color:white; padding:10px; border:none; border-radius:6px; cursor:pointer;">Rent Now</button>
-                    `;
+                    <img src="${getPropertyImage(prop)}" style="width:100%; height:180px; object-fit:cover; border-radius:8px; margin-bottom:12px; background:#f3f4f6;" alt="${prop.name}">
+                    <h3 style="margin-top:0; font-size: 1.1rem; color: #374151;"><span style="color: #6b7280; font-weight: normal;">Name:</span> ${prop.name}</h3>
+                    <div style="margin-bottom:8px; display: flex; align-items: center; gap: 6px;"><span style="color: #6b7280; font-size: 0.9rem;">Address:</span> ${getCityBadge(prop.address)}</div>
+                    <p style="font-weight:bold; color:#7c3aed;">${prop.pricePerNight} EURO / night</p>
+                    <button onclick="confirmRentModal(${prop.id})" style="width:100%; background:#7c3aed; color:white; padding:10px; border:none; border-radius:6px; cursor:pointer;">Rent Now</button>
+                `;
                 grid.appendChild(card);
             });
-        } catch (error) { console.error(error); }
-    }
+        }
 
-    async function rentProperty(propertyId) {
-        const today = new Date().toISOString().split('T')[0];
-        const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-        if(confirm("Rent this property?")) {
+        async function loadProperties() {
+            try {
+                const response = await fetch('http://localhost:8080/api/properties/all');
+                const properties = await response.json();
+                renderPropertiesGrid(properties);
+            } catch (error) { console.error(error); }
+        }
+
+        function toggleFilterPopup() {
+            const popup = document.getElementById('filterPopup');
+            popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function applyFilter() {
+            const checkboxes = document.querySelectorAll('#cityCheckboxes input[type="checkbox"]:checked');
+            const selectedCities = Array.from(checkboxes).map(cb => cb.value);
+
+            document.getElementById('filterPopup').style.display = 'none';
+
+            let url = 'http://localhost:8080/api/properties/filter';
+            if (selectedCities.length > 0) {
+                url += `?cities=${selectedCities.join(',')}`;
+            } else {
+                url = 'http://localhost:8080/api/properties/all';
+            }
+
+            try {
+                const response = await fetch(url);
+                let properties = [];
+                if (response.ok) {
+                    properties = await response.json();
+                } else {
+                    console.warn("Filter endpoint not implemented. Falling back to frontend filtering for demo purposes.");
+                    const allRes = await fetch('http://localhost:8080/api/properties/all');
+                    properties = await allRes.json();
+                    if (selectedCities.length > 0) {
+                        properties = properties.filter(p => {
+                            const addr = p.address ? p.address.toLowerCase() : '';
+                            return selectedCities.some(c => addr.includes(c.toLowerCase()));
+                        });
+                    }
+                }
+                renderPropertiesGrid(properties);
+            } catch (error) { console.error(error); }
+        }
+
+        let propertyToRentId = null;
+
+        function confirmRentModal(propertyId) {
+            propertyToRentId = propertyId;
+            document.getElementById('rentConfirmModal').classList.add('show');
+        }
+
+        function closeRentModal() {
+            propertyToRentId = null;
+            document.getElementById('rentConfirmModal').classList.remove('show');
+        }
+
+        document.getElementById('confirmRentBtn').addEventListener('click', async () => {
+            if (!propertyToRentId) return;
+            const propertyId = propertyToRentId;
+            closeRentModal();
+
+            const today = new Date().toISOString().split('T')[0];
+            const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
             try {
                 const response = await fetch(`http://localhost:8080/api/rentals/rent`, {
                     method: 'POST',
@@ -156,54 +380,54 @@
                 if (response.ok) { alert("Success!"); window.location.reload(); }
                 else { const msg = await response.text(); alert(msg); }
             } catch (error) { console.error(error); }
-        }
-    }
-
-    function showReportForm() { document.getElementById('initialReportView').style.display = 'none'; document.getElementById('issueForm').style.display = 'block'; }
-    function hideReportForm() { document.getElementById('initialReportView').style.display = 'block'; document.getElementById('issueForm').style.display = 'none'; }
-
-    document.getElementById('issueForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const requestData = { title: document.getElementById('issueTitle').value, description: document.getElementById('issueDescription').value, guestEmail: guestEmail, propertyId: currentPropertyId };
-        const response = await fetch('http://localhost:8080/api/issues/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestData) });
-        if (response.ok) { alert("Reported!"); loadMyIssues(); hideReportForm(); }
-    });
-
-    async function loadMyIssues() {
-        const response = await fetch(`http://localhost:8080/api/issues/my-reports?email=${guestEmail}`);
-        const issues = await response.json();
-        const list = document.getElementById('issuesTrackerList'); list.innerHTML = '';
-        if(issues.length === 0) { list.innerHTML = '<p>No requests.</p>'; return; }
-        issues.forEach(issue => {
-            list.innerHTML += `<div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:6px; margin-bottom:5px;"><strong>${issue.title}</strong> - ${issue.status}</div>`;
         });
-    }
 
-    async function loadChat() {
-        if (!guestEmail || !currentHostEmail) return;
-        try {
-            const response = await fetch(`http://localhost:8080/api/messages/conversation?user1=${guestEmail}&user2=${currentHostEmail}`);
-            const messages = await response.json();
-            const chatBox = document.getElementById('chat-messages'); chatBox.innerHTML = "";
-            messages.forEach(msg => {
-                const isMe = msg.sender.emailAddress === guestEmail;
-                const alignment = isMe ? "flex-end" : "flex-start";
-                const bgColor = isMe ? "#7c3aed" : "#e2e8f0";
-                chatBox.innerHTML += `
-                        <div style="align-self: ${alignment}; background:${bgColor}; color:${isMe?'white':'#333'}; padding:10px; border-radius:10px; max-width:70%;">
+        function showReportForm() { document.getElementById('initialReportView').style.display = 'none'; document.getElementById('issueForm').style.display = 'block'; }
+        function hideReportForm() { document.getElementById('initialReportView').style.display = 'block'; document.getElementById('issueForm').style.display = 'none'; }
+
+        document.getElementById('issueForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const requestData = { title: document.getElementById('issueTitle').value, description: document.getElementById('issueDescription').value, guestEmail: guestEmail, propertyId: currentPropertyId };
+            const response = await fetch('http://localhost:8080/api/issues/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestData) });
+            if (response.ok) { alert("Reported!"); loadMyIssues(); hideReportForm(); }
+        });
+
+        async function loadMyIssues() {
+            const response = await fetch(`http://localhost:8080/api/issues/my-reports?email=${guestEmail}`);
+            const issues = await response.json();
+            const list = document.getElementById('issuesTrackerList'); list.innerHTML = '';
+            if (issues.length === 0) { list.innerHTML = '<p>No requests.</p>'; return; }
+            issues.forEach(issue => {
+                list.innerHTML += `<div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:6px; margin-bottom:5px;"><strong>${issue.title}</strong> - ${issue.status}</div>`;
+            });
+        }
+
+        async function loadChat() {
+            if (!guestEmail || !currentHostEmail) return;
+            try {
+                const response = await fetch(`http://localhost:8080/api/messages/conversation?user1=${guestEmail}&user2=${currentHostEmail}`);
+                const messages = await response.json();
+                const chatBox = document.getElementById('chat-messages'); chatBox.innerHTML = "";
+                messages.forEach(msg => {
+                    const isMe = msg.sender.emailAddress === guestEmail;
+                    const alignment = isMe ? "flex-end" : "flex-start";
+                    const bgColor = isMe ? "#7c3aed" : "#e2e8f0";
+                    chatBox.innerHTML += `
+                        <div style="align-self: ${alignment}; background:${bgColor}; color:${isMe ? 'white' : '#333'}; padding:10px; border-radius:10px; max-width:70%;">
                             ${msg.content}
                         </div>`;
-            });
-            chatBox.scrollTop = chatBox.scrollHeight;
-        } catch (e) {}
-    }
+                });
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (e) { }
+        }
 
-    async function sendChatMessage() {
-        const input = document.getElementById('chatInput'); if (!input.value.trim() || !currentHostEmail) return;
-        await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: guestEmail, receiverEmail: currentHostEmail, content: input.value }) });
-        input.value = ""; loadChat();
-    }
-    document.getElementById('chatInput').addEventListener('keypress', (e) => { if(e.key==='Enter') sendChatMessage(); });
-</script>
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput'); if (!input.value.trim() || !currentHostEmail) return;
+            await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: guestEmail, receiverEmail: currentHostEmail, content: input.value }) });
+            input.value = ""; loadChat();
+        }
+        document.getElementById('chatInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChatMessage(); });
+    </script>
 </body>
+
 </html>

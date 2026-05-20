@@ -6,6 +6,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FixStay – Admin Dashboard</title>
     <link rel="stylesheet" href="style/style.css">
+    <style>
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .property-card {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 14px;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .property-card:last-child {
+            border-bottom: none;
+        }
+
+        .property-card:hover {
+            background: var(--off-white);
+        }
+
+        .property-thumb {
+            width: 120px;
+            height: 88px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #edf2f7;
+        }
+
+        .property-body {
+            min-width: 0;
+        }
+
+        .property-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .property-meta {
+            font-size: 0.86rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm.accept {
+            background: #16a34a;
+            color: #fff;
+            border-color: #16a34a;
+        }
+
+        .btn-sm.accept:hover {
+            background: #15803d;
+            color: #fff;
+        }
+
+        .btn-sm.reject {
+            background: #dc2626;
+            color: #fff;
+            border-color: #dc2626;
+        }
+
+        .btn-sm.reject:hover {
+            background: #b91c1c;
+            color: #fff;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 110px;
+        }
+    </style>
 </head>
 
 <body>
@@ -56,6 +138,14 @@
                     </svg>
                     Providers
                 </a>
+                <a class="sidebar-item" href="#pendingPropertiesSection">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 11L12 4L20 11" />
+                        <path d="M6 10V20H18V10" />
+                        <path d="M9 20V14H15V20" />
+                    </svg>
+                    Pending Properties
+                </a>
                 <a class="sidebar-item" href="#">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -63,23 +153,6 @@
                         <rect x="8" y="2" width="8" height="4" rx="1" />
                     </svg>
                     All Tasks
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 3H21C21.5304 3 22.0391 3.21071 22.4142 3.58579C22.7893 3.96086 23 4.46957 23 5V19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V5C1 4.46957 1.21071 3.96086 1.58579 3.58579C1.96086 3.21071 2.46957 3 3 3Z" />
-                        <path d="M1 9H23" />
-                        <path d="M1 15H23" />
-                    </svg>
-                    Reports
-                </a>
-                <a class="sidebar-item" href="#">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 20V10" />
-                        <path d="M12 20V4" />
-                        <path d="M6 20V14" />
-                    </svg>
-                    Analytics
                 </a>
                 <a class="sidebar-item" href="#">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +215,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="dash-stat-num">340</div>
+                            <div class="dash-stat-num" id="verifiedProvidersCount">0</div>
                             <div class="dash-stat-label">Verified Providers</div>
                         </div>
                     </div>
@@ -155,21 +228,34 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="dash-stat-num">23</div>
+                            <div class="dash-stat-num" id="activeTasksCount">0</div>
                             <div class="dash-stat-label">Active Tasks</div>
                         </div>
                     </div>
                     <div class="dash-stat">
-                        <div class="dash-stat-icon secondary">
+                        <div class="dash-stat-icon warning">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18 20V10" />
-                                <path d="M12 20V4" />
-                                <path d="M6 20V14" />
+                                <path d="M12 3L1 21H23L12 3Z" />
+                                <path d="M12 9V13" />
+                                <path d="M12 17H12.01" />
                             </svg>
                         </div>
                         <div>
-                            <div class="dash-stat-num">98%</div>
-                            <div class="dash-stat-label">Satisfaction</div>
+                            <div class="dash-stat-num red" id="pendingPropertiesCount">0</div>
+                            <div class="dash-stat-label">Pending Properties</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat">
+                        <div class="dash-stat-icon success">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 11L12 4L20 11" />
+                                <path d="M6 10V20H18V10" />
+                                <path d="M9 20V14H15V20" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="dash-stat-num" id="activePropertiesCount">0</div>
+                            <div class="dash-stat-label">Active Properties</div>
                         </div>
                     </div>
                 </div>
@@ -182,6 +268,22 @@
                     <div id="providersList" class="task-list">
                         <!-- Filled dynamically -->
                     </div>
+                </div>
+
+                <div class="dash-panel section-anchor" id="pendingPropertiesSection">
+                    <div class="dash-panel-header">
+                        <h3>Pending Properties (Need Approval)</h3>
+                    </div>
+                    <div id="pendingPropertiesAlert" class="pending-alert">No pending properties</div>
+                    <div id="pendingPropertiesList" class="task-list"></div>
+                </div>
+
+                <div class="dash-panel section-anchor" id="activePropertiesSection">
+                    <div class="dash-panel-header">
+                        <h3>Active Properties</h3>
+                    </div>
+                    <div id="activePropertiesList" class="property-grid"></div>
+                    <div id="activePropertiesEmpty" class="pending-alert">No active properties</div>
                 </div>
 
                 <!-- Recent Activity -->
@@ -309,6 +411,11 @@
     </div>
 
     <script>
+        const adminEmail = sessionStorage.getItem('loggedInEmail')
+            || sessionStorage.getItem('emailAddress')
+            || localStorage.getItem('loggedInEmail')
+            || localStorage.getItem('emailAddress')
+            || localStorage.getItem('email');
         console.log("LOADING PROVIDERS...");
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
@@ -317,17 +424,61 @@
             navMenu.classList.toggle('open');
         });
 
+        function getPropertyImage(property) {
+            if (property.imageUrl) {
+                return property.imageUrl;
+            }
+
+            if (property.pictureFileName) {
+                return `http://localhost:8080/uploads/${property.pictureFileName}`;
+            }
+
+            return 'Images/Gemini_Generated_Image_8umfit8umfit8umf.png';
+        }
+
+        function getCityBadge(address) {
+            if (!address) return '';
+            const city = address.trim().toLowerCase();
+            let color, bgColor, borderColor;
+
+            if (city.includes('bucurești') || city.includes('bucharest') || city.includes('bucuresti')) {
+                color = '#1e3a8a'; bgColor = '#dbeafe'; borderColor = '#bfdbfe';
+            } else if (city.includes('cluj')) {
+                color = '#14532d'; bgColor = '#dcfce7'; borderColor = '#bbf7d0';
+            } else if (city.includes('timișoara') || city.includes('timisoara')) {
+                color = '#7c2d12'; bgColor = '#ffedd5'; borderColor = '#fed7aa';
+            } else if (city.includes('iași') || city.includes('iasi')) {
+                color = '#4c1d95'; bgColor = '#ede9fe'; borderColor = '#ddd6fe';
+            } else if (city.includes('brașov') || city.includes('brasov')) {
+                color = '#831843'; bgColor = '#fce7f3'; borderColor = '#fbcfe8';
+            } else if (city.includes('constanța') || city.includes('constanta')) {
+                color = '#0c4a6e'; bgColor = '#e0f2fe'; borderColor = '#bae6fd';
+            } else {
+                color = '#374151'; bgColor = '#f3f4f6'; borderColor = '#e5e7eb';
+            }
+
+            return `<span style="display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: ${color}; background-color: ${bgColor}; border: 1px solid ${borderColor};">${address}</span>`;
+        }
+
+        function getPropertyHostEmail(property) {
+            return property.hostEmail || property.hostEmailAddress || property.host?.emailAddress || 'Unknown host';
+        }
+
+        async function renderPropertyLists() {
+            await Promise.all([loadPendingProperties(), loadActiveProperties()]);
+        }
+
         async function loadPendingProviders() {
-        //http://localhost:8080/admin/providers/pending
-        //const res = await fetch("http://localhost:8080/api/admin/providers/pending");
-        const res = await fetch("http://localhost:8080/api/admin/providers/pending");
-        const providers = await res.json();
+            //http://localhost:8080/admin/providers/pending
+            //const res = await fetch("http://localhost:8080/api/admin/providers/pending");
+            const res = await fetch("http://localhost:8080/api/admin/providers/pending");
+            const providers = await res.json();
 
-        const container = document.getElementById("providersList");
-        container.innerHTML = "";
+            const container = document.getElementById("providersList");
+            container.innerHTML = "";
 
-        providers.forEach(p => {
-            container.innerHTML += `
+            providers.forEach(p => {
+                container.innerHTML += `
                 <div class="task-item">
                     <div class="task-info">
                         <div class="task-title">
@@ -341,40 +492,175 @@
                     <button class="btn-sm" onclick="approveProvider(${p.id})">
                         Approve
                     </button>
+                    <button class="btn-sm reject" onclick="rejectProvider(${p.id})">
+                        Reject
+                    </button>
                 </div>
             `;
-        });
+            });
 
-        // Update pending count
-        const count = providers.length;
-        const countElement = document.getElementById("pendingCount");
-        const alertElement = document.getElementById("pendingAlert");
+            // Update pending count
+            const count = providers.length;
+            const countElement = document.getElementById("pendingCount");
+            const alertElement = document.getElementById("pendingAlert");
 
-        countElement.textContent = count;
-        if (count === 0) {
-            countElement.classList.remove("red");
-            alertElement.textContent = "No pending providers";
-            alertElement.classList.remove("red");
-        } else {
-            countElement.classList.add("red");
-            alertElement.textContent = `${count} pending provider${count > 1 ? 's' : ''}`;
-            alertElement.classList.add("red");
+            countElement.textContent = count;
+            if (count === 0) {
+                countElement.classList.remove("red");
+                alertElement.textContent = "No pending providers";
+                alertElement.classList.remove("red");
+            } else {
+                countElement.classList.add("red");
+                alertElement.textContent = `${count} pending provider${count > 1 ? 's' : ''}`;
+                alertElement.classList.add("red");
+            }
         }
-    }
 
-    async function approveProvider(id) {
-        await fetch(`http://localhost:8080/api/admin/providers/${id}/approve`, {
-            //method: "PUT"
-            method: "POST"
-        });
+        async function loadPendingProperties() {
+            const response = await fetch("http://localhost:8080/api/properties/admin/get-pending-properties");
+            const properties = await response.json();
 
-        loadPendingProviders();
-    }
+            const container = document.getElementById("pendingPropertiesList");
+            const alertElement = document.getElementById("pendingPropertiesAlert");
+            const countElement = document.getElementById("pendingPropertiesCount");
 
-    // 👇 AUTO LOAD ON PAGE OPEN
-    window.onload = loadPendingProviders;
+            container.innerHTML = "";
+            countElement.textContent = properties.length;
+
+            if (properties.length === 0) {
+                countElement.classList.remove("red");
+                alertElement.textContent = "No pending properties";
+                alertElement.classList.remove("red");
+                return;
+            }
+
+            countElement.classList.add("red");
+            alertElement.textContent = `${properties.length} pending propert${properties.length === 1 ? 'y' : 'ies'}`;
+            alertElement.classList.add("red");
+
+            properties.forEach(property => {
+                container.innerHTML += `
+                    <div class="property-card">
+                        <img class="property-thumb" src="${getPropertyImage(property)}" alt="${property.name}">
+                        <div class="property-body">
+                            <div class="property-title" style="color: #374151;"><span style="color: #6b7280; font-weight: normal; font-size: 0.9rem;">Name:</span> ${property.name}</div>
+                            <div class="property-meta" style="margin-bottom:6px; display: flex; align-items: center; gap: 6px;"><span style="color: #6b7280; font-size: 0.9rem;">Address:</span> ${getCityBadge(property.address)}</div>
+                            <div class="property-meta" style="margin-top:-4px; margin-bottom:10px;"><span style="color: #6b7280; font-size: 0.9rem;">Host Email:  </span>${getPropertyHostEmail(property)}</div>
+                            <div class="property-actions">
+                                <button class="btn-sm accept" onclick="updatePropertyStatus(${property.id}, 'APPROVED')">Accept</button>
+                                <button class="btn-sm reject" onclick="updatePropertyStatus(${property.id}, 'REJECTED')">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function loadActiveProperties() {
+            const response = await fetch("http://localhost:8080/api/properties/all");
+            const properties = await response.json();
+
+            const container = document.getElementById("activePropertiesList");
+            const emptyState = document.getElementById("activePropertiesEmpty");
+            const countElement = document.getElementById("activePropertiesCount");
+
+            container.innerHTML = "";
+            countElement.textContent = properties.length;
+
+            if (properties.length === 0) {
+                emptyState.style.display = "block";
+                return;
+            }
+
+            emptyState.style.display = "none";
+
+            properties.forEach(property => {
+                container.innerHTML += `
+                    <div class="dash-panel" style="margin-bottom: 0; overflow: hidden; border: 1px solid var(--border);">
+                        <img src="${getPropertyImage(property)}" alt="${property.name}" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                        <div style="padding: 14px 16px;">
+                            <div class="property-title" style="color: #374151;"><span style="color: #6b7280; font-weight: normal; font-size: 0.9rem;">Name:</span> ${property.name}</div>
+                            <div class="property-meta" style="margin-bottom:6px; display: flex; align-items: center; gap: 6px;"><span style="color: #6b7280; font-size: 0.9rem;">Address:</span> ${getCityBadge(property.address)}</div>
+                            <div class="property-meta" style="margin-top:-4px;">${getPropertyHostEmail(property)}</div>
+                            <div style="font-weight: 700; color: var(--primary);">${property.pricePerNight ?? 0} EURO / night</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function updatePropertyStatus(propertyId, propertyStatus) {
+            if (!adminEmail) {
+                alert("Admin email is missing. Please log in again.");
+                return;
+            }
+
+            const response = await fetch(`http://localhost:8080/api/properties/admin/update-property-status/${propertyId}?propertyStatus=${encodeURIComponent(propertyStatus)}&adminEmail=${encodeURIComponent(adminEmail)}`, {
+                method: "POST"
+            });
+
+            if (!response.ok) {
+                const message = await response.text();
+                alert(message);
+                return;
+            }
+
+            const message = await response.text();
+            alert(message);
+            await renderPropertyLists();
+        }
+
+        async function approveProvider(id) {
+            const response = await fetch(`http://localhost:8080/api/admin/providers/${id}/approve`, {
+                method: "POST"
+            });
+
+            if (!response.ok) {
+                alert(await response.text());
+                return;
+            }
+
+            await loadPendingProviders();
+        }
+
+        async function rejectProvider(id) {
+            const response = await fetch(`http://localhost:8080/api/admin/providers/${id}/reject`, {
+                method: "POST"
+            });
+
+            if (!response.ok) {
+                alert(await response.text());
+                return;
+            }
+
+            await loadPendingProviders();
+        }
+
+        async function loadAdminStats() {
+            try {
+                const providersRes = await fetch("http://localhost:8080/api/admin/providers/verified");
+                if (providersRes.ok) {
+                    const providers = await providersRes.json();
+                    document.getElementById('verifiedProvidersCount').textContent = providers.length;
+                }
+
+                const tasksRes = await fetch("http://localhost:8080/api/admin/tasks/active");
+                if (tasksRes.ok) {
+                    const tasks = await tasksRes.json();
+                    document.getElementById('activeTasksCount').textContent = tasks.length;
+                }
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+        }
+
+        // 👇 AUTO LOAD ON PAGE OPEN
+        window.onload = () => {
+            loadPendingProviders();
+            renderPropertyLists();
+            loadAdminStats();
+        };
     </script>
-    <script src="admin.js"></script>
 </body>
 
 </html>

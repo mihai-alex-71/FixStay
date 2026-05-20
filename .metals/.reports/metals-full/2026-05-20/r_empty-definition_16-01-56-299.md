@@ -1,3 +1,14 @@
+error id: file:///E:/uni/an3sem2/IWP/project/FixStay/backend/src/main/java/com/fixStay/backend/service/PropertyService.java:_empty_/PropertyRequest#hostEmailAddress#
+file:///E:/uni/an3sem2/IWP/project/FixStay/backend/src/main/java/com/fixStay/backend/service/PropertyService.java
+empty definition using pc, found symbol in pc: _empty_/PropertyRequest#hostEmailAddress#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 1383
+uri: file:///E:/uni/an3sem2/IWP/project/FixStay/backend/src/main/java/com/fixStay/backend/service/PropertyService.java
+text:
+```scala
 package com.fixStay.backend.service;
 
 import com.fixStay.backend.dto.PropertyRequest;
@@ -8,8 +19,6 @@ import com.fixStay.backend.model.Role;
 import com.fixStay.backend.model.User;
 import com.fixStay.backend.repository.PropertyRepository;
 import com.fixStay.backend.repository.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +48,7 @@ public class PropertyService {
 
     public String createProperty(PropertyRequest request, MultipartFile image){
 
-        Optional<User> user = userRepository.findUserByEmailAddress(request.hostEmailAddress());
+        Optional<User> user = userRepository.findUserByEmailAddress(request.@@hostEmailAddress());
 
         if(user.isEmpty()){
             return " host with this email does not exists ";
@@ -92,7 +101,6 @@ public class PropertyService {
                 property.getAddress(),
                 property.getPricePerNight(),
                 property.getImageUrl(),
-                property.getPictureFileName(),
                 property.getApprovalStatus(),
                 property.getHost().getEmailAddress()
         )).collect(Collectors.toList());
@@ -120,7 +128,6 @@ public class PropertyService {
                 property.getAddress(),
                 property.getPricePerNight(),
                 property.getImageUrl(),
-                property.getPictureFileName(),
                 property.getApprovalStatus(),
                 property.getHost().getEmailAddress()
         )).collect(Collectors.toList());
@@ -152,21 +159,10 @@ public class PropertyService {
         propertyRepository.save(property);
         return  "property "+property.getName() + " status have been set to "+status.toString();
     }
-    public ResponseEntity<String> deleteRejectedProperty(Long id, String email){
-        Optional<Property> propertyOptional = propertyRepository.findById(id);
-        if(propertyOptional.isEmpty()){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Property not found.");
-        }
-
-        Property property = propertyOptional.get();
-
-        String actualOwner = property.getHost().getEmailAddress();
-
-        if(!email.equals(actualOwner)){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("only owner of the property can access this function");
-        }
-        propertyRepository.delete(property);
-        return ResponseEntity.ok("deleted successfully");
-    }
-
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/PropertyRequest#hostEmailAddress#
