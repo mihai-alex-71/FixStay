@@ -97,6 +97,17 @@
             justify-content: center;
         }
 
+        .btn-sm.accept {
+            background: #16a34a;
+            color: #fff;
+            border-color: #16a34a;
+        }
+
+        .btn-sm.accept:hover {
+            background: #15803d;
+            color: #fff;
+        }
+
         .address-badge {
             display: inline-flex;
             align-items: center;
@@ -319,7 +330,6 @@
             <main class="dash-content">
                 <div class="dash-greeting">
                     <h2>Hello, Mihai</h2>
-                    <p>You have 2 new task offers available near you.</p>
                 </div>
 
                 <div class="dash-stats">
@@ -382,7 +392,8 @@
                 <div class="available-section-header">
                     <h3>Available Tasks</h3>
                     <div class="filter-shell">
-                        <button onclick="toggleFilterPopup()" class="btn-modal filter-toggle" style="padding: 10px 16px;">
+                        <button onclick="toggleFilterPopup()" class="btn-modal filter-toggle"
+                            style="padding: 10px 16px;">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -399,7 +410,8 @@
                                 <label><input type="checkbox" value="Constanța"> Constanța</label>
                                 <label><input type="checkbox" value="Brașov"> Brașov</label>
                             </div>
-                            <button onclick="applyFilter()" class="btn-modal primary" style="width: 100%;">Apply Filter</button>
+                            <button onclick="applyFilter()" class="btn-modal primary" style="width: 100%;">Apply
+                                Filter</button>
                         </div>
                     </div>
                 </div>
@@ -421,6 +433,73 @@
                     </div>
                 </div>
             </main>
+        </div>
+        <!-- Resolve Confirmation Modal -->
+        <div id="resolveModal" style="
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(15,23,42,0.45);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;">
+            <div style="
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px 28px 24px;
+        max-width: 420px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(15,23,42,0.18);
+        text-align: center;">
+
+                <!-- Icon -->
+                <div style="
+            width: 56px; height: 56px;
+            background: rgba(22,163,74,0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <path d="M22 4L12 14.01l-3-3" />
+                    </svg>
+                </div>
+
+                <h3 style="margin: 0 0 8px; font-size: 1.15rem; color: #111827;">
+                    Mark task as resolved?
+                </h3>
+                <p style="margin: 0 0 24px; color: #6b7280; font-size: 0.95rem; line-height: 1.5;">
+                    By confirming, you're telling the host the job is done.
+                    They will be asked to rate your work.
+                </p>
+
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button onclick="closeResolveModal()" style="
+                flex: 1;
+                padding: 10px 0;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                background: #fff;
+                color: #374151;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;">
+                        Cancel
+                    </button>
+                    <button onclick="confirmResolve()" style="
+                flex: 1;
+                padding: 10px 0;
+                border: none;
+                border-radius: 10px;
+                background: #16a34a;
+                color: #fff;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;">
+                        Yes, I'm done!
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -618,12 +697,12 @@
             const iconWrap = document.createElement('div');
             iconWrap.className = 'task-icon';
             iconWrap.innerHTML = `
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 14S9.5 16 12 16S16 14 16 14"></path>
-                <path d="M9 9H9.01"></path>
-                <path d="M15 9H15.01"></path>
-            </svg>`;
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 14S9.5 16 12 16S16 14 16 14"></path>
+            <path d="M9 9H9.01"></path>
+            <path d="M15 9H15.01"></path>
+        </svg>`;
 
             const info = document.createElement('div');
             info.className = 'task-info';
@@ -634,7 +713,7 @@
 
             const meta = document.createElement('div');
             meta.className = 'task-meta';
-            const city = issue.property && issue.property.address ? issue.property.address : 'Unknown city';
+            const city = issue.property?.address ?? 'Unknown city';
             meta.textContent = `${city} · Active now`;
 
             const badge = document.createElement('span');
@@ -642,26 +721,49 @@
             badge.textContent = city;
             badge.setAttribute('style', getAddressBadgeStyle(city));
 
+            const resolveBtn = document.createElement('button');
+            resolveBtn.className = 'btn-sm accept';
+            resolveBtn.textContent = 'Mark as Resolved';
+            resolveBtn.style.marginLeft = '12px';
+            resolveBtn.addEventListener('click', () => openResolveModal(issue.id));
+
             info.appendChild(title);
             info.appendChild(meta);
             card.appendChild(iconWrap);
             card.appendChild(info);
             card.appendChild(badge);
+            card.appendChild(resolveBtn);
             return card;
         }
 
         function updateProviderStats(jobs) {
             const providerJobs = Array.isArray(jobs) ? jobs : [];
-            const completedJobs = providerJobs.filter((issue) => getIssueStatus(issue) === 'RESOLVED');
-            const activeJobs = providerJobs.filter((issue) => getIssueStatus(issue) !== 'RESOLVED');
-            const trackedJobs = activeJobs.length + completedJobs.length;
-            const ratingValue = trackedJobs > 0 ? ((completedJobs.length / trackedJobs) * 5).toFixed(1) : '0.0';
+            const completedJobs = providerJobs.filter(issue => getIssueStatus(issue) === 'RESOLVED');
+            const activeJobs = providerJobs.filter(issue => getIssueStatus(issue) !== 'RESOLVED');
 
             activeJobCount.textContent = String(activeJobs.length);
             completedJobCount.textContent = String(completedJobs.length);
-            providerRating.textContent = ratingValue;
+            // rating is loaded separately
 
             return { activeJobs, completedJobs };
+        }
+
+        async function loadProviderRating() {
+            const providerEmail = getLoggedInProviderEmail();
+            if (!providerEmail) return;
+
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/issues/provider-rating?providerEmail=${encodeURIComponent(providerEmail)}`
+                );
+                if (!res.ok) return;
+
+                const avg = await res.json();
+                providerRating.textContent = avg != null ? avg.toFixed(1) : '0.0';
+            } catch (err) {
+                console.error('Could not load provider rating:', err);
+                providerRating.textContent = '0.0';
+            }
         }
 
         async function renderAvailableTasks() {
@@ -745,11 +847,58 @@
                 activeJobsEmpty.textContent = 'Could not load active jobs.';
             }
         }
+        let pendingResolveId = null;
+
+        function openResolveModal(issueId) {
+            pendingResolveId = issueId;
+            const modal = document.getElementById('resolveModal');
+            modal.style.display = 'flex';
+        }
+
+        function closeResolveModal() {
+            pendingResolveId = null;
+            document.getElementById('resolveModal').style.display = 'none';
+        }
+
+        async function confirmResolve() {
+            if (!pendingResolveId) return;
+
+            const providerEmail = getLoggedInProviderEmail();
+            if (!providerEmail) {
+                alert('Session expired. Please log in again.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/issues/${pendingResolveId}/resolve?providerEmail=${encodeURIComponent(providerEmail)}`,
+                    { method: 'POST' }
+                );
+                const message = await res.text();
+                closeResolveModal();
+                alert(message);
+
+                if (res.ok) {
+                    const jobs = await loadProviderJobs();
+                    await renderActiveJobs(jobs);
+                }
+            } catch (err) {
+                console.error('Could not resolve task:', err);
+                alert('Something went wrong. Please try again.');
+            }
+        }
+
+        // Close modal if user clicks the dark backdrop
+        document.getElementById('resolveModal').addEventListener('click', function (e) {
+            if (e.target === this) closeResolveModal();
+        });
 
         document.querySelector('.dash-greeting h2').textContent = `Hello, ${getLoggedInFirstName()}`;
 
         Promise.all([
             loadAvailableIssues(),
+            loadProviderRating(),
             loadProviderJobs()
                 .then((jobs) => renderActiveJobs(jobs))
                 .catch((error) => {

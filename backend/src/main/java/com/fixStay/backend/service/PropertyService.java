@@ -7,6 +7,7 @@ import com.fixStay.backend.model.PropertyStatus;
 import com.fixStay.backend.model.Role;
 import com.fixStay.backend.model.User;
 import com.fixStay.backend.repository.PropertyRepository;
+import com.fixStay.backend.repository.RentalRepository;
 import com.fixStay.backend.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,10 +29,13 @@ public class PropertyService {
 
     private final UserRepository userRepository;
     private final PropertyRepository propertyRepository;
+    private final RentalRepository rentalRepository;
 
-    public PropertyService(UserRepository userRepository, PropertyRepository propertyRepository) {
+
+    public PropertyService(UserRepository userRepository, PropertyRepository propertyRepository, RentalRepository rentalRepository) {
         this.userRepository = userRepository;
         this.propertyRepository = propertyRepository;
+        this.rentalRepository = rentalRepository;
     }
 
     public String createProperty(PropertyRequest request, MultipartFile image){
@@ -167,6 +168,20 @@ public class PropertyService {
         }
         propertyRepository.delete(property);
         return ResponseEntity.ok("deleted successfully");
+    }
+
+    public List<Property> getAvailableProperties() {
+        List<Property> approved = propertyRepository.findByApprovalStatus(PropertyStatus.APPROVED);
+
+        Set<Long> occupiedIds = rentalRepository.findAll()
+                .stream()
+                .filter(r -> !r.isCompleted())
+                .map(r -> r.getProperty().getId())
+                .collect(Collectors.toSet());
+
+        return approved.stream()
+                .filter(p -> !occupiedIds.contains(p.getId()))
+                .collect(Collectors.toList());
     }
 
 }

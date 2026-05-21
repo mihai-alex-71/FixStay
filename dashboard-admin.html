@@ -146,7 +146,7 @@
                     </svg>
                     Pending Properties
                 </a>
-                <a class="sidebar-item" href="#">
+                <a class="sidebar-item" href="#recentActivitySection">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8" />
@@ -287,69 +287,13 @@
                 </div>
 
                 <!-- Recent Activity -->
-                <div class="dash-panel">
+                <div class="dash-panel" id="recentActivitySection">
                     <div class="dash-panel-header">
                         <h3>Recent Platform Activity</h3>
                         <button class="btn-sm outline">View All</button>
                     </div>
-                    <div class="task-list">
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21" />
-                                    <path
-                                        d="M3 5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5Z" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">New provider registration: CleanPro SRL</div>
-                                <div class="task-meta">Pending verification · 5 min ago</div>
-                            </div>
-                            <span class="badge pending">Pending</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" />
-                                    <path d="M22 4L12 14.01L9 11.01" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Task completed: Deep cleaning – Beach House</div>
-                                <div class="task-meta">Completed by Mihai P. · 1h ago</div>
-                            </div>
-                            <span class="badge done">Completed</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">New 5-star review for Ion E.</div>
-                                <div class="task-meta">Left by Alex M. · 2h ago</div>
-                            </div>
-                            <span class="badge new">New</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M10.29 3.86L1.82 18C1.64537 18.3024 1.55297 18.6453 1.55199 18.9945C1.55101 19.3437 1.64149 19.6871 1.81442 19.9905C1.98735 20.2939 2.23673 20.5467 2.53771 20.7239C2.83869 20.901 3.18109 20.9962 3.53 21H20.47C20.8189 20.9962 21.1613 20.901 21.4623 20.7239C21.7633 20.5467 22.0127 20.2939 22.1856 19.9905C22.3585 19.6871 22.449 19.3437 22.448 18.9945C22.447 18.6453 22.3546 18.3024 22.18 18L13.71 3.86C13.5317 3.56611 13.2807 3.32312 12.9812 3.15448C12.6817 2.98585 12.3438 2.89725 12 2.89725C11.6562 2.89725 11.3183 2.98585 11.0188 3.15448C10.7193 3.32312 10.4683 3.56611 10.29 3.86Z" />
-                                    <path d="M12 9V13" />
-                                    <path d="M12 17H12.01" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Urgent task created: Leaking pipe – kitchen sink</div>
-                                <div class="task-meta">Created by Alex M. · 3h ago</div>
-                            </div>
-                            <span class="badge urgent">Urgent</span>
-                        </div>
+                    <div class="task-list" id="recentActivityList">
+                        <div class="pending-alert">Loading activity...</div>
                     </div>
                 </div>
 
@@ -359,49 +303,8 @@
                         <h3>Top Performing Providers</h3>
                         <button class="btn-sm outline">View All</button>
                     </div>
-                    <div class="task-list">
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" />
-                                    <circle cx="12" cy="7" r="4" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Mihai P. – Plumbing Specialist</div>
-                                <div class="task-meta">47 completed tasks · 4.9★ rating</div>
-                            </div>
-                            <span class="badge done">Top Rated</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" />
-                                    <circle cx="12" cy="7" r="4" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Ion E. – Electrician</div>
-                                <div class="task-meta">52 completed tasks · 4.8★ rating</div>
-                            </div>
-                            <span class="badge done">Top Rated</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" />
-                                    <circle cx="12" cy="7" r="4" />
-                                </svg>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">CleanPro SRL – Cleaning Service</div>
-                                <div class="task-meta">38 completed tasks · 4.7★ rating</div>
-                            </div>
-                            <span class="badge new">Verified</span>
-                        </div>
+                    <div class="task-list" id="topProvidersList">
+                        <div class="pending-alert">Loading providers...</div>
                     </div>
                 </div>
 
@@ -452,7 +355,7 @@
             } else if (city.includes('brașov') || city.includes('brasov')) {
                 color = '#831843'; bgColor = '#fce7f3'; borderColor = '#fbcfe8';
             } else if (city.includes('constanța') || city.includes('constanta')) {
-                color = '#0c4a6e'; bgColor = '#e0f2fe'; borderColor = '#bae6fd';
+                color = '#854d0e'; bgColor = '#fef9c3'; borderColor = '#fde68a';
             } else {
                 color = '#374151'; bgColor = '#f3f4f6'; borderColor = '#e5e7eb';
             }
@@ -608,6 +511,7 @@
             const message = await response.text();
             alert(message);
             await renderPropertyLists();
+            await loadAdminStats();
         }
 
         async function approveProvider(id) {
@@ -621,6 +525,7 @@
             }
 
             await loadPendingProviders();
+            await loadAdminStats();
         }
 
         async function rejectProvider(id) {
@@ -634,6 +539,7 @@
             }
 
             await loadPendingProviders();
+            await loadAdminStats();
         }
 
         async function loadAdminStats() {
@@ -654,11 +560,154 @@
             }
         }
 
+        async function loadRecentActivity() {
+            const container = document.getElementById("recentActivityList");
+
+            try {
+                const res = await fetch("http://localhost:8080/api/issues/all");
+                if (!res.ok) throw new Error("Failed to fetch issues");
+
+                const issues = await res.json();
+
+                if (issues.length === 0) {
+                    container.innerHTML = '<div class="pending-alert">No activity yet</div>';
+                    return;
+                }
+
+                // Sort by createdAt descending, take top 6
+                const recent = [...issues]
+                    .sort((a, b) => {
+                        const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+                        const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+                        return dateB - dateA;
+                    })
+                    .slice(0, 6);
+
+                const statusConfig = {
+                    PENDING: { label: "Pending", cls: "pending" },
+                    OPEN: { label: "Open", cls: "new" },
+                    IN_PROGRESS: { label: "In Progress", cls: "urgent" },
+                    RESOLVED: { label: "Resolved", cls: "done" }
+                };
+
+                function timeAgo(dateStr) {
+                    if (!dateStr) return "some time ago";
+                    const now = new Date();
+                    const then = new Date(dateStr);
+                    const diffMs = now - then;
+                    const diffMins = Math.floor(diffMs / 60000);
+                    if (diffMins < 1) return "just now";
+                    if (diffMins < 60) return `${diffMins} min ago`;
+                    const diffHours = Math.floor(diffMins / 60);
+                    if (diffHours < 24) return `${diffHours}h ago`;
+                    const diffDays = Math.floor(diffHours / 24);
+                    return `${diffDays}d ago`;
+                }
+
+                const taskIcon = `
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8"/>
+                <rect x="8" y="2" width="8" height="4" rx="1"/>
+            </svg>`;
+
+                container.innerHTML = recent.map(issue => {
+                    const cfg = statusConfig[issue.status] || { label: issue.status, cls: "pending" };
+
+                    const propertyName = issue.property?.name ?? "Unknown property";
+                    const providerName = issue.provider
+                        ? `${issue.provider.firstName} ${issue.provider.lastName}`
+                        : "Unassigned";
+                    const guestEmail = issue.guest?.emailAddress ?? "Unknown";
+                    const when = timeAgo(issue.createdAt);
+
+                    return `
+                <div class="task-item">
+                    <div class="task-icon">${taskIcon}</div>
+                    <div class="task-info">
+                        <div class="task-title">${issue.title}</div>
+                        <div class="task-meta">
+                            <strong>Property:</strong> ${propertyName}
+                            &nbsp;·&nbsp;
+                            <strong>Provider:</strong> ${providerName}
+                            &nbsp;·&nbsp;
+                            <strong>By:</strong> ${guestEmail}
+                            &nbsp;·&nbsp;
+                            ${when}
+                        </div>
+                    </div>
+                    <span class="badge ${cfg.cls}">${cfg.label}</span>
+                </div>
+            `;
+                }).join("");
+
+            } catch (err) {
+                console.error("Error loading activity:", err);
+                container.innerHTML = '<div class="pending-alert">Failed to load activity</div>';
+            }
+        }
+
+        async function loadTopProviders() {
+            const container = document.getElementById("topProvidersList");
+
+            try {
+                const res = await fetch("http://localhost:8080/api/admin/providers/top-performing");
+                if (!res.ok) throw new Error("Failed to fetch providers");
+
+                const providers = await res.json();
+
+                if (providers.length === 0) {
+                    container.innerHTML = '<div class="pending-alert">No verified providers yet</div>';
+                    return;
+                }
+
+                const providerIcon = `
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>`;
+
+                container.innerHTML = providers.map((p, index) => {
+                    const hasRating = p.averageRating != null;
+                    const ratingText = hasRating ? `${p.averageRating}★` : "No ratings yet";
+                    const isTop = index === 0 && p.resolvedTasks > 0;
+                    const badgeCls = isTop ? "done" : "new";
+                    const badgeLabel = isTop ? "Top Rated" : "Verified";
+                    const inProgText = p.inProgressTasks > 0
+                        ? ` · ${p.inProgressTasks} in progress` : "";
+
+                    return `
+                <div class="task-item">
+                    <div class="task-icon">${providerIcon}</div>
+                    <div class="task-info">
+                        <div class="task-title">
+                            ${p.firstName} ${p.lastName}
+                        </div>
+                        <div class="task-meta">
+                            ${p.resolvedTasks} completed${inProgText}
+                            &nbsp;·&nbsp;
+                            ${ratingText}
+                            &nbsp;·&nbsp;
+                            ${p.emailAddress}
+                        </div>
+                    </div>
+                    <span class="badge ${badgeCls}">${badgeLabel}</span>
+                </div>
+            `;
+                }).join("");
+
+            } catch (err) {
+                console.error("Error loading top providers:", err);
+                container.innerHTML = '<div class="pending-alert">Failed to load providers</div>';
+            }
+        }
+
         // 👇 AUTO LOAD ON PAGE OPEN
         window.onload = () => {
             loadPendingProviders();
             renderPropertyLists();
             loadAdminStats();
+            loadRecentActivity();
+            loadTopProviders();
         };
     </script>
 </body>

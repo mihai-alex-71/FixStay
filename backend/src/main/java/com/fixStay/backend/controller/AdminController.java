@@ -1,5 +1,6 @@
 package com.fixStay.backend.controller;
 
+import com.fixStay.backend.dto.ProviderStatsDTO;
 import com.fixStay.backend.model.Role;
 import com.fixStay.backend.model.Status;
 import com.fixStay.backend.model.User;
@@ -7,6 +8,7 @@ import com.fixStay.backend.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fixStay.backend.model.Issue;
 import com.fixStay.backend.model.IssueStatus;
@@ -67,5 +69,25 @@ public class AdminController {
         List<Issue> active = issueRepository.findByStatus(IssueStatus.OPEN);
         active.addAll(issueRepository.findByStatus(IssueStatus.IN_PROGRESS));
         return active;
+    }
+
+
+    @GetMapping("/providers/top-performing")
+    public List<ProviderStatsDTO> getTopPerformingProviders() {
+        return userRepository.findByRoleAndStatus(Role.SERVICE_PROVIDER, Status.APPROVED)
+                .stream()
+                .map(p -> new ProviderStatsDTO(
+                        p.getFirstName(),
+                        p.getLastName(),
+                        p.getEmailAddress(),
+                        issueRepository.countByProviderAndStatus(p, IssueStatus.RESOLVED),
+                        issueRepository.countByProviderAndStatus(p, IssueStatus.IN_PROGRESS),
+                        issueRepository.findAverageRatingByProvider(p) != null
+                                ? Math.round(issueRepository.findAverageRatingByProvider(p) * 10.0) / 10.0
+                                : null
+                ))
+                .sorted((a, b) -> Long.compare(b.resolvedTasks(), a.resolvedTasks()))
+                .limit(5)
+                .collect(Collectors.toList());
     }
 }

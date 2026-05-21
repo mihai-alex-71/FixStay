@@ -2,7 +2,10 @@ package com.fixStay.backend.repository;
 
 import com.fixStay.backend.model.Issue;
 import com.fixStay.backend.model.IssueStatus;
+import com.fixStay.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +23,9 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     List<Issue> findByStatus(IssueStatus status);
 
     List<Issue> findByProviderEmailAddress(String serviceProviderEmailAddress);
+
+    @Query("SELECT AVG(i.rating) FROM Issue i WHERE i.provider = :provider AND i.rating IS NOT NULL")
+    Double findAverageRatingByProvider(@Param("provider") User provider);
+
+    long countByProviderAndStatus(User provider, IssueStatus status);
 }

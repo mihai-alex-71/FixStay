@@ -197,9 +197,9 @@
         }
 
         .status-badge.resolved {
-            background: rgba(99, 102, 241, 0.08);
-            color: #3730a3;
-            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: #81ca97;
+            color: rgb(2, 88, 9);
+            border: 1px solid rgb(2, 88, 9);
         }
 
         .property-section {
@@ -399,6 +399,65 @@
                 </div>
             </main>
         </div>
+        <!-- Star Rating Modal -->
+        <div class="modal-overlay" id="ratingModal" aria-hidden="true">
+            <div class="modal-card" style="max-width: 380px; text-align: center;">
+
+                <!-- Icon -->
+                <div style="
+            width: 52px; height: 52px;
+            background: rgba(245,158,11,0.12);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px;">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                    </svg>
+                </div>
+
+                <h3 style="margin: 0 0 6px; font-size: 1.1rem; color: #111827;">Rate the Service Provider</h3>
+                <p style="margin: 0 0 20px; color: #6b7280; font-size: 0.9rem;" id="ratingModalSubtitle">
+                    How well was the job done?
+                </p>
+
+                <!-- Stars -->
+                <div id="starRow" style="
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 22px;">
+                    <!-- filled by JS -->
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="closeRatingModal()" style="
+                flex: 1; padding: 10px 0;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                background: #fff;
+                color: #374151;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;">
+                        Cancel
+                    </button>
+                    <button onclick="submitRating()" id="submitRatingBtn" disabled style="
+                flex: 1; padding: 10px 0;
+                border: none;
+                border-radius: 10px;
+                background: #f59e0b;
+                color: #fff;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: not-allowed;
+                opacity: 0.5;">
+                        Submit Rating
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="chatModal" aria-hidden="true">
@@ -503,7 +562,7 @@
             } else if (city.includes('brașov') || city.includes('brasov')) {
                 color = '#831843'; bgColor = '#fce7f3'; borderColor = '#fbcfe8';
             } else if (city.includes('constanța') || city.includes('constanta')) {
-                color = '#0c4a6e'; bgColor = '#e0f2fe'; borderColor = '#bae6fd';
+                color = '#854d0e'; bgColor = '#fef9c3'; borderColor = '#fde68a';
             } else {
                 color = '#374151'; bgColor = '#f3f4f6'; borderColor = '#e5e7eb';
             }
@@ -804,9 +863,36 @@
                         div.style.padding = "14px"; div.style.border = "1px solid #dbe4ee"; div.style.borderRadius = "10px"; div.style.background = "#fff"; div.style.display = "flex"; div.style.justifyContent = "space-between"; div.style.alignItems = "center";
 
                         let publishBtn = "";
-                        // If it's not open or in progress, host can publish it to service providers
                         if (issue.status !== 'OPEN' && issue.status !== 'IN_PROGRESS' && issue.status !== 'RESOLVED') {
                             publishBtn = `<button class="btn-sm outline" style="color:#166534; border-color:#166534;" onclick="publishIssue(${issue.id})">Publish</button>`;
+                        }
+
+                        // ⭐ Rate button — only on resolved, only if not yet rated
+                        let rateBtn = "";
+                        if (issue.status === 'RESOLVED' && issue.rating == null) {
+                            rateBtn = `
+                                        <button onclick="openRatingModal(${issue.id}, '${issue.title.replace(/'/g, "\\'")}')"
+                                            style="
+                                                background: none;
+                                                border: none;
+                                                cursor: pointer;
+                                                padding: 4px;
+                                                display: inline-flex;
+                                                align-items: center;
+                                                gap: 5px;
+                                                color: #f59e0b;
+                                                font-weight: 600;
+                                                font-size: 0.88rem;"
+                                            title="Rate this job">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                            </svg>
+                                            Rate
+                                        </button>`;
+                        } else if (issue.status === 'RESOLVED' && issue.rating != null) {
+                            // Already rated — show the score
+                            rateBtn = `<span style="color: #f59e0b; font-weight: 700; font-size: 0.9rem;">★ ${issue.rating}/5</span>`;
                         }
 
                         const providerEmail = getIssueProviderEmail(issue);
@@ -836,6 +922,7 @@
                                 <div style="font-size: 0.85rem; color: #64748b;">${providerLine}</div>
                                 ${statusBadge}
                                 <div>${publishBtn}</div>
+                                <div>${rateBtn}</div>
                             </div>
                         `;
                         list.appendChild(div);
@@ -855,6 +942,89 @@
                 }
             } catch (e) { alert("Error publishing issue"); }
         }
+        let pendingRatingIssueId = null;
+        let selectedRating = 0;
+
+        function openRatingModal(issueId, issueTitle) {
+            pendingRatingIssueId = issueId;
+            selectedRating = 0;
+            document.getElementById('ratingModalSubtitle').textContent = `"${issueTitle}"`;
+            buildStars();
+            document.getElementById('ratingModal').classList.add('show');
+        }
+
+        function closeRatingModal() {
+            pendingRatingIssueId = null;
+            selectedRating = 0;
+            document.getElementById('ratingModal').classList.remove('show');
+        }
+
+        function buildStars() {
+            const row = document.getElementById('starRow');
+            row.innerHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.dataset.value = i;
+                btn.style.cssText = `
+            background: none; border: none; cursor: pointer;
+            padding: 4px; font-size: 36px; line-height: 1;
+            color: #d1d5db; transition: color 0.1s ease;`;
+                btn.textContent = '★';
+                btn.setAttribute('aria-label', `${i} star${i > 1 ? 's' : ''}`);
+
+                btn.addEventListener('mouseenter', () => highlightStars(i));
+                btn.addEventListener('mouseleave', () => highlightStars(selectedRating));
+                btn.addEventListener('click', () => {
+                    selectedRating = i;
+                    highlightStars(i);
+                    updateSubmitBtn();
+                });
+
+                row.appendChild(btn);
+            }
+
+            highlightStars(0);
+            updateSubmitBtn();
+        }
+
+        function highlightStars(count) {
+            const stars = document.querySelectorAll('#starRow button');
+            stars.forEach((btn, idx) => {
+                btn.style.color = idx < count ? '#f59e0b' : '#d1d5db';
+            });
+        }
+
+        function updateSubmitBtn() {
+            const btn = document.getElementById('submitRatingBtn');
+            const active = selectedRating > 0;
+            btn.disabled = !active;
+            btn.style.opacity = active ? '1' : '0.5';
+            btn.style.cursor = active ? 'pointer' : 'not-allowed';
+        }
+
+        async function submitRating() {
+            if (!pendingRatingIssueId || selectedRating === 0) return;
+
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/issues/${pendingRatingIssueId}/rate?hostEmail=${encodeURIComponent(hostEmail)}&rating=${selectedRating}`,
+                    { method: 'POST' }
+                );
+                const message = await res.text();
+                closeRatingModal();
+                alert(message);
+                if (res.ok) loadHostIssues();
+            } catch (err) {
+                console.error('Could not submit rating:', err);
+                alert('Something went wrong. Please try again.');
+            }
+        }
+
+        document.getElementById('ratingModal').addEventListener('click', function (e) {
+            if (e.target === this) closeRatingModal();
+        });
 
         renderProperties();
         loadHostIssues();
