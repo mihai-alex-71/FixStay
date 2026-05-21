@@ -1,5 +1,6 @@
 package com.fixStay.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,9 +29,18 @@ public class Issue {
     @Column(nullable = false)
     private IssueStatus status;
 
+    @Column(updatable = false)
+    private java.time.LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = java.time.LocalDateTime.now();
+    }
+
     // Relatia cu Guest-ul care a raportat
     @ManyToOne
     @JoinColumn(name = "guest_id", nullable = false)
+    @JsonIgnoreProperties({"password"})
     private User guest;
 
     // Relatia cu Proprietatea unde a aparut problema
@@ -41,5 +51,10 @@ public class Issue {
     // Relatia cu Provider-ul care repara (poate fi null la inceput)
     @ManyToOne
     @JoinColumn(name = "provider_id")
+    @JsonIgnoreProperties({"password"})
     private User provider;
+
+
+    @Column(nullable = true)
+    private Integer rating;
 }

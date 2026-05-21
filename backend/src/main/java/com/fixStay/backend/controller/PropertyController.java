@@ -55,4 +55,9 @@ public class PropertyController {
     public ResponseEntity<String> deleteRejectedProperty(@PathVariable Long id, @RequestParam String email){
         return  propertyService.deleteRejectedProperty(id,email);
     }
+
+    @GetMapping("/available")
+    public List<Property> getAvailableProperties() {
+        return propertyService.getAvailableProperties();
+    }
 }

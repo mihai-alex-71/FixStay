@@ -55,4 +55,27 @@ public class IssueController {
         return  issueService.getIssueByServiceProvider(email);
     }
 
+    @GetMapping("/all")
+    public List<Issue> getAllIssues() {
+        return issueService.getAllIssues();
+    }
+
+    @PostMapping("/{id}/rate")
+    public String rateIssue(@PathVariable Long id,
+                            @RequestParam String hostEmail,
+                            @RequestParam int rating){
+        return issueService.rateIssue(id, hostEmail, rating);
+    }
+
+    @PostMapping("/{id}/resolve")
+    public String resolveIssues(@PathVariable Long id,
+                                @RequestParam String providerEmail){
+        return  issueService.resolveIssues(id,providerEmail);
+    }
+
+    @GetMapping("/provider-rating")
+    public Double getProviderRating(@RequestParam String providerEmail){
+        return issueService.getProviderRating(providerEmail);
+    }
+
 }

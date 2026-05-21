@@ -114,4 +114,75 @@ public class IssueService {
     public List<Issue> getIssueByServiceProvider(String email){
         return issueRepository.findByProviderEmailAddress(email);
     }
+
+    public List<Issue> getAllIssues() {
+        return issueRepository.findAll();
+    }
+
+    public String rateIssue(Long issueId, String hostEmail,  int rating){
+        Optional<Issue> issueOptional = issueRepository.findById(issueId);
+
+        if (issueOptional.isEmpty()){
+            return "Issue not found 404";
+        }
+
+        Issue issue = issueOptional.get();
+
+        if(!issue.getProperty().getHost().getEmailAddress().equals(hostEmail)){
+            return "cannot asses the any rate to a task taht you have not initiated";
+        }
+
+        if(issue.getStatus() != IssueStatus.RESOLVED){
+            return  "You cannot rate an incompleted job";
+        }
+
+        if(issue.getRating() != null){
+            return  "already has a rating";
+        }
+
+        if(issue.getProvider() == null){
+            return  "nu provider is assigned";
+        }
+
+        issue.setRating(rating);
+        issueRepository.save(issue);
+        return "rating saved";
+    }
+
+
+    //solving issues
+
+    public  String resolveIssues(Long issueId, String providerEmail){
+        Optional<Issue> issuePotential = issueRepository.findById(issueId);
+        if(issuePotential.isEmpty()){
+            return  " issue not found";
+        }
+
+        Issue issue = issuePotential.get();
+
+        if(issue.getProvider() == null  || !issue.getProvider().getEmailAddress().equals(providerEmail)){
+            return  " security allert, cannot resolve issue because th provider is not the same";
+        }
+
+        if(issue.getStatus() != IssueStatus.IN_PROGRESS){
+            return "issue cannot be resolved if not in progress";
+        }
+
+        issue.setStatus(IssueStatus.RESOLVED);
+        issueRepository.save(issue);
+        return "Task marked as resolved! The host will now be able to rate your work.";
+
+    }
+
+    public Double getProviderRating(String emailProvider){
+        Optional<User> potentialProvider = userRepository.findUserByEmailAddress(emailProvider);
+
+        if(potentialProvider.isPresent()){
+            User provider = potentialProvider.get();
+            Double avg = issueRepository.findAverageRatingByProvider(provider);
+            if (avg == null) return  0.0;
+            return Math.round(avg * 10.0) / 10.0;
+        }
+        return null;
+    }
 }

@@ -7,11 +7,14 @@ import com.fixStay.backend.model.User;
 import com.fixStay.backend.repository.PropertyRepository;
 import com.fixStay.backend.repository.RentalRepository;
 import com.fixStay.backend.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -82,9 +85,8 @@ public class RentalController {
             return ResponseEntity.badRequest().body("Eroare: Data de început trebuie să fie înainte de data de final!");
         }
 
-        boolean isOccupied = rentalRepository.existsByPropertyIdAndEndDateGreaterThanEqualAndStartDateLessThanEqual(
-                request.propertyId(), request.startDate(), request.endDate()
-        );
+        boolean isOccupied = rentalRepository.existsActiveRentalByProperty(
+                request.propertyId(), request.startDate(), request.endDate());
 
         if (isOccupied) {
             return ResponseEntity.badRequest().body("Ne pare rău! Această proprietate este deja închiriată în perioada selectată.");
@@ -114,12 +116,8 @@ public class RentalController {
             return ResponseEntity.badRequest().body("Eroare: Noua dată trebuie să fie ulterioară celei curente!");
         }
 
-        boolean isOccupied = rentalRepository.existsByPropertyIdAndIdNotAndEndDateGreaterThanEqualAndStartDateLessThanEqual(
-                rental.getProperty().getId(),
-                rental.getId(),
-                rental.getStartDate(),
-                request.newEndDate()
-        );
+        boolean isOccupied = rentalRepository.existsActiveRentalByPropertyExcluding(
+                rental.getProperty().getId(), rental.getId(), rental.getStartDate(), request.newEndDate());
 
         if (isOccupied) {
             return ResponseEntity.badRequest().body("Ne pare rău! Nu poți prelungi, casa a fost deja rezervată.");
@@ -129,5 +127,32 @@ public class RentalController {
         rentalRepository.save(rental);
 
         return ResponseEntity.ok("Prelungire reușită!");
+    }
+
+    @PostMapping("/terminate")
+    public ResponseEntity<String> terminateRental(@RequestParam String guestEmail){
+        Optional<User> guestOptional = userRepository.findUserByEmailAddress(guestEmail);
+        if(guestOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("guess not found");
+        }
+
+        User guest = guestOptional.get();
+        Rental activeRental =  rentalRepository.findAllByGuest_EmailAddress(guestEmail)
+                .stream()
+                .filter(r -> !r.isCompleted()) // rental completed  ?
+                .findFirst()
+                .orElse(null);
+
+        if (activeRental == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("no active rental found");
+        }
+
+        activeRental.setCompleted(true);
+        rentalRepository.save(activeRental);
+
+        guest.setCurrentProperty(null);
+        userRepository.save(guest);
+
+        return ResponseEntity.ok("your stay has been ended hope you enjoyed");
     }
 }

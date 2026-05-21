@@ -110,32 +110,37 @@
                                 <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;"
                                     id="cityCheckboxes">
                                     <label
-                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
-                                            type="checkbox" value="Cluj-Napoca"
-                                            style="accent-color: #7c3aed; width: 16px; height: 16px;">
-                                        Cluj-Napoca</label>
+                                        style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#475467; font-size:0.95rem;">
+                                        <input type="checkbox" value="Cluj-Napoca"
+                                            style="accent-color:#7c3aed; width:16px; height:16px;"> Cluj-Napoca
+                                    </label>
                                     <label
-                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
-                                            type="checkbox" value="București"
-                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> București</label>
+                                        style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#475467; font-size:0.95rem;">
+                                        <input type="checkbox" value="București"
+                                            style="accent-color:#7c3aed; width:16px; height:16px;"> București
+                                    </label>
                                     <label
-                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
-                                            type="checkbox" value="Iași"
-                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Iași</label>
+                                        style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#475467; font-size:0.95rem;">
+                                        <input type="checkbox" value="Iași"
+                                            style="accent-color:#7c3aed; width:16px; height:16px;"> Iași
+                                    </label>
                                     <label
-                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
-                                            type="checkbox" value="Timișoara"
-                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Timișoara</label>
+                                        style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#475467; font-size:0.95rem;">
+                                        <input type="checkbox" value="Timișoara"
+                                            style="accent-color:#7c3aed; width:16px; height:16px;"> Timișoara
+                                    </label>
                                     <label
-                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
-                                            type="checkbox" value="Constanța"
-                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Constanța</label>
+                                        style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#475467; font-size:0.95rem;">
+                                        <input type="checkbox" value="Constanța"
+                                            style="accent-color:#7c3aed; width:16px; height:16px;"> Constanța
+                                    </label>
                                     <label
-                                        style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475467; font-size: 0.95rem;"><input
-                                            type="checkbox" value="Brașov"
-                                            style="accent-color: #7c3aed; width: 16px; height: 16px;"> Brașov</label>
+                                        style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#475467; font-size:0.95rem;">
+                                        <input type="checkbox" value="Brașov"
+                                            style="accent-color:#7c3aed; width:16px; height:16px;"> Brașov
+                                    </label>
                                 </div>
-                                <button onclick="applyFilter()" class="btn-modal primary" style="width: 100%;">Apply
+                                <button onclick="applyFilter()" class="btn-modal primary" style="width:100%;">Apply
                                     Filter</button>
                             </div>
                         </div>
@@ -146,41 +151,33 @@
                 </div>
 
                 <div id="activeRentalSection" style="display: none;">
-                    <div class="dash-greeting">
-                        <h2>Welcome back!</h2>
-                        <p>Manage your current rental seamlessly.</p>
-                    </div>
-
-                    <div class="dash-panel"
-                        style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem; color: white; padding: 2rem; text-align: center;">
-                        <h3>Need to Report an Issue?</h3>
-                        <div id="initialReportView">
-                            <p style="opacity: 0.9; margin-bottom: 1.5rem;">Water leak? Broken appliance? Let your
-                                landlord know instantly.</p>
-                            <button class="btn-white" onclick="showReportForm()"
-                                style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Report
-                                Issue Now</button>
+                    <div class="dash-greeting"
+                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h2>Welcome back!</h2>
+                            <p>Manage your current rental seamlessly.</p>
                         </div>
-                        <form id="issueForm" style="display: none; text-align: left; max-width: 500px; margin: 0 auto;">
-                            <input type="text" id="issueTitle" placeholder="Issue Title" required
-                                style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none;">
-                            <textarea id="issueDescription" placeholder="Describe the problem..." required
-                                style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none; min-height: 100px;"></textarea>
-                            <div style="display: flex; gap: 10px; justify-content: center;">
-                                <button type="submit"
-                                    style="background: white; color: #7c3aed; padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send
-                                    Report</button>
-                                <button type="button" onclick="hideReportForm()"
-                                    style="background: transparent; color: white; border: 1px solid white; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">Cancel</button>
-                            </div>
-                        </form>
-                        <div id="myIssuesSection" style="margin-top: 2.5rem; text-align: left;">
-                            <h4 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;">My Support
-                                Requests</h4>
-                            <div id="issuesTrackerList"></div>
-                        </div>
+                        <button onclick="openTerminateModal()" style="
+                                    display: flex; align-items: center; gap: 8px;
+                                    padding: 10px 18px;
+                                    background: #fff;
+                                    color: #dc2626;
+                                    border: 1.5px solid #dc2626;
+                                    border-radius: 10px;
+                                    font-weight: 700;
+                                    font-size: 0.95rem;
+                                    cursor: pointer;
+                                    transition: all 0.2s ease;">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            End My Stay
+                        </button>
                     </div>
-
+                    <!-- Chat Panel -->
                     <div class="dash-panel" style="margin-bottom: 2rem; padding: 20px;">
                         <h3>Chat with your Host</h3>
                         <div id="chat-messages"
@@ -190,12 +187,93 @@
                             <input type="text" id="chatInput" placeholder="Type your message here..."
                                 style="flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
                             <button onclick="sendChatMessage()"
-                                style="padding: 12px 24px; background-color: #7c3aed; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Send</button>
+                                style="padding: 12px 24px; background-color: #7c3aed; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Report Issue Panel -->
+                    <div class="dash-panel"
+                        style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); border: none; margin-bottom: 2rem; color: white; padding: 2rem; text-align: center;">
+                        <h3>Need to Report an Issue?</h3>
+                        <div id="initialReportView">
+                            <p style="opacity: 0.9; margin-bottom: 1.5rem;">Water leak? Broken appliance? Let your
+                                landlord know instantly.</p>
+                            <button onclick="showReportForm()"
+                                style="background: white; color: #7c3aed; padding: 1rem 2.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                Report Issue Now
+                            </button>
+                        </div>
+                        <form id="issueForm" style="display: none; text-align: left; max-width: 500px; margin: 0 auto;">
+                            <input type="text" id="issueTitle" placeholder="Issue Title" required
+                                style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none;">
+                            <textarea id="issueDescription" placeholder="Describe the problem..." required
+                                style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 6px; border: none; min-height: 100px;"></textarea>
+                            <div style="display: flex; gap: 10px; justify-content: center;">
+                                <button type="submit"
+                                    style="background: white; color: #7c3aed; padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                                    Send Report
+                                </button>
+                                <button type="button" onclick="hideReportForm()"
+                                    style="background: transparent; color: white; border: 1px solid white; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                        <div id="myIssuesSection" style="margin-top: 2.5rem; text-align: left;">
+                            <h4 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;">My Support
+                                Requests</h4>
+                            <div id="issuesTrackerList"></div>
                         </div>
                     </div>
                 </div>
 
             </main>
+        </div>
+        <!-- Terminate Stay Modal -->
+        <div class="modal-overlay" id="terminateModal" aria-hidden="true">
+            <div class="modal-card" style="text-align: center;">
+
+                <div style="
+            width: 52px; height: 52px;
+            background: rgba(220,38,38,0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px;">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                </div>
+
+                <h3 style="margin: 0 0 8px; font-size: 1.15rem; color: #111827;">
+                    End your stay?
+                </h3>
+                <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.5; font-size: 0.95rem;">
+                    You will be checked out immediately and the property will become available to others.
+                    This cannot be undone.
+                </p>
+
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="closeTerminateModal()" class="btn-modal secondary" style="flex: 1;">
+                        Cancel
+                    </button>
+                    <button onclick="confirmTerminate()" style="
+                flex: 1;
+                padding: 12px 16px;
+                border: none;
+                border-radius: 8px;
+                background: #dc2626;
+                color: #fff;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;">
+                        Yes, Check Out
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -271,7 +349,7 @@
             } else if (city.includes('brașov') || city.includes('brasov')) {
                 color = '#831843'; bgColor = '#fce7f3'; borderColor = '#fbcfe8';
             } else if (city.includes('constanța') || city.includes('constanta')) {
-                color = '#0c4a6e'; bgColor = '#e0f2fe'; borderColor = '#bae6fd';
+                color = '#854d0e'; bgColor = '#fef9c3'; borderColor = '#fde68a';
             } else {
                 color = '#374151'; bgColor = '#f3f4f6'; borderColor = '#e5e7eb';
             }
@@ -308,10 +386,12 @@
 
         async function loadProperties() {
             try {
-                const response = await fetch('http://localhost:8080/api/properties/all');
+                const response = await fetch('http://localhost:8080/api/properties/available');
                 const properties = await response.json();
                 renderPropertiesGrid(properties);
-            } catch (error) { console.error(error); }
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         function toggleFilterPopup() {
@@ -329,7 +409,7 @@
             if (selectedCities.length > 0) {
                 url += `?cities=${selectedCities.join(',')}`;
             } else {
-                url = 'http://localhost:8080/api/properties/all';
+                url = 'http://localhost:8080/api/properties/available';
             }
 
             try {
@@ -339,7 +419,7 @@
                     properties = await response.json();
                 } else {
                     console.warn("Filter endpoint not implemented. Falling back to frontend filtering for demo purposes.");
-                    const allRes = await fetch('http://localhost:8080/api/properties/all');
+                    const allRes = await fetch('http://localhost:8080/api/properties/available');
                     properties = await allRes.json();
                     if (selectedCities.length > 0) {
                         properties = properties.filter(p => {
@@ -426,6 +506,40 @@
             await fetch("http://localhost:8080/api/messages/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senderEmail: guestEmail, receiverEmail: currentHostEmail, content: input.value }) });
             input.value = ""; loadChat();
         }
+
+        function openTerminateModal() {
+            document.getElementById('terminateModal').classList.add('show');
+        }
+
+        function closeTerminateModal() {
+            document.getElementById('terminateModal').classList.remove('show');
+        }
+
+        async function confirmTerminate() {
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/rentals/terminate?guestEmail=${encodeURIComponent(guestEmail)}`,
+                    { method: 'POST' }
+                );
+                const message = await res.text();
+                closeTerminateModal();
+                alert(message);
+                if (res.ok) {
+                    // Reset state and reload
+                    currentPropertyId = null;
+                    currentHostEmail = null;
+                    window.location.reload();
+                }
+            } catch (err) {
+                console.error('Could not terminate rental:', err);
+                alert('Something went wrong. Please try again.');
+            }
+        }
+
+        // Close on backdrop click
+        document.getElementById('terminateModal').addEventListener('click', function (e) {
+            if (e.target === this) closeTerminateModal();
+        });
         document.getElementById('chatInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChatMessage(); });
     </script>
 </body>
